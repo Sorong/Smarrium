@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>add_sensor.qml</file>
+        <file>start.qml</file>
+        <file>add_actor.qml</file>
+        <file>configure.qml</file>
+        <file>overview.qml</file>
     </qresource>
 </RCC>

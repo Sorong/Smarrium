@@ -1,9 +1,19 @@
 import QtQuick 2.10
 import QtQuick.Window 2.10
-
+import QtQuick.Controls 2.3
 Window {
+
+    id: window
     visible: true
-    width: 640
+    width: 1280
     height: 480
-    title: qsTr("Hello World")
+    minimumHeight: 400
+    minimumWidth: 640
+    title: qsTr("Smarrium")
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: Qt.resolvedUrl("start.qml")
+        //initialItem:
+    }
 }
