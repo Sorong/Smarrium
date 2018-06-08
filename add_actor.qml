@@ -59,9 +59,6 @@ Item {
             stackView.pop()
         }
     }
-    Component {
-        id: dl
-    }
 
     ComboBox {
         id: gpioSelector
@@ -70,16 +67,18 @@ Item {
         anchors.topMargin: 20
         model: availablePins
         anchors.left: content.left
-        delegate:     RoundButton {
-            id: add
-            anchors.top: content.bottom
-            anchors.topMargin: 20
-            anchors.left: gpioSelector.right
-            anchors.leftMargin: 10
-            text: "+"
-            onClicked: {
-                gpioSelector.model.re
-            }
+        //delegate: add
+    }
+
+   RoundButton {
+        id: add
+        anchors.topMargin: 20
+        anchors.top: content.bottom
+        anchors.left: gpioSelector.right
+        anchors.leftMargin: 10
+        text: "+"
+        onClicked: {
+            availablePins.removeAt(gpioSelector.currentIndex)
         }
     }
 /*

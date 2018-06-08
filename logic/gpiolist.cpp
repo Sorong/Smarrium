@@ -1,3 +1,4 @@
+#include <qdebug.h>
 #include "gpiolist.h"
 
 GPIOList::GPIOList(QObject *parent)
@@ -22,8 +23,6 @@ QVariant GPIOList::headerData(int section, Qt::Orientation orientation, int role
 
 int GPIOList::rowCount(const QModelIndex &parent) const
 {
-    // For list models only the root node (an invalid parent) should return the list's size. For all
-    // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
     if (parent.isValid())
         return 0;
 
@@ -38,8 +37,38 @@ QVariant GPIOList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool GPIOList::removeRow(int row, const QModelIndex &parent) const
+bool GPIOList::removeRows(int row, int count, const QModelIndex &parent)
 {
-    this->gpioList.removeAt(row);
+    beginRemoveRows(parent, row, row + count - 1);
+    for(int i = 0; i < count; i++) {
+        QString item = gpioList.at(row);
+        qDebug() << item;
+        emit removed(item);
+        this->gpioList.removeAt(row);
+    }
+    endRemoveRows();
     return true;
 }
+
+bool GPIOList::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertColumns(parent, row, count);
+    for (int i = 0; i < count; i++) {
+        gpioList.insert(row, "");
+    }
+    endInsertRows();
+    return true;
+}
+
+bool GPIOList::removeAt(int index) {
+    return removeRows(index, 1);
+}
+
+void GPIOList::add(const QString item)
+{
+    this->insertRows(gpioList.size(), 1);
+    this->gpioList[gpioList.size() - 1] = item;
+
+    qDebug() << gpioList.at(gpioList.size() - 1);
+}
+

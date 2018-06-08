@@ -18,7 +18,8 @@ SOURCES += \
     logic/gpiomanager.cpp \
     frontend/actorfactory.cpp \
     frontend/sensorfactory.cpp \
-    logic/gpiolist.cpp
+    logic/gpiolist.cpp \
+    logic/gpiomap.cpp
 
 
 RESOURCES += qml.qrc
@@ -40,7 +41,8 @@ HEADERS += \
     logic/gpiomanager.h \
     frontend/actorfactory.h \
     frontend/sensorfactory.h \
-    logic/gpiolist.h
+    logic/gpiolist.h \
+    logic/gpiomap.h
 
 DISTFILES += \
     backend/.dummy \

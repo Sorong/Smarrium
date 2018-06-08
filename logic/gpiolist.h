@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QStringList>
+#include <QString>
 
 //See: http://www.java2s.com/Code/Cpp/Qt/stringlistmodelexample.htm
 class GPIOList : public QAbstractListModel
@@ -24,9 +25,16 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    bool removeRow(int row, const QModelIndex &parent = QModelIndexList()) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+    Q_INVOKABLE bool removeAt(int index);
+
 signals:
-    void removed(QString *);
+    void removed(const QString);
+public slots:
+    void add(const QString);
 private:
 
     QStringList gpioList;
