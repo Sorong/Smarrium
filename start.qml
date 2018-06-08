@@ -40,7 +40,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("add_sensor.qml")
+            stackView.push("add_actor.qml")
         }
     }
 

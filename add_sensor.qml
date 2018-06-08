@@ -42,7 +42,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("add_actor.qml")
+            stackView.push("configure.qml")
         }
     }
     Button {

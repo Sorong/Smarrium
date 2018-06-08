@@ -4,6 +4,7 @@ import QtQuick.Controls 2.3
 
 Item {
     id: addActor
+    property alias content: content
     //anchors.fill: parent
 
     Label {
@@ -16,12 +17,12 @@ Item {
         horizontalAlignment: Text.AlignHCenter
     }
 
-
     Label {
         id: content
         anchors.top: titleActor.bottom
         anchors.topMargin: 20
         text: qsTr("ALorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,")
+        //text: availablePins.data(0)
         font.pointSize: 8
         lineHeight: 1
         fontSizeMode: Text.FixedSize
@@ -30,7 +31,6 @@ Item {
         wrapMode: Text.WordWrap
         font.weight: Font.Light
     }
-
     Button {
         id: btnNewActor
         height: 40
@@ -42,7 +42,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("configure.qml")
+            stackView.push("add_sensor.qml")
         }
     }
     Button {
@@ -59,4 +59,41 @@ Item {
             stackView.pop()
         }
     }
+    Component {
+        id: dl
+    }
+
+    ComboBox {
+        id: gpioSelector
+        textRole: "display"
+        anchors.top: content.bottom
+        anchors.topMargin: 20
+        model: availablePins
+        anchors.left: content.left
+        delegate:     RoundButton {
+            id: add
+            anchors.top: content.bottom
+            anchors.topMargin: 20
+            anchors.left: gpioSelector.right
+            anchors.leftMargin: 10
+            text: "+"
+            onClicked: {
+                gpioSelector.model.re
+            }
+        }
+    }
+/*
+    RoundButton {
+        id: add
+        anchors.top: content.bottom
+        anchors.topMargin: 20
+        anchors.left: gpioSelector.right
+        anchors.leftMargin: 10
+        text: "+"
+        onClicked: {
+            gpioSelector.de
+        }
+    }
+*/
+
 }

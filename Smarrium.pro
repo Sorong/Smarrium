@@ -14,7 +14,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    frontend/example.cpp
+    frontend/example.cpp \
+    logic/gpiomanager.cpp \
+    frontend/actorfactory.cpp \
+    frontend/sensorfactory.cpp \
+    logic/gpiolist.cpp
+
 
 RESOURCES += qml.qrc
 
@@ -30,4 +35,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    frontend/example.h
+    frontend/example.h \
+    logic/gpio.h \
+    logic/gpiomanager.h \
+    frontend/actorfactory.h \
+    frontend/sensorfactory.h \
+    logic/gpiolist.h
+
+DISTFILES += \
+    backend/.dummy \
+    logic/.dummy
