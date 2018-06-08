@@ -63,6 +63,7 @@ GPIOList* GPIOManager::getGPIOList(GPIOList *ptr, bool available) {
 }
 
 void GPIOManager::availableChanged(QString str) {
+    emit addUnavailable(str);
     qDebug() << "availableChanged";
 }
 

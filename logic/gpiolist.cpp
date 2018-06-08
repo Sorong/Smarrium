@@ -52,7 +52,7 @@ bool GPIOList::removeRows(int row, int count, const QModelIndex &parent)
 
 bool GPIOList::insertRows(int row, int count, const QModelIndex &parent)
 {
-    beginInsertColumns(parent, row, count);
+    beginInsertRows(parent, row, row + count - 1);
     for (int i = 0; i < count; i++) {
         gpioList.insert(row, "");
     }
@@ -64,11 +64,16 @@ bool GPIOList::removeAt(int index) {
     return removeRows(index, 1);
 }
 
+const QString GPIOList::at(int index)
+{
+    return gpioList.at(index);
+}
+
 void GPIOList::add(const QString item)
 {
     this->insertRows(gpioList.size(), 1);
     this->gpioList[gpioList.size() - 1] = item;
 
-    qDebug() << gpioList.at(gpioList.size() - 1);
+    qDebug() << "add " << gpioList.at(gpioList.size() - 1);
 }
 

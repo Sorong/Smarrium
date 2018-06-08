@@ -16,21 +16,47 @@ Item {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }
+    //Test
 
-    Label {
+    ListView {
         id: content
+        width: 200; height: 250
         anchors.top: titleActor.bottom
         anchors.topMargin: 20
-        text: qsTr("ALorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,")
-        //text: availablePins.data(0)
-        font.pointSize: 8
-        lineHeight: 1
-        fontSizeMode: Text.FixedSize
         anchors.left: titleActor.left
         anchors.right: titleActor.right
-        wrapMode: Text.WordWrap
-        font.weight: Font.Light
+        model: unavailablePins
+        delegate: Component {
+                    Item {
+                        width: parent.width
+                        height: 40
+                        Column {
+                            anchors.centerIn: parent
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: 'Pin: ' + display
+                                //verticalAlignment: Text.AlignBottom
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: content.currentIndex = index
+                        }
+                    }
+                }
+                highlight: Rectangle {
+                    color: 'lightgrey'
+                    Text {
+                        anchors.centerIn: parent
+                        //text: 'Hello ' + unavailablePins.at(content.currentIndex)
+                        color: 'white'
+                    }
+                }
+                focus: true
+                onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
+
     }
+
     Button {
         id: btnNewActor
         height: 40
@@ -67,6 +93,7 @@ Item {
         anchors.topMargin: 20
         model: availablePins
         anchors.left: content.left
+        width: parent.width * 2/3
         //delegate: add
     }
 

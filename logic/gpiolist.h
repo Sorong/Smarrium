@@ -31,6 +31,8 @@ public:
 
     Q_INVOKABLE bool removeAt(int index);
 
+    Q_INVOKABLE const QString at(int index);
+
 signals:
     void removed(const QString);
 public slots:
