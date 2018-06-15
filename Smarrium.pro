@@ -28,13 +28,14 @@ SOURCES += \
     backend/Actuator/Actuator.cpp \
     Sensor.cpp \
     logic/configmanager.cpp \
-   # backend/RCSwitch/RCSwitch.cpp
+    backend/RCSwitch/RCSwitch.cpp
 
 
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
+QMAKE_CXXFLAGS += -DRPI
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -63,7 +64,7 @@ HEADERS += \
     backend/Sensors/Sensor.h \
     backend/Actuator/Actuator.hpp \
     logic/configmanager.h \
-    #backend/RCSwitch/RCSwitch.h
+    backend/RCSwitch/RCSwitch.h
 
 DISTFILES += \
     backend/.dummy \

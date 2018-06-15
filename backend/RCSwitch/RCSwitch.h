@@ -40,9 +40,10 @@
     // Include libraries for RPi:
     #include <string.h> /* memcpy */
     #include <stdlib.h> /* abs */
-    #include <wiringPi.h>
+    #include "wiringPi.h"
+    #include "bcm2835.h"
 #else
-    //#include "WProgram.h"
+    #include "WProgram.h"
 #endif
 
 #include <stdint.h>

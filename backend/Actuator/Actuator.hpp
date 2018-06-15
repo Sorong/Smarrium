@@ -3,13 +3,13 @@
 
 
 #include "./backend/Sensors/Sensor.h"
-//#include "./../RCSwitch/RCSwitch.h"
+#include "./../RCSwitch/RCSwitch.h"
 #include <string>
 
 class Actuator{
     
     public:
-    Actuator(std::string, int);
+    Actuator(std::string, int, RCSwitch*);
 
     void switchOn();
     void switchOff();
@@ -23,7 +23,7 @@ class Actuator{
         int _id;
         std::string _commandOn;
         std::string _commandOff;
-        //RCSwitch* _switch;
+        RCSwitch* _switch;
         
 
 };
