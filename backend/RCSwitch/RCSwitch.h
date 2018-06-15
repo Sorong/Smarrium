@@ -34,6 +34,8 @@
     #include "Arduino.h"
 #elif defined(ENERGIA) // LaunchPad, FraunchPad and StellarPad specific
     #include "Energia.h"
+#elif _WIN32
+    #include "stub/wiringPi.h"
 #elif defined(RPI) // Raspberry Pi
     #define RaspberryPi
 
@@ -41,10 +43,9 @@
     #include <string.h> /* memcpy */
     #include <stdlib.h> /* abs */
     #include <wiringPi.h>
-#elif _WIN32
-    #include "stub/wiringPi.h"
+    #include "bcm2835.h"
 #else
-    //#include "WProgram.h"
+    #include "WProgram.h"
 #endif
 
 #include <stdint.h>

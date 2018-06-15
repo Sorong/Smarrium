@@ -5,6 +5,8 @@
 #include "backend/Sensors/Sensor.h"
 #include "backend/RCSwitch/RCSwitch.h"
 
+#include "./backend/Sensors/Sensor.h"
+#include "./../RCSwitch/RCSwitch.h"
 #include <string>
 
 
@@ -23,6 +25,7 @@ class Actuator{
         
         bool _isActive;
         int _id;
+
         QString _commandOn;
         QString _commandOff;
         QSharedPointer<RCSwitch> _switch;

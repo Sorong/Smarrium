@@ -33,7 +33,9 @@ SOURCES += \
     logic/gpiomap.cpp \
     main.cpp \
     stub/bcm2835.c \
-    stub/wiringPi.c
+    stub/wiringPi.c \
+    Sensor.cpp \
+    logic/configmanager.cpp
 !win32 {
 SOURCES += \
     backend/Sensors/HumiditySensor/HumiditySensor.cpp \
@@ -42,10 +44,12 @@ SOURCES += \
     backend/Sensors/UVSensor/UVSensor.cpp
 }
 
+
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
+QMAKE_CXXFLAGS += -DRPI
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
