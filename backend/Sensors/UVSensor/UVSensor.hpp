@@ -1,4 +1,4 @@
-#ifndef UVSENSOR_H
+ #ifndef UVSENSOR_H
 #define UVSENSOR_H
 
 #include "./../Sensor.h"
@@ -7,7 +7,7 @@ class UVSensor: Sensor{
 
     public:
 
-    UVSensor(uint8_t pin, uint8_t pinRef, uint32_t sensorID);
+    UVSensor(int intervall, uint8_t pin, uint8_t pinRef, uint32_t sensorID);
     ~UVSensor();
 
     void enableAutoRange(bool enabled);

@@ -25,7 +25,10 @@ SOURCES += \
     backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
     backend/Sensors/UVSensor/UVSensor.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
-    backend/Actuator/Actuator.cpp
+    backend/Actuator/Actuator.cpp \
+    Sensor.cpp \
+    logic/configmanager.cpp \
+   # backend/RCSwitch/RCSwitch.cpp
 
 
 RESOURCES += qml.qrc
@@ -58,8 +61,9 @@ HEADERS += \
     backend/Sensors/UVSensor/UVSensor.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
     backend/Sensors/Sensor.h \
+    backend/Actuator/Actuator.hpp \
     logic/configmanager.h \
-    backend/Actuator/Actuator.hpp
+    #backend/RCSwitch/RCSwitch.h
 
 DISTFILES += \
     backend/.dummy \

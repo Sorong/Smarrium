@@ -68,11 +68,11 @@
  *
  * These are combined to form Tri-State bits when sending or receiving codes.
  */
-#ifdef ESP8266
-static const RCSwitch::Protocol proto[] = {
-#else
+//#ifdef ESP8266
+//static const RCSwitch::Protocol proto[] = {
+//#else
 static const RCSwitch::Protocol PROGMEM proto[] = {
-#endif
+//#endif
     { 350, {  1, 31 }, {  1,  3 }, {  3,  1 } },    // protocol 1
     { 650, {  1, 10 }, {  1,  2 }, {  2,  1 } },    // protocol 2
     { 100, { 30, 71 }, {  4, 11 }, {  9,  6 } },    // protocol 3

@@ -53,7 +53,7 @@
                     keep track if you have many sensors in use
 */
 /**************************************************************************/
-LightSensor::LightSensor(uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c)
+LightSensor::LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c): Sensor(intervall)
 {
   _addr = addr;
   _i2c = i2c;

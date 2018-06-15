@@ -98,10 +98,22 @@ typedef struct
     int32_t  min_delay;                       /**< min delay in microseconds between events. zero = not a constant rate */
 } sensor_t;
 
-class Sensor: QTimer {
- public:
-  // Constructor(s)
-  Sensor() {}
+
+typedef struct{
+
+    int     sensorId;
+    float   minValue;
+    float   maxValue;
+    //int     startTime;
+    //int     stopTime;
+
+}sensor_config;
+
+class Sensor: public QTimer {
+    Q_OBJECT
+
+public:
+  Sensor(int);
   virtual ~Sensor() {}
 
   // These must be defined by the subclass
@@ -109,8 +121,15 @@ class Sensor: QTimer {
   virtual bool getEvent(sensors_event_t*) = 0;
   virtual void getSensor(sensor_t*) = 0;
   
+ public slots:
+  void intervallElapsed();
+
+ signals:
+  void newSensorEvent(sensors_event_t*);
+
  private:
   bool _autoRange;
+
 };
 
 #endif

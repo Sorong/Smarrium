@@ -42,7 +42,7 @@
     #include <stdlib.h> /* abs */
     #include <wiringPi.h>
 #else
-    #include "WProgram.h"
+    //#include "WProgram.h"
 #endif
 
 #include <stdint.h>
