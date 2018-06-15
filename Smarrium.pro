@@ -19,7 +19,13 @@ SOURCES += \
     frontend/actorfactory.cpp \
     frontend/sensorfactory.cpp \
     logic/gpiolist.cpp \
-    logic/gpiomap.cpp
+    logic/gpiomap.cpp \
+    backend/Sensors/HumiditySensor/HumiditySensor.cpp \
+    backend/Sensors/LightSensor/LightSensor.cpp \
+    backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
+    backend/Sensors/UVSensor/UVSensor.cpp \
+    backend/Sensors/Bcm2835Interface.cpp \
+    backend/Actuator/Actuator.cpp
 
 
 RESOURCES += qml.qrc
@@ -29,6 +35,9 @@ QML_IMPORT_PATH =
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
+
+INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
+LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -42,8 +51,21 @@ HEADERS += \
     frontend/actorfactory.h \
     frontend/sensorfactory.h \
     logic/gpiolist.h \
-    logic/gpiomap.h
+    logic/gpiomap.h \
+    backend/Sensors/HumiditySensor/HumiditySensor.hpp \
+    backend/Sensors/LightSensor/LightSensor.hpp \
+    backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
+    backend/Sensors/UVSensor/UVSensor.hpp \
+    backend/Sensors/Bcm2835Interface.hpp \
+    backend/Sensors/Sensor.h \
+    logic/configmanager.h \
+    backend/Actuator/Actuator.hpp
 
 DISTFILES += \
     backend/.dummy \
     logic/.dummy
+
+target.path = /home/pi
+INSTALLS += target
+
+
