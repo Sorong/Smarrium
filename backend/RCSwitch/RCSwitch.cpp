@@ -70,6 +70,8 @@
  */
 #ifdef ESP8266
 static const RCSwitch::Protocol proto[] = {
+#elif _WIN32
+static const RCSwitch::Protocol proto[] = {
 #else
 static const RCSwitch::Protocol PROGMEM proto[] = {
 #endif
@@ -84,7 +86,7 @@ enum {
    numProto = sizeof(proto) / sizeof(proto[0])
 };
 
-#if not defined( RCSwitchDisableReceiving )
+#ifndef RCSwitchDisableReceiving
 unsigned long RCSwitch::nReceivedValue = 0;
 unsigned int RCSwitch::nReceivedBitlength = 0;
 unsigned int RCSwitch::nReceivedDelay = 0;
@@ -124,6 +126,8 @@ void RCSwitch::setProtocol(int nProtocol) {
   }
 #ifdef ESP8266
   this->protocol = proto[nProtocol-1];
+#elif _WIN32
+  this->protocol = proto[nProtocol-1];
 #else
   memcpy_P(&this->protocol, &proto[nProtocol-1], sizeof(Protocol));
 #endif
@@ -155,7 +159,7 @@ void RCSwitch::setRepeatTransmit(int nRepeatTransmit) {
 /**
  * Set Receiving Tolerance
  */
-#if not defined( RCSwitchDisableReceiving )
+#ifndef RCSwitchDisableReceiving
 void RCSwitch::setReceiveTolerance(int nPercent) {
   RCSwitch::nReceiveTolerance = nPercent;
 }
@@ -169,7 +173,9 @@ void RCSwitch::setReceiveTolerance(int nPercent) {
  */
 void RCSwitch::enableTransmit(int nTransmitterPin) {
   this->nTransmitterPin = nTransmitterPin;
-  pinMode(this->nTransmitterPin, OUTPUT);
+#ifndef _WIN32
+ pinMode(this->nTransmitterPin, OUTPUT);
+#endif
 }
 
 /**
@@ -486,7 +492,7 @@ void RCSwitch::send(unsigned long code, unsigned int length) {
   if (this->nTransmitterPin == -1)
     return;
 
-#if not defined( RCSwitchDisableReceiving )
+#ifndef RCSwitchDisableReceiving
   // make sure the receiver is disabled while we transmit
   int nReceiverInterrupt_backup = nReceiverInterrupt;
   if (nReceiverInterrupt_backup != -1) {
@@ -504,10 +510,12 @@ void RCSwitch::send(unsigned long code, unsigned int length) {
     this->transmit(protocol.syncFactor);
   }
 
-#if not defined( RCSwitchDisableReceiving )
+#ifndef RCSwitchDisableReceiving
   // enable receiver again if we just disabled it
   if (nReceiverInterrupt_backup != -1) {
+#ifndef _WIN32
     this->enableReceive(nReceiverInterrupt_backup);
+#endif
   }
 #endif
 }
@@ -516,14 +524,16 @@ void RCSwitch::send(unsigned long code, unsigned int length) {
  * Transmit a single high-low pulse.
  */
 void RCSwitch::transmit(HighLow pulses) {
+#ifndef _WIN32
   digitalWrite(this->nTransmitterPin, HIGH);
   delayMicroseconds( this->protocol.pulseLength * pulses.high);
   digitalWrite(this->nTransmitterPin, LOW);
   delayMicroseconds( this->protocol.pulseLength * pulses.low);
+ #endif
 }
 
 
-#if not defined( RCSwitchDisableReceiving )
+#ifndef RCSwitchDisableReceiving
 /**
  * Enable receiving data
  */
@@ -538,7 +548,7 @@ void RCSwitch::enableReceive() {
     RCSwitch::nReceivedBitlength = 0;
 #if defined(RaspberryPi) // Raspberry Pi
     wiringPiISR(this->nReceiverInterrupt, INT_EDGE_BOTH, &handleInterrupt);
-#else // Arduino
+#elif !_WIN32 // Arduino
     attachInterrupt(this->nReceiverInterrupt, handleInterrupt, CHANGE);
 #endif
   }
@@ -584,7 +594,11 @@ unsigned int* RCSwitch::getReceivedRawdata() {
 
 /* helper function for the receiveProtocol method */
 static inline unsigned int diff(int A, int B) {
+ #ifndef _WIN32
   return abs(A - B);
+#else
+  return A-B;
+#endif
 }
 
 /**
@@ -595,7 +609,9 @@ bool RECEIVE_ATTR RCSwitch::receiveProtocol(const int p, unsigned int changeCoun
     const Protocol &pro = proto[p-1];
 #else
     Protocol pro;
+#ifndef _WIN32
     memcpy_P(&pro, &proto[p-1], sizeof(Protocol));
+#endif
 #endif
 
     unsigned long code = 0;
@@ -632,8 +648,11 @@ void RECEIVE_ATTR RCSwitch::handleInterrupt() {
   static unsigned int changeCount = 0;
   static unsigned long lastTime = 0;
   static unsigned int repeatCount = 0;
-
+#ifdef _WIN32
+  const long time = 0;
+#else
   const long time = micros();
+#endif
   const unsigned int duration = time - lastTime;
 
   if (duration > RCSwitch::nSeparationLimit) {

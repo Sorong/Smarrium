@@ -2,8 +2,8 @@
 #define LIGHTSENSOR_H
 
 
-#include "./../Bcm2835Interface.hpp"
-#include "./../Sensor.h"
+#include "backend/Sensors/Bcm2835Interface.hpp"
+#include "backend/Sensors/Sensor.h"
 
 #define TSL2561_VISIBLE 2                   ///< channel 0 - channel 1
 #define TSL2561_INFRARED 1                  ///< channel 1

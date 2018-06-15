@@ -1,7 +1,7 @@
 #ifndef UVSENSOR_H
 #define UVSENSOR_H
 
-#include "./../Sensor.h"
+#include "backend/Sensors/Sensor.h"
 
 class UVSensor: Sensor{
 

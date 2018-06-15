@@ -103,6 +103,7 @@ Item {
         anchors.leftMargin: 10
         text: "+"
         onClicked: {
+            actuators.setSender(availablePins.at(gpioSelector.currentIndex))
             availablePins.removeAt(gpioSelector.currentIndex)
         }
     }

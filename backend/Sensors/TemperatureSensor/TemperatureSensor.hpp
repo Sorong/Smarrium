@@ -1,6 +1,6 @@
 #ifndef TEMPERATUR_SENSOR_H
 #define TEMPERATUR_SENSOR_H
-#include "./../Sensor.h"
+#include "backend/Sensors/Sensor.h"
 #include "./../Bcm2835Interface.hpp"
 
 

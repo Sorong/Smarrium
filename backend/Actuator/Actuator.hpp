@@ -3,14 +3,14 @@
 
 #include <QSharedPointer>
 #include "backend/Sensors/Sensor.h"
-#include "./../RCSwitch/RCSwitch.h"
+#include "backend/RCSwitch/RCSwitch.h"
 #include <string>
 
 
 class Actuator{
     
     public:
-    Actuator(std::string, int, QSharedPointer<RCSwitch>);
+    Actuator(QString, int, QSharedPointer<RCSwitch>);
 
     void switchOn();
     void switchOff();
@@ -22,8 +22,8 @@ class Actuator{
         
         bool _isActive;
         int _id;
-        std::string _commandOn;
-        std::string _commandOff;
+        QString _commandOn;
+        QString _commandOff;
         QSharedPointer<RCSwitch> _switch;
         
 

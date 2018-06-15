@@ -1,9 +1,8 @@
 #ifndef HUMIDITYSENSOR_H
 #define HUMIDITYSENSOR_H
 
-#include "./../Sensor.h"
-#include "./../Bcm2835Interface.hpp"
-#include <sys/time.h>
+#include "backend/Sensors/Sensor.h"
+#include "backend/Sensors/Bcm2835Interface.hpp"
 #include <time.h>
 
 #define BASIS_ADDR              (0x51)

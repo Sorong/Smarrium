@@ -21,8 +21,13 @@
 #define SENSOR_H
 
 
+#if _WIN32
+#include "stub/wiringPi.h"
+#include "stub/bcm2835.h"
+#else
 #include <wiringPi.h>
 #include <bcm2835.h>
+#endif
 #include <string.h>
 #include <QTimer>
 
@@ -105,7 +110,7 @@ class Sensor: QTimer {
   virtual ~Sensor() {}
 
   // These must be defined by the subclass
-  virtual void enableAutoRange(bool enabled) {};
+  virtual void enableAutoRange(bool enabled) = 0;
   virtual bool getEvent(sensors_event_t*) = 0;
   virtual void getSensor(sensor_t*) = 0;
   

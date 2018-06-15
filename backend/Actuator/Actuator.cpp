@@ -1,6 +1,6 @@
-#include "./Actuator.hpp"
+#include "Actuator.hpp"
 
-Actuator::Actuator(std::string baseAdress, int id, RCSwitch* rcSwitch){
+Actuator::Actuator(QString baseAdress, int id, QSharedPointer<RCSwitch> rcSwitch){
     this->_commandOn = baseAdress.append("0F");
     this->_commandOff = baseAdress.append("F0");
     this->_id = id;
@@ -13,6 +13,7 @@ void Actuator::switchOff(){
     // this->_isActive = false;
     this->_switch->send(5592401,24);
 }
+
 
 void Actuator::switchOn(){
     // this->_switch->sendTriState(this->_commandOn.c_str());

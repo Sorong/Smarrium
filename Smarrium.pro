@@ -20,21 +20,27 @@ SOURCES += \
     frontend/sensorfactory.cpp \
     logic/gpiolist.cpp \
     logic/gpiomap.cpp \
-    backend/Sensors/HumiditySensor/HumiditySensor.cpp \
-    backend/Sensors/LightSensor/LightSensor.cpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/UVSensor/UVSensor.cpp \
-    backend/Sensors/Bcm2835Interface.cpp \
-    backend/Actuator/Actuator.cpp \
     logic/Models/actuatorlist.cpp \
     backend/Actuator/Actuator.cpp \
     backend/RCSwitch/RCSwitch.cpp \
+    backend/Sensors/Bcm2835Interface.cpp \
+    frontend/actorfactory.cpp \
+    frontend/example.cpp \
+    frontend/sensorfactory.cpp \
+    logic/Models/actuatorlist.cpp \
+    logic/gpiolist.cpp \
+    logic/gpiomanager.cpp \
+    logic/gpiomap.cpp \
+    main.cpp \
+    stub/bcm2835.c \
+    stub/wiringPi.c
+!win32 {
+SOURCES += \
     backend/Sensors/HumiditySensor/HumiditySensor.cpp \
     backend/Sensors/LightSensor/LightSensor.cpp \
     backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/UVSensor/UVSensor.cpp \
-    backend/Sensors/Bcm2835Interface.cpp
-
+    backend/Sensors/UVSensor/UVSensor.cpp
+}
 
 RESOURCES += qml.qrc
 
@@ -45,7 +51,12 @@ QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
 
 INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
-LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835
+!win32 {
+    LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835
+}
+
+
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -60,10 +71,6 @@ HEADERS += \
     frontend/sensorfactory.h \
     logic/gpiolist.h \
     logic/gpiomap.h \
-    backend/Sensors/HumiditySensor/HumiditySensor.hpp \
-    backend/Sensors/LightSensor/LightSensor.hpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
-    backend/Sensors/UVSensor/UVSensor.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
     backend/Sensors/Sensor.h \
     logic/configmanager.h \
@@ -71,12 +78,28 @@ HEADERS += \
     logic/Models/actuatorlist.h \
     backend/Actuator/Actuator.hpp \
     backend/RCSwitch/RCSwitch.h \
+    backend/Sensors/Bcm2835Interface.hpp \
+    backend/Sensors/Sensor.h \
+    backend/Actuator/Actuator.hpp \
+    backend/RCSwitch/RCSwitch.h \
+    frontend/actorfactory.h \
+    frontend/example.h \
+    frontend/sensorfactory.h \
+    logic/Models/actuatorlist.h \
+    logic/configmanager.h \
+    logic/gpio.h \
+    logic/gpiolist.h \
+    logic/gpiomanager.h \
+    logic/gpiomap.h \
+    stub/bcm2835.h \
+    stub/wiringPi.h
+!win32 {
+SOURCES += \
     backend/Sensors/HumiditySensor/HumiditySensor.hpp \
     backend/Sensors/LightSensor/LightSensor.hpp \
     backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
-    backend/Sensors/UVSensor/UVSensor.hpp \
-    backend/Sensors/Bcm2835Interface.hpp \
-    backend/Sensors/Sensor.h
+    backend/Sensors/UVSensor/UVSensor.hpp
+}
 
 DISTFILES +=
 

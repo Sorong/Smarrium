@@ -1,4 +1,4 @@
-#include "./UVSensor.hpp"
+#include "UVSensor.hpp"
 
 UVSensor::UVSensor(uint8_t pinUVin, uint8_t pinRef,uint32_t sensorID)
 {

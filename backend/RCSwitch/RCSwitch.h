@@ -41,6 +41,8 @@
     #include <string.h> /* memcpy */
     #include <stdlib.h> /* abs */
     #include <wiringPi.h>
+#elif _WIN32
+    #include "stub/wiringPi.h"
 #else
     #include "WProgram.h"
 #endif
@@ -50,7 +52,7 @@
 
 // At least for the ATTiny X4/X5, receiving has to be disabled due to
 // missing libm depencies (udivmodhi4)
-#if defined( __AVR_ATtinyX5__ ) or defined ( __AVR_ATtinyX4__ )
+#if defined( __AVR_ATtinyX5__ ) || defined ( __AVR_ATtinyX4__ )
 #define RCSwitchDisableReceiving
 #endif
 
@@ -78,7 +80,7 @@ class RCSwitch {
     void send(unsigned long code, unsigned int length);
     void send(const char* sCodeWord);
     
-    #if not defined( RCSwitchDisableReceiving )
+    #ifndef RCSwitchDisableReceiving
     void enableReceive(int interrupt);
     void enableReceive();
     void disableReceive();
@@ -96,8 +98,8 @@ class RCSwitch {
     void disableTransmit();
     void setPulseLength(int nPulseLength);
     void setRepeatTransmit(int nRepeatTransmit);
-    #if not defined( RCSwitchDisableReceiving )
-    void setReceiveTolerance(int nPercent);
+    #ifndef RCSwitchDisableReceiving
+        void setReceiveTolerance(int nPercent);
     #endif
 
     struct HighLow {
@@ -123,7 +125,7 @@ class RCSwitch {
     char* getCodeWordD(char group, int nDevice, bool bStatus);
     void transmit(HighLow pulses);
 
-    #if not defined( RCSwitchDisableReceiving )
+    #ifndef RCSwitchDisableReceiving
     static void handleInterrupt();
     static bool receiveProtocol(const int p, unsigned int changeCount);
     int nReceiverInterrupt;
@@ -133,7 +135,7 @@ class RCSwitch {
     
     Protocol protocol;
 
-    #if not defined( RCSwitchDisableReceiving )
+    #ifndef RCSwitchDisableReceiving
     static int nReceiveTolerance;
     static unsigned long nReceivedValue;
     static unsigned int nReceivedBitlength;

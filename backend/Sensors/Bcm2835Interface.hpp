@@ -1,8 +1,11 @@
 #ifndef BCMINTERFACE_H
 #define BCMINTERFACE_H
 
-
+#if _WIN32
+#include "stub/bcm2835.h"
+#else
 #include "bcm2835.h"
+#endif
 #include <cstdio>
 #include <string.h>
 
