@@ -9,7 +9,7 @@ bool ConfigManager::registerSensor(QSharedPointer<Sensor> sensor, sensor_config*
 {
     this->_sensorList.push_back(sensor);
     this->_configList.push_back(config);
-    //connect(sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventRecived(sensors_event_t*)));
+    connect(sensor.data(), SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventRecived(sensors_event_t*)));
     return true;
 }
 
