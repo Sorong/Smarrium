@@ -73,7 +73,5 @@ void GPIOList::add(const QString item)
 {
     this->insertRows(gpioList.size(), 1);
     this->gpioList[gpioList.size() - 1] = item;
-
-    qDebug() << "add " << gpioList.at(gpioList.size() - 1);
 }
 

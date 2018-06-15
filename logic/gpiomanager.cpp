@@ -57,7 +57,6 @@ GPIOList* GPIOManager::getGPIOList(GPIOList *ptr, bool available) {
             strings.append(item);
         }
     }
-    strings.append("C++ Inputs");
     ptr->setGPIOList(strings);
     return ptr;
 }
@@ -68,5 +67,6 @@ void GPIOManager::availableChanged(QString str) {
 }
 
 void GPIOManager::unavailableChanged(QString str) {
+    emit addAvailable(str);
     qDebug() << "unavailableChanged";
 }

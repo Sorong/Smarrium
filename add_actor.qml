@@ -35,7 +35,6 @@ Item {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: 'Pin: ' + display
-                                //verticalAlignment: Text.AlignBottom
                             }
                         }
                         MouseArea {
@@ -48,7 +47,6 @@ Item {
                     color: 'lightgrey'
                     Text {
                         anchors.centerIn: parent
-                        //text: 'Hello ' + unavailablePins.at(content.currentIndex)
                         color: 'white'
                     }
                 }
@@ -58,7 +56,7 @@ Item {
     }
 
     Button {
-        id: btnNewActor
+        id: btnNewSensor
         height: 40
         text: qsTr("Weiter")
         anchors.leftMargin: 0
@@ -94,7 +92,6 @@ Item {
         model: availablePins
         anchors.left: content.left
         width: parent.width * 2/3
-        //delegate: add
     }
 
    RoundButton {
@@ -108,18 +105,4 @@ Item {
             availablePins.removeAt(gpioSelector.currentIndex)
         }
     }
-/*
-    RoundButton {
-        id: add
-        anchors.top: content.bottom
-        anchors.topMargin: 20
-        anchors.left: gpioSelector.right
-        anchors.leftMargin: 10
-        text: "+"
-        onClicked: {
-            gpioSelector.de
-        }
-    }
-*/
-
 }

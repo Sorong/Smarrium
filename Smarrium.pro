@@ -44,6 +44,4 @@ HEADERS += \
     logic/gpiolist.h \
     logic/gpiomap.h
 
-DISTFILES += \
-    backend/.dummy \
-    logic/.dummy
+DISTFILES +=
