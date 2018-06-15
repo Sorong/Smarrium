@@ -69,6 +69,7 @@ Item {
             stackView.push("add_sensor.qml")
         }
     }
+
     Button {
         id: btnBack
         height: 40
