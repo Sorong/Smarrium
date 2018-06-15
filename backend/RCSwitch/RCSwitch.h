@@ -44,7 +44,7 @@
 #elif _WIN32
     #include "stub/wiringPi.h"
 #else
-    #include "WProgram.h"
+    //#include "WProgram.h"
 #endif
 
 #include <stdint.h>

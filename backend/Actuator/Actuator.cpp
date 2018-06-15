@@ -11,14 +11,14 @@ Actuator::Actuator(QString baseAdress, int id, QSharedPointer<RCSwitch> rcSwitch
 void Actuator::switchOff(){
     // this->_switch->sendTriState(this->_commandOff.c_str());
     // this->_isActive = false;
-    this->_switch->send(5592401,24);
+    //this->_switch->send(5592401,24);
 }
 
 
 void Actuator::switchOn(){
     // this->_switch->sendTriState(this->_commandOn.c_str());
     // this->_isActive = true;
-    this->_switch->send(5592406,24);
+    //this->_switch->send(5592406,24);
 }
 
 int Actuator::getId(){

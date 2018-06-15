@@ -4,6 +4,7 @@
 #include <QSharedPointer>
 #include "backend/Sensors/Sensor.h"
 #include "backend/RCSwitch/RCSwitch.h"
+
 #include <string>
 
 
