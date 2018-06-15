@@ -2,7 +2,7 @@
 #define GPIO_H
 
 enum GPIO {
-    GPIO_0, GPIO_1, GPIO_2
+    GPIO_0 = 0, GPIO_1 = 1, GPIO_2 = 2
 };
 
 

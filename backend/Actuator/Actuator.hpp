@@ -1,15 +1,16 @@
 #ifndef ACTUATOR_H
 #define ACTUATOR_H
 
-
-#include "./../Sensor.h"
+#include <QSharedPointer>
+#include "backend/Sensors/Sensor.h"
 #include "./../RCSwitch/RCSwitch.h"
 #include <string>
+
 
 class Actuator{
     
     public:
-    Actuator(std::string, int, RCSwitch*);
+    Actuator(std::string, int, QSharedPointer<RCSwitch>);
 
     void switchOn();
     void switchOff();
@@ -23,7 +24,7 @@ class Actuator{
         int _id;
         std::string _commandOn;
         std::string _commandOff;
-        RCSwitch* _switch;
+        QSharedPointer<RCSwitch> _switch;
         
 
 };
