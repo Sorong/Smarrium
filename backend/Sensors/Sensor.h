@@ -24,6 +24,7 @@
 #include <wiringPi.h>
 #include <bcm2835.h>
 #include <string.h>
+#include <QTimer>
 
 /* Intentionally modeled after sensors.h in the Android API:
  * https://github.com/android/platform_hardware_libhardware/blob/master/include/hardware/sensors.h */
@@ -97,7 +98,7 @@ typedef struct
     int32_t  min_delay;                       /**< min delay in microseconds between events. zero = not a constant rate */
 } sensor_t;
 
-class Sensor {
+class Sensor: QTimer {
  public:
   // Constructor(s)
   Sensor() {}
