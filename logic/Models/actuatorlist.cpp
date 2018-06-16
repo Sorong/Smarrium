@@ -33,7 +33,7 @@ QVariant ActuatorList::data(const QModelIndex &index, int role) const
         return QVariant();
 
     // FIXME: Implement me!
-    return this->actuators.at(index.row());
+    return QVariant(this->actuators.at(index.row()));
 }
 
 bool ActuatorList::setData(const QModelIndex &index, const QVariant &value, int role)

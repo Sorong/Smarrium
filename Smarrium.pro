@@ -24,14 +24,6 @@ SOURCES += \
     backend/Actuator/Actuator.cpp \
     backend/RCSwitch/RCSwitch.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
-    frontend/actorfactory.cpp \
-    frontend/example.cpp \
-    frontend/sensorfactory.cpp \
-    logic/Models/actuatorlist.cpp \
-    logic/gpiolist.cpp \
-    logic/gpiomanager.cpp \
-    logic/gpiomap.cpp \
-    main.cpp \
     stub/bcm2835.c \
     stub/wiringPi.c \
     Sensor.cpp \
@@ -98,7 +90,7 @@ HEADERS += \
     stub/bcm2835.h \
     stub/wiringPi.h
 !win32 {
-SOURCES += \
+HEADERS += \
     backend/Sensors/HumiditySensor/HumiditySensor.hpp \
     backend/Sensors/LightSensor/LightSensor.hpp \
     backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
