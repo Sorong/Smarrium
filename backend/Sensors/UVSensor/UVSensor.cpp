@@ -1,13 +1,11 @@
 #include "./UVSensor.hpp"
 
-UVSensor::UVSensor(int intervall, uint8_t pinUVin, uint8_t pinRef,uint32_t sensorID): Sensor(intervall)
+UVSensor::UVSensor(uint8_t chUVin, uint8_t chRef, uint32_t sensorID, ADC* adc)
 {
-    _pinUVin = pinUVin;
-    _pinRef = pinRef;
+    _pinUVin = chUVin;
+    _pinRef = chRef;
     _sensorID = sensorID;
-    pinMode(pinUVin, INPUT);
-    pinMode(pinRef, INPUT);
-
+    _adc = adc;
 }
 
 UVSensor::~UVSensor()
@@ -34,7 +32,7 @@ float UVSensor::averageAnalogRead(uint8_t pinToRead)
 
   for(int x = 0 ; x < numberOfReadings ; x++)
   {
-      runningValue += analogRead(pinToRead);
+      runningValue += _adc->myAnalogRead(pinToRead);
   }
     
   runningValue /= numberOfReadings;
@@ -54,7 +52,7 @@ bool UVSensor::getEvent(sensors_event_t* event)
 
     event->version   = sizeof(sensors_event_t);
     event->sensor_id = _sensorID;
-    event->type      = SENSOR_TYPE_LIGHT;
+    event->type      = SENSOR_TYPE_UV;
     event->timestamp = bcm2835_st_read();
 
     /* Calculate the actual lux value */
@@ -70,14 +68,13 @@ bool UVSensor::getEvent(sensors_event_t* event)
 void UVSensor::getSensor(sensor_t* sensor){
     memset(sensor, 0, sizeof(sensor_t));
 
-    /* Insert the sensor name in the fixed length char array */
     strncpy (sensor->name, "ML8511", sizeof(sensor->name) - 1);
     sensor->name[sizeof(sensor->name)- 1] = 0;
     sensor->version     = 1;
     sensor->sensor_id   = _sensorID;
     sensor->type        = SENSOR_TYPE_UV;
     sensor->min_delay   = 0;
-    sensor->max_value   = 17000.0;  /* Based on trial and error ... confirm! */
+    sensor->max_value   = 17000.0;
     sensor->min_value   = 1.0;
     sensor->resolution  = 1.0;
 }

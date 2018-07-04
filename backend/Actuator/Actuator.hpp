@@ -1,10 +1,13 @@
 #ifndef ACTUATOR_H
 #define ACTUATOR_H
 
+#define OFF_SUFFIX "F0"
+#define ON_SUFFIX "0F"
 
-#include "./backend/Sensors/Sensor.h"
+#include "./../Sensor.h"
 #include "./../RCSwitch/RCSwitch.h"
 #include <string>
+#include <stdio.h>
 
 class Actuator{
     

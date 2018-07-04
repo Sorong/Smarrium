@@ -1,59 +1,7 @@
-/*!
- * @file LightSensor
- r.cpp
- *
- * @mainpage Adafruit TSL2561 Light/Lux sensor driver
- *
- * @section intro_sec Introduction
- *
- * This is the documentation for Adafruit's TSL2561 driver for the
- * Arduino platform.  It is designed specifically to work with the
- * Adafruit TSL2561 breakout: http://www.adafruit.com/products/439
- *
- * These sensors use I2C to communicate, 2 pins (SCL+SDA) are required
- * to interface with the breakout.
- *
- * Adafruit invests time and resources providing this open source code,
- * please support Adafruit and open-source hardware by purchasing
- * products from Adafruit!
- *
- * @section dependencies Dependencies
- *
- * This library depends on <a href="https://github.com/adafruit/Adafruit_Sensor">
- * Adafruit_Sensor</a> being present on your system. Please make sure you have
- * installed the latest version before using this library.
- *
- * @section author Author
- *
- * Written by Kevin "KTOWN" Townsend for Adafruit Industries.
- *
- * @section license License
- *
- * BSD license, all text here must be included in any redistribution.
- *
- *   @section  HISTORY
- *
- *   v2.0 - Rewrote driver for Adafruit_Sensor and Auto-Gain support, and
- *          added lux clipping check (returns 0 lux on sensor saturation)
- *   v1.0 - First release (previously TSL2561)
-*/
-/**************************************************************************/
 
 #include "LightSensor.hpp"
 
-/*========================================================================*/
-/*                            CONSTRUCTORS                                */
-/*========================================================================*/
-
-/**************************************************************************/
-/*!
-    @brief Constructor
-    @param addr The I2C address this chip can be found on, 0x29, 0x39 or 0x49
-    @param sensorID An optional ID that will be placed in sensor events to help
-                    keep track if you have many sensors in use
-*/
-/**************************************************************************/
-LightSensor::LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c): Sensor(intervall)
+LightSensor::LightSensor(uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c)
 {
   _addr = addr;
   _i2c = i2c;
@@ -64,47 +12,7 @@ LightSensor::LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835I
   _tsl2561SensorID = sensorID;
 }
 
-/*========================================================================*/
-/*                           PUBLIC FUNCTIONS                             */
-/*========================================================================*/
 
-/**************************************************************************/
-/*!
-    @brief Initializes I2C and configures the sensor with default Wire I2C
-           (call this function before doing anything else)
-    @returns True if sensor is found and initialized, false otherwise.
-*/
-/**************************************************************************/
-// bool LightSensor::begin()
-// {
-//   _i2c = &Wire;
-//   _i2c->begin();
-//   return init();
-// }
-
-/**************************************************************************/
-/*!
-    @brief Initializes I2C and configures the sensor with provided I2C device
-           (call this function before doing anything else)
-    @param theWire A pointer to any I2C interface (e.g. &Wire1)
-    @returns True if sensor is found and initialized, false otherwise.
-*/
-/**************************************************************************/
-// bool LightSensor::begin(Bcm2835Interface *theWire)
-// {
-//   _i2c = theWire;
-//   _i2c-> begin();
-//   return init();
-// }
-
-/**************************************************************************/
-/*!
-    @brief  Initializes I2C connection and settings. 
-    Attempts to determine if the sensor is contactable, then sets up a default
-    integration time and gain. Then powers down the chip.
-    @returns True if sensor is found and initialized, false otherwise.
-*/
-/**************************************************************************/
 bool LightSensor::init()
 {
   /* Make sure we're actually connected */

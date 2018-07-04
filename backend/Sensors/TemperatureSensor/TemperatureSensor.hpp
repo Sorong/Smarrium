@@ -21,7 +21,7 @@
 class TemperatureSensor : Sensor{
 
     public:
-    TemperatureSensor(uint8_t pin, int32_t sensorID, Bcm2835Interface *wire);
+    TemperatureSensor(uint8_t pin, int32_t sensorID, Bcm2835Interface* wire);
     ~TemperatureSensor();
 
     void enableAutoRange(bool enabled);

@@ -146,7 +146,7 @@ tsl2561Gain_t;
 /**************************************************************************/
 class LightSensor: Sensor {
  public:
-  LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c);
+  LightSensor(uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c);
   //bool begin(void);
   bool begin(Bcm2835Interface *interface);
   bool init();
