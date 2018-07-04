@@ -58,7 +58,9 @@ typedef enum
   SENSOR_TYPE_VOLTAGE               = (15),
   SENSOR_TYPE_CURRENT               = (16),
   SENSOR_TYPE_COLOR                 = (17),
-  SENSOR_TYPE_UV                    = (18)
+  SENSOR_TYPE_UV                    = (18),
+  SENSOR_TYPE_IRTEMPERATURE         = (19),
+  SENSOR_TYPE_MOISTURE              = (20)
 } sensors_type_t;
 
 /* Sensor event (36 bytes) */
@@ -81,6 +83,9 @@ typedef struct
         float           current;              /**< current in milliamps (mA) */
         float           voltage;              /**< voltage in volts (V) */
         float           uv;                   /**< UV light value */
+        float           irTemperature;
+        float           moisture;
+
     };
 } sensors_event_t;
 

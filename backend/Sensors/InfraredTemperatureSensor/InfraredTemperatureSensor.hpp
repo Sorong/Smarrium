@@ -43,7 +43,7 @@ class IRTemperatureSensor : Sensor
 public:
 	// Default constructor, does very little besides setting class variable
 	// initial values.
-	IRTemperatureSensor(uint8_t address, int id, Bcm2835Interface*);
+    IRTemperatureSensor(int intervall, uint8_t address, int id, Bcm2835Interface*);
 
 	void enableAutoRange(bool enabled);
 

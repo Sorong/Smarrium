@@ -1,6 +1,7 @@
 #include "./MoistureSensor.hpp"
 
-MoistureSensor::MoistureSensor(uint8_t channel, int id, ADC* ADC){
+MoistureSensor::MoistureSensor(int intervall, uint8_t channel, int id, ADC* ADC): Sensor(intervall)
+{
     this->_id = id;
     this->_channel = channel;
     this->_ADC = ADC;

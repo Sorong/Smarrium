@@ -1,6 +1,7 @@
 #include "TemperatureSensor.hpp"
 
-TemperatureSensor::TemperatureSensor(uint8_t pin, int32_t sensorID, Bcm2835Interface* wire){
+TemperatureSensor::TemperatureSensor(int intervall, uint8_t pin, int32_t sensorID, Bcm2835Interface* wire): Sensor(intervall)
+{
     this->_pin = pin;
     this->_sensorID = sensorID;
     this->_wire = wire;

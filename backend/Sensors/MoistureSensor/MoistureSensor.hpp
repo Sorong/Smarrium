@@ -9,7 +9,7 @@
 class MoistureSensor: Sensor{
 
 public:
-    MoistureSensor(uint8_t channel, int id, ADC*);
+    MoistureSensor(int intervall, uint8_t channel, int id, ADC*);
 
     bool getEvent(sensors_event_t*);
     void getSensor(sensor_t*);

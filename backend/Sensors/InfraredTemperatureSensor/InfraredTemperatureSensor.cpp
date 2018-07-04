@@ -1,6 +1,6 @@
 #include "InfraredTemperatureSensor.hpp"
 
-IRTemperatureSensor::IRTemperatureSensor(uint8_t address, int id, Bcm2835Interface* wire)
+IRTemperatureSensor::IRTemperatureSensor(int intervall, uint8_t address, int id, Bcm2835Interface* wire) : Sensor(intervall)
 {
 	// Set initial values for all private member variables
 	this->_deviceAddress = address;

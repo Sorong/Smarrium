@@ -1,6 +1,6 @@
 #include "HumiditySensor.hpp"
 
-HumiditySensor::HumiditySensor(uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire)
+HumiditySensor::HumiditySensor(int intervall, uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire): Sensor(intervall)
 {
     _pin = pin;
     _sensorID = sensorID;

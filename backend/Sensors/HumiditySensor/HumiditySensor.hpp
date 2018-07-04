@@ -18,7 +18,7 @@
 class HumiditySensor : Sensor{
 
     public:
-    HumiditySensor(uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire);
+    HumiditySensor(int intervall, uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire);
     ~HumiditySensor();
 
     void enableAutoRange(bool enabled);

@@ -4,7 +4,7 @@
 #define OFF_SUFFIX "F0"
 #define ON_SUFFIX "0F"
 
-#include "./../Sensor.h"
+#include "./../Sensors/Sensor.h"
 #include "./../RCSwitch/RCSwitch.h"
 #include <string>
 #include <stdio.h>

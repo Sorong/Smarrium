@@ -1,6 +1,6 @@
 #include "./UVSensor.hpp"
 
-UVSensor::UVSensor(uint8_t chUVin, uint8_t chRef, uint32_t sensorID, ADC* adc)
+UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, uint32_t sensorID, ADC* adc): Sensor(intervall)
 {
     _pinUVin = chUVin;
     _pinRef = chRef;
