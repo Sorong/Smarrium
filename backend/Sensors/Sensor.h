@@ -109,9 +109,6 @@ typedef struct{
     int     sensorId;
     float   minValue;
     float   maxValue;
-    //int     startTime;
-    //int     stopTime;
-
 }sensor_config;
 
 class Sensor: public QTimer {
@@ -122,9 +119,9 @@ public:
   virtual ~Sensor() {}
 
   // These must be defined by the subclass
-  virtual void enableAutoRange(bool enabled) {};
+  
   virtual bool getEvent(sensors_event_t*) = 0;
-  virtual void getSensor(sensor_t*) = 0;
+  //virtual void getSensor(sensor_t*) = 0;
   
  public slots:
   void intervallElapsed();

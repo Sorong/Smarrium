@@ -1,18 +1,19 @@
 #ifndef MOISTRESENSOR_H
 #define MOISTRESENSOR_H
 
-#include "../Sensor.h"
+#include "../../Sensor.h"
 #include "./../ADC.hpp"
 #include "iostream"
+#include "./..AnalogSensor.hpp"
 #include <bcm2835.h>
 
-class MoistureSensor: Sensor{
+class MoistureSensor: AnalogSensor{
 
 public:
     MoistureSensor(int intervall, uint8_t channel, int id, ADC*);
 
     bool getEvent(sensors_event_t*);
-    void getSensor(sensor_t*);
+    void getSensor(sensor_analog_t*);
 
     float readMoisture();
 
