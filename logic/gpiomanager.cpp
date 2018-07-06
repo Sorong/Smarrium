@@ -5,9 +5,7 @@
 
 GPIOManager::GPIOManager() :
     available({
-              GPIO::GPIO_0,
-              GPIO::GPIO_1,
-              GPIO::GPIO_2
+              GPIO::GPIO_7
               })
 {
 

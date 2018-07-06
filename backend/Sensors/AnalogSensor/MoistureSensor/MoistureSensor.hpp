@@ -2,12 +2,12 @@
 #define MOISTRESENSOR_H
 
 #include "../../Sensor.h"
-#include "./../ADC.hpp"
+#include "./../../ADC.hpp"
 #include "iostream"
-#include "./..AnalogSensor.hpp"
+#include "./../AnalogSensor.hpp"
 #include <bcm2835.h>
 
-class MoistureSensor: AnalogSensor{
+class MoistureSensor: AnalogSensor, Sensor{
 
 public:
     MoistureSensor(int intervall, uint8_t channel, int id, ADC*);

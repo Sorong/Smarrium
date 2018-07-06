@@ -2,8 +2,9 @@
 #define INFRAREDTEMPERATURESESNOR_H
 
 
-#include "./../Bcm2835Interface.hpp"
-#include "./../Sensor.h"
+#include "./../../Bcm2835Interface.hpp"
+#include "./../../Sensor.h"
+#include "./../I2CSensor.hpp"
 
 //////////////////////////////////
 // MLX90614 Default I2C Address //
@@ -38,7 +39,7 @@ typedef enum temperature_units {
 	TEMP_F
 };
 
-class IRTemperatureSensor : Sensor
+class IRTemperatureSensor : I2CSensor, Sensor
 {
 public:
 	// Default constructor, does very little besides setting class variable
@@ -49,7 +50,7 @@ public:
 
   	bool getEvent(sensors_event_t*);
 
- 	void getSensor(sensor_t*);
+    void getSensor(sensor_I2C_t*);
 	
 
 	// read() pulls the latest ambient and object temperatures from the 

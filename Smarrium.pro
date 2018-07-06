@@ -20,18 +20,20 @@ SOURCES += \
     frontend/sensorfactory.cpp \
     logic/gpiolist.cpp \
     logic/gpiomap.cpp \
-    backend/Sensors/HumiditySensor/HumiditySensor.cpp \
-    backend/Sensors/LightSensor/LightSensor.cpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/UVSensor/UVSensor.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
     backend/Sensors/ADC.cpp \
     backend/Actuator/Actuator.cpp \
     Sensor.cpp \
     logic/configmanager.cpp \
     backend/RCSwitch/RCSwitch.cpp \
-    backend/Sensors/InfraredTemperatureSensor/InfraredTemperatureSensor.cpp \
-    backend/Sensors/MoistureSensor/MoistureSensor.cpp
+    backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.cpp \
+    backend/Sensors/AnalogSensor/UVSensor/UVSensor.cpp \
+    backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.cpp \
+    backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.cpp \
+    backend/Sensors/DigitalSensor/DigitalSensor.cpp \
+    backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.cpp \
+    backend/Sensors/I2CSensor/LightSensor/LightSensor.cpp \
+    backend/Sensors/I2CSensor/I2CSensor.cpp
 
 
 RESOURCES += qml.qrc
@@ -59,10 +61,6 @@ HEADERS += \
     frontend/sensorfactory.h \
     logic/gpiolist.h \
     logic/gpiomap.h \
-    backend/Sensors/HumiditySensor/HumiditySensor.hpp \
-    backend/Sensors/LightSensor/LightSensor.hpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
-    backend/Sensors/UVSensor/UVSensor.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
     backend/Sensors/ADC.hpp \
     backend/Sensors/Sensor.h \
@@ -70,8 +68,15 @@ HEADERS += \
     logic/configmanager.h \
     backend/RCSwitch/RCSwitch.h \
     backend/Actuator/Actuator.hpp \
-    backend/Sensors/InfraredTemperatureSensor/InfraredTemperatureSensor.hpp \
-    backend/Sensors/MoistureSensor/MoistureSensor.hpp
+    backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.hpp \
+    backend/Sensors/AnalogSensor/UVSensor/UVSensor.hpp \
+    backend/Sensors/AnalogSensor/AnalogSensor.hpp \
+    backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.hpp \
+    backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.hpp \
+    backend/Sensors/DigitalSensor/DigitalSensor.hpp \
+    backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.hpp \
+    backend/Sensors/I2CSensor/LightSensor/LightSensor.hpp \
+    backend/Sensors/I2CSensor/I2CSensor.hpp
 
 DISTFILES += \
     backend/.dummy \

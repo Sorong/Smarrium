@@ -1,19 +1,19 @@
 #ifndef UVSENSOR_H
 #define UVSENSOR_H
 
-#include "./../Sensor.h"
-#include "./../ADC.hpp"
+#include "./../../Sensor.h"
+#include "./../../ADC.hpp"
+#include "./../AnalogSensor.hpp"
 
-class UVSensor: Sensor{
+class UVSensor: AnalogSensor, Sensor{
 
     public:
 
     UVSensor(int intervall, uint8_t pin, uint8_t pinRef, uint32_t sensorID, ADC* adc);
     ~UVSensor();
 
-    void enableAutoRange(bool enabled);
     bool getEvent(sensors_event_t*);
-    void getSensor(sensor_t*);
+    void getSensor(sensor_analog_t*);
     float calculateUV();
 
     private:

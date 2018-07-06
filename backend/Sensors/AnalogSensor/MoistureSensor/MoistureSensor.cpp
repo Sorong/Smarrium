@@ -18,9 +18,9 @@ bool MoistureSensor::getEvent(sensors_event_t* event){
     return true;
 }
 
-void MoistureSensor::getSensor(sensor_t* sensor){
+void MoistureSensor::getSensor(sensor_analog_t* sensor){
     /* Clear the sensor_t object */
-  memset(sensor, 0, sizeof(sensor_t));
+  memset(sensor, 0, sizeof(sensor_analog_t));
 
   /* Insert the sensor name in the fixed length char array */
   strncpy (sensor->name, "MoistSensor", sizeof(sensor->name) - 1);
@@ -28,10 +28,7 @@ void MoistureSensor::getSensor(sensor_t* sensor){
   sensor->version     = 1;
   sensor->sensor_id   = _id;
   sensor->type        = SENSOR_TYPE_MOISTURE;
-  sensor->min_delay   = 0;
-  sensor->max_value   = 17000.0;  /* Based on trial and error ... confirm! */
-  sensor->min_value   = 1.0;
-  sensor->resolution  = 1.0;
+  sensor->channel     = _channel;
 }
 
 

@@ -9,13 +9,13 @@ typedef struct
     int32_t  channel;                         /**< Connectet Channel on MSP3008 ADC */
 } sensor_analog_t;
 
-class AnalogSensor : Sensor{
+class AnalogSensor{
 
 public: 
-    AnalogSensor(){};
-    ~AnalogSensor(){};
+    AnalogSensor(){}
+    ~AnalogSensor(){}
 
     virtual int getChannel() = 0;
     virtual void setChannel(int) = 0;
     virtual void getAnalogSensor(sensor_analog_t*) = 0;
-}
+};

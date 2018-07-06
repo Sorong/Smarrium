@@ -407,10 +407,10 @@ bool LightSensor::getEvent(sensors_event_t *event)
                    details about the TSL2561 and its capabilities
 */
 /**************************************************************************/
-void LightSensor::getSensor(sensor_t *sensor)
+void LightSensor::getSensor(sensor_I2C_t *sensor)
 {
   /* Clear the sensor_t object */
-  memset(sensor, 0, sizeof(sensor_t));
+  memset(sensor, 0, sizeof(sensor_I2C_t));
 
   /* Insert the sensor name in the fixed length char array */
   strncpy (sensor->name, "TSL2561", sizeof(sensor->name) - 1);
@@ -418,69 +418,7 @@ void LightSensor::getSensor(sensor_t *sensor)
   sensor->version     = 1;
   sensor->sensor_id   = _tsl2561SensorID;
   sensor->type        = SENSOR_TYPE_LIGHT;
-  sensor->min_delay   = 0;
-  sensor->max_value   = 17000.0;  /* Based on trial and error ... confirm! */
-  sensor->min_value   = 1.0;
-  sensor->resolution  = 1.0;
+  sensor->adress      = _addr;
 }
 
 
-
-/*========================================================================*/
-/*                          PRIVATE FUNCTIONS                             */
-/*========================================================================*/
-
-/**************************************************************************/
-/*!
-    @brief  Writes a register and an 8 bit value over I2C
-    @param  reg I2C register to write the value to
-    @param  value The 8-bit value we're writing to the register
-*/
-/**************************************************************************/
-// void LightSensor::write8 (uint8_t reg, uint8_t value)
-// {
-//   _i2c->beginTransmission(_addr);
-//   _i2c->write(reg);
-//   _i2c->write(value);
-//   _i2c->endTransmission();
-// }
-
-// /**************************************************************************/
-// /*!
-//     @brief  Reads an 8 bit value over I2C
-//     @param  reg I2C register to read from
-//     @returns 8-bit value containing single byte data read
-// */
-// /**************************************************************************/
-// uint8_t LightSensor::read8(uint8_t reg)
-// {
-//   _i2c->beginTransmission(_addr);
-//   _i2c->write(reg);
-//   _i2c->endTransmission();
-
-//   _i2c->requestFrom(_addr, 1);
-//   return _i2c-> read();
-// }
-
-// /**************************************************************************/
-// /*!
-//     @brief  Reads a 16 bit values over I2C
-//     @param  reg I2C register to read from
-//     @returns 16-bit value containing 2-byte data read
-// */
-// /**************************************************************************/
-// uint16_t LightSensor::read16(uint8_t reg)
-// {
-//   uint16_t x, t;
-
-//   _i2c->beginTransmission(_addr);
-//   _i2c->write(reg);
-//   _i2c->endTransmission();
-
-//   _i2c->requestFrom(_addr, 2);
-//   t = _i2c->read();
-//   x = _i2c->read();
-//   x <<= 8;
-//   x |= t;
-//   return x;
-// }

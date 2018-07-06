@@ -1,7 +1,8 @@
 #ifndef TEMPERATUR_SENSOR_H
 #define TEMPERATUR_SENSOR_H
-#include "./../Sensor.h"
-#include "./../Bcm2835Interface.hpp"
+#include "./../../Sensor.h"
+#include "./../../Bcm2835Interface.hpp"
+#include "./../DigitalSensor.hpp"
 
 
 #define SEARCH_ROM      (0xF0)
@@ -18,15 +19,14 @@
 
 
 
-class TemperatureSensor : Sensor{
+class TemperatureSensor : DigitalSensor, Sensor{
 
     public:
     TemperatureSensor(int intervall, uint8_t pin, int32_t sensorID, Bcm2835Interface* wire);
     ~TemperatureSensor();
 
-    void enableAutoRange(bool enabled);
     bool getEvent(sensors_event_t*);
-    void getSensor(sensor_t*);
+    void getSensor(sensor_digital_t*);
     float readTemperature();
 
 

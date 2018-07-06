@@ -9,13 +9,13 @@ typedef struct
     int8_t  adress;                         /**< Connectet Channel on MSP3008 ADC */
 } sensor_I2C_t;
 
-class I2CSensor : Sensor{
+class I2CSensor{
 
 public: 
-    I2CSensor(){};
-    ~I2CSensor(){};
+    I2CSensor(){}
+    ~I2CSensor(){}
 
     virtual int getAdress() = 0;
     virtual void setadress(int) = 0;
-    virtual void getI2CSensor(sensor_analog_t*) = 0;
-}
+    virtual void getI2CSensor(sensor_I2C_t*) = 0;
+};

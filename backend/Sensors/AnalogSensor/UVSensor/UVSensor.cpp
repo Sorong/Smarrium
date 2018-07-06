@@ -65,20 +65,14 @@ bool UVSensor::getEvent(sensors_event_t* event)
 }
 
 
-void UVSensor::getSensor(sensor_t* sensor){
-    memset(sensor, 0, sizeof(sensor_t));
+void UVSensor::getSensor(sensor_analog_t *sensor){
+    memset(sensor, 0, sizeof(sensor_analog_t));
 
     strncpy (sensor->name, "ML8511", sizeof(sensor->name) - 1);
     sensor->name[sizeof(sensor->name)- 1] = 0;
     sensor->version     = 1;
     sensor->sensor_id   = _sensorID;
     sensor->type        = SENSOR_TYPE_UV;
-    sensor->min_delay   = 0;
-    sensor->max_value   = 17000.0;
-    sensor->min_value   = 1.0;
-    sensor->resolution  = 1.0;
+    sensor->channel     = _pinUVin;
 }
 
-void UVSensor::enableAutoRange(bool enabled){
-
-}

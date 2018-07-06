@@ -2,8 +2,9 @@
 #define LIGHTSENSOR_H
 
 
-#include "./../Bcm2835Interface.hpp"
-#include "./../Sensor.h"
+#include "./../../Bcm2835Interface.hpp"
+#include "./../../Sensor.h"
+#include "./../I2CSensor.hpp"
 
 #define TSL2561_VISIBLE 2                   ///< channel 0 - channel 1
 #define TSL2561_INFRARED 1                  ///< channel 1
@@ -144,7 +145,7 @@ tsl2561Gain_t;
     @brief  Class that stores state and functions for interacting with TSL2561 Light Sensor
 */
 /**************************************************************************/
-class LightSensor: Sensor {
+class LightSensor: I2CSensor, Sensor {
  public:
   LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c);
   //bool begin(void);
@@ -160,7 +161,7 @@ class LightSensor: Sensor {
   
   /* Unified Sensor API Functions */  
   bool getEvent(sensors_event_t*);
-  void getSensor(sensor_t*);
+  void getSensor(sensor_I2C_t*);
 
  private:
   Bcm2835Interface *_i2c;

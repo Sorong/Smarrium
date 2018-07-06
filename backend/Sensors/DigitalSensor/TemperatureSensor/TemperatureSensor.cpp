@@ -28,20 +28,17 @@ bool TemperatureSensor::getEvent(sensors_event_t* event){
 
 }
 
-void TemperatureSensor::getSensor(sensor_t *sensor)
+void TemperatureSensor::getSensor(sensor_digital_t *sensor)
 {
 
-  memset(sensor, 0, sizeof(sensor_t));
+  memset(sensor, 0, sizeof(sensor_digital_t));
 
   strncpy (sensor->name, "DS18B20", sizeof(sensor->name) - 1);
   sensor->name[sizeof(sensor->name)- 1] = 0;
   sensor->version     = 1;
   sensor->sensor_id   = _sensorID;
   sensor->type        = SENSOR_TYPE_TEMPERATURE;
-  sensor->min_delay   = 0;
-  sensor->max_value   = 17000.0;
-  sensor->min_value   = 1.0;
-  sensor->resolution  = 1.0;
+  sensor->pin         = _pin;
 }
 
 float TemperatureSensor::readTemperature(){
@@ -78,9 +75,5 @@ void TemperatureSensor::convert(){
             break;
         }
     }
-}
-
-void TemperatureSensor::enableAutoRange(bool){
-
 }
 

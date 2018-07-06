@@ -1,8 +1,9 @@
 #ifndef HUMIDITYSENSOR_H
 #define HUMIDITYSENSOR_H
 
-#include "./../Sensor.h"
-#include "./../Bcm2835Interface.hpp"
+#include "./../../Sensor.h"
+#include "./../../Bcm2835Interface.hpp"
+#include "./../DigitalSensor.hpp"
 #include <sys/time.h>
 #include <time.h>
 
@@ -15,15 +16,15 @@
 
 
 
-class HumiditySensor : Sensor{
+class HumiditySensor : DigitalSensor, Sensor
+{
 
     public:
     HumiditySensor(int intervall, uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire);
     ~HumiditySensor();
 
-    void enableAutoRange(bool enabled);
     bool getEvent(sensors_event_t*);
-    void getSensor(sensor_t*);
+    void getSensor(sensor_digital_t*);
     float calculateHumidity();
 
     private:
