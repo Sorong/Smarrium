@@ -1,8 +1,8 @@
 #include "configmanager.h"
 
-ConfigManager::ConfigManager(QSharedPointer<Actuator> acturator, QObject *parent) : QObject(parent)
+ConfigManager::ConfigManager(QSharedPointer<Actuator> actuator, QObject *parent) : QObject(parent)
 {
-    this->_actuator = acturator;
+    this->_actuator = actuator;
 }
 
 bool ConfigManager::registerSensor(QSharedPointer<Sensor> sensor, sensor_config* config)

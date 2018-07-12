@@ -20,8 +20,8 @@ GPIOList* GPIOManager::getAvailable(GPIOList *ptr) {
     if(!ptr) {
         return nullptr;
     }
-    connect(ptr, SIGNAL(removed(QString)), this, SLOT(availableChanged(QString)));
-    connect(this, SIGNAL(addAvailable(QString)), ptr, SLOT(add(QString)));
+    connect(ptr, &GPIOList::removed, this, &GPIOManager::availableChanged);
+    connect(this, &GPIOManager::addAvailable, ptr, &GPIOList::add);
     return getGPIOList(ptr, true);
 }
 
@@ -29,8 +29,8 @@ GPIOList* GPIOManager::getUnvailable(GPIOList *ptr) {
     if(!ptr) {
         return nullptr;
     }
-    connect(ptr, SIGNAL(removed(QString)), this, SLOT(unavailableChanged(QString)));
-    connect(this, SIGNAL(addUnavailable(QString)), ptr, SLOT(add(QString)));
+    connect(ptr,  &GPIOList::removed, this, &GPIOManager::unavailableChanged);
+    connect(this, &GPIOManager::addUnavailable, ptr,  &GPIOList::add);
     return getGPIOList(ptr, false);
 }
 
@@ -55,16 +55,15 @@ GPIOList* GPIOManager::getGPIOList(GPIOList *ptr, bool available) {
             strings.append(item);
         }
     }
-    strings.append("C++ Inputs");
     ptr->setGPIOList(strings);
     return ptr;
 }
 
 void GPIOManager::availableChanged(QString str) {
     emit addUnavailable(str);
-    qDebug() << "availableChanged";
+    qDebug() << "availableChanged" << str;
 }
 
 void GPIOManager::unavailableChanged(QString str) {
-    qDebug() << "unavailableChanged";
+    qDebug() << "unavailableChanged" << str;
 }

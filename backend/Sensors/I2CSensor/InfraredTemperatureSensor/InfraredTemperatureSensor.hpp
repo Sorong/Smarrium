@@ -37,7 +37,7 @@ typedef enum temperature_units {
 	TEMP_K,
 	TEMP_C,
 	TEMP_F
-};
+} temperature_units;
 
 class IRTemperatureSensor : I2CSensor, Sensor
 {

@@ -13,18 +13,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp \
-    frontend/example.cpp \
-    logic/gpiomanager.cpp \
-    frontend/actorfactory.cpp \
-    frontend/sensorfactory.cpp \
-    logic/gpiolist.cpp \
-    logic/gpiomap.cpp \
-    backend/Sensors/Bcm2835Interface.cpp \
-    backend/Sensors/ADC.cpp \
     backend/Actuator/Actuator.cpp \
-    Sensor.cpp \
-    logic/configmanager.cpp \
     backend/RCSwitch/RCSwitch.cpp \
     backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.cpp \
     backend/Sensors/AnalogSensor/UVSensor/UVSensor.cpp \
@@ -33,8 +22,18 @@ SOURCES += \
     backend/Sensors/DigitalSensor/DigitalSensor.cpp \
     backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.cpp \
     backend/Sensors/I2CSensor/LightSensor/LightSensor.cpp \
-    backend/Sensors/I2CSensor/I2CSensor.cpp
-
+    backend/Sensors/I2CSensor/I2CSensor.cpp \
+    backend/Sensors/ADC.cpp \
+    backend/Sensors/Bcm2835Interface.cpp \
+    backend/Sensors/Sensor.cpp \
+    frontend/actorfactory.cpp \
+    frontend/sensorfactory.cpp \
+    logic/models/actuatorlist.cpp \
+    logic/configmanager.cpp \
+    logic/gpiolist.cpp \
+    logic/gpiomanager.cpp \
+    logic/gpiomap.cpp \
+    main.cpp
 
 RESOURCES += qml.qrc
 
@@ -54,20 +53,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    frontend/example.h \
-    logic/gpio.h \
-    logic/gpiomanager.h \
-    frontend/actorfactory.h \
-    frontend/sensorfactory.h \
-    logic/gpiolist.h \
-    logic/gpiomap.h \
-    backend/Sensors/Bcm2835Interface.hpp \
-    backend/Sensors/ADC.hpp \
-    backend/Sensors/Sensor.h \
     backend/Actuator/Actuator.hpp \
-    logic/configmanager.h \
     backend/RCSwitch/RCSwitch.h \
-    backend/Actuator/Actuator.hpp \
     backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.hpp \
     backend/Sensors/AnalogSensor/UVSensor/UVSensor.hpp \
     backend/Sensors/AnalogSensor/AnalogSensor.hpp \
@@ -76,10 +63,21 @@ HEADERS += \
     backend/Sensors/DigitalSensor/DigitalSensor.hpp \
     backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.hpp \
     backend/Sensors/I2CSensor/LightSensor/LightSensor.hpp \
-    backend/Sensors/I2CSensor/I2CSensor.hpp
+    backend/Sensors/I2CSensor/I2CSensor.hpp \
+    backend/Sensors/ADC.hpp \
+    backend/Sensors/Bcm2835Interface.hpp \
+    backend/Sensors/Sensor.h \
+    frontend/actorfactory.h \
+    frontend/sensorfactory.h \
+    logic/models/actuatorlist.h \
+    logic/configmanager.h \
+    logic/gpio.h \
+    logic/gpiolist.h \
+    logic/gpiomanager.h \
+    logic/gpiomap.h
+
 
 DISTFILES += \
-    backend/.dummy \
     logic/.dummy
 
 target.path = /home/pi
