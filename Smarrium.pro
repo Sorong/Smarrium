@@ -1,4 +1,4 @@
-QT += quick quickcontrols2
+QT += quick quickcontrols2 svg
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -26,8 +26,7 @@ SOURCES += \
     backend/Sensors/ADC.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
     backend/Sensors/Sensor.cpp \
-    frontend/actorfactory.cpp \
-    frontend/sensorfactory.cpp \
+    factories/sensorfactory.cpp \
     logic/configmanager.cpp \
     logic/gpiolist.cpp \
     logic/gpiomanager.cpp \
@@ -36,7 +35,8 @@ SOURCES += \
     logic/actuatorlist.cpp \
     logic/channelmanager.cpp \
     logic/channellist.cpp \
-    logic/channelmap.cpp
+    logic/channelmap.cpp \
+    factories/actuator_factory.cpp
 
 RESOURCES += qml.qrc
 
@@ -70,8 +70,7 @@ HEADERS += \
     backend/Sensors/ADC.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
     backend/Sensors/Sensor.h \
-    frontend/actorfactory.h \
-    frontend/sensorfactory.h \
+    factories/sensorfactory.h \
     logic/models/actuatorlist.h \
     logic/configmanager.h \
     logic/gpio.h \
@@ -82,7 +81,8 @@ HEADERS += \
     logic/channelmanager.h \
     logic/channel.h \
     logic/channellist.h \
-    logic/channelmap.h
+    logic/channelmap.h \
+    factories/actuator_factory.h
 
 
 DISTFILES += \

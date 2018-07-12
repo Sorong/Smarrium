@@ -29,11 +29,10 @@ int ActuatorList::rowCount(const QModelIndex &parent) const
 
 QVariant ActuatorList::data(const QModelIndex &index, int role) const
 {
+    qDebug() << "actuatorlist" << index.row();
     if (!index.isValid() && role == Qt::DisplayPropertyRole)
         return QVariant();
-
-    // FIXME: Implement me!
-    return QVariant(this->actuators.at(index.row()));
+    return QVariant(QString::fromStdString(this->actuators.at(index.row())->getCode()));
 }
 
 bool ActuatorList::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -73,15 +72,18 @@ bool ActuatorList::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-void ActuatorList::addActuator(const QString &str)
+void ActuatorList::addActuator(const QSharedPointer<Actuator> actuator)
 {
     this->insertRows(actuators.size(), 1);
-    QSharedPointer<Actuator> ptr = QSharedPointer<Actuator>(new Actuator(str.toStdString(), nullptr));
-    this->actuators[actuators.size() - 1] = ptr;
+    this->actuators[actuators.size() - 1] = actuator;
 }
 
-void ActuatorList::setSender(const QString gpioString)
+const QString ActuatorList::at(int index)
 {
-    qDebug() << gpioString << " set as Senderpin";
-    this->sender.enableTransmit(this->gpioMap[gpioString]);
+    return QString::fromStdString(this->actuators.at(index)->getCode());
+}
+
+bool ActuatorList::removeAt(int index)
+{
+    return removeRows(index, 1);
 }

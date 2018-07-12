@@ -28,33 +28,37 @@ Item {
         anchors.left: titleActor.left
         anchors.right: titleActor.right
         model: actuators
+        ScrollBar.vertical: ScrollBar {
+                active: true
+                }
         delegate: Component {
             Item {
                 width: parent.width
                 height: 40
-                Column {
-                    anchors.centerIn: parent
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: 'Pin: ' + display
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: content.currentIndex = index
+                Rectangle {
+                    //anchors.centerIn: parent
+                    //Row {
+                       anchors.fill: parent
+                       border.color: "lightgray"
+                       // anchors.horizontalCenter: parent.horizontalCenter
+                        Text {                
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: (index+1) + '. Adresse:  ' + display
+                        }
+                        RoundButton {
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            icon {
+                                source:"/icons/svg/ic_delete_forever_48px.svg"
+                            }
+                            onClicked: function() {
+                                actuators.removeAt(index)
+                            }
+                        }
+                    //}
                 }
             }
         }
-        highlight: Rectangle {
-            color: 'lightgrey'
-            Text {
-                anchors.centerIn: parent
-                color: 'white'
-            }
-        }
-        focus: true
-        onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
-
     }
 
     Button {
@@ -114,13 +118,14 @@ Item {
         anchors.top: content.bottom
         anchors.left: actorSelector.right
         anchors.leftMargin: 10
-        text: "+"
+        icon { source:"/icons/svg/ic_add_48px.svg"}
+        spacing: 7
         onClicked: function() {
-            console.log("button click")
-                console.log("loop")
+                var list = []
                 for(var i = 0; i < switches.children.length; i++) {
-                    console.log(switches.children[i].checked ? "ja" : "nein")
+                    list.push(switches.children[i].checked)
                 }
+                actuatorFactory.addActuator(list)
         }
     }
 }

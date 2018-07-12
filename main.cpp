@@ -5,9 +5,12 @@
 #include "logic/actuatorlist.h"
 #include "logic/gpiomanager.h"
 #include "logic/gpiolist.h"
+#include "factories/sensorfactory.h"
+#include "factories/actuator_factory.h"
 
 int main(int argc, char *argv[])
 {
+    wiringPiSetup();
     QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
@@ -20,12 +23,14 @@ int main(int argc, char *argv[])
     GPIOList available;
     GPIOList unavailable;
     ActuatorList actuators;
+    ActuatorFactory actuatorFactory(actuators);
     manager.getAvailable(&available);
     manager.getUnvailable(&unavailable);
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("availablePins", &available);
     context->setContextProperty("unavailablePins", &unavailable);
     context->setContextProperty("actuators", &actuators);
+    context->setContextProperty("actuatorFactory", &actuatorFactory);
 
 
     //Ende eigener Code

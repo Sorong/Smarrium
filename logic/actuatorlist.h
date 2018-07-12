@@ -35,9 +35,11 @@ public:
     // Remove data:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-    Q_INVOKABLE void addActuator(const QString&);
+    void addActuator(const QSharedPointer<Actuator> actuator);
 
-    Q_INVOKABLE void setSender(const QString gpioString);
+    Q_INVOKABLE const QString at(int index);
+
+     Q_INVOKABLE bool removeAt(int index);
 
 private:
     QList<QSharedPointer<Actuator>> actuators;
