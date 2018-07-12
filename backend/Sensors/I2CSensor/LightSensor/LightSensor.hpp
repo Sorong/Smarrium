@@ -145,9 +145,9 @@ tsl2561Gain_t;
     @brief  Class that stores state and functions for interacting with TSL2561 Light Sensor
 */
 /**************************************************************************/
-class LightSensor: I2CSensor, Sensor {
+class LightSensor: I2CSensor, public Sensor {
  public:
-  LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c);
+  LightSensor(int intervall, uint8_t addr, Bcm2835Interface *i2c);
   //bool begin(void);
   bool begin(Bcm2835Interface *interface);
   bool init();
@@ -160,18 +160,20 @@ class LightSensor: I2CSensor, Sensor {
   uint32_t calculateLux(uint16_t broadband, uint16_t ir);
   
   /* Unified Sensor API Functions */  
-  bool getEvent(sensors_event_t*);
-  void getSensor(sensor_I2C_t*);
+  bool getEvent(sensors_event_t*) override;
+  void getI2CSensor(sensor_I2C_t*) override;
+
+  uint8_t getAddress() override;
+  void setAddress(uint8_t) override;
 
  private:
   Bcm2835Interface *_i2c;
  
-  int8_t _addr;
+  int8_t _address;
   bool _tsl2561Initialised;
   bool _tsl2561AutoGain;
   tsl2561IntegrationTime_t _tsl2561IntegrationTime;
   tsl2561Gain_t _tsl2561Gain;
-  int32_t _tsl2561SensorID;
   
   void     enable (void);
   void     disable (void);

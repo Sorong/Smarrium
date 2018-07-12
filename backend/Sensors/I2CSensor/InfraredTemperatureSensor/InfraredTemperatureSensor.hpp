@@ -39,18 +39,18 @@ typedef enum temperature_units {
 	TEMP_F
 } temperature_units;
 
-class IRTemperatureSensor : I2CSensor, Sensor
+class IRTemperatureSensor : I2CSensor, public Sensor
 {
 public:
 	// Default constructor, does very little besides setting class variable
 	// initial values.
-    IRTemperatureSensor(int intervall, uint8_t address, int id, Bcm2835Interface*);
+    IRTemperatureSensor(int intervall, uint8_t address, Bcm2835Interface*);
 
 	void enableAutoRange(bool enabled);
 
-  	bool getEvent(sensors_event_t*);
+    bool getEvent(sensors_event_t*) override;
 
-    void getSensor(sensor_I2C_t*);
+    void getI2CSensor(sensor_I2C_t*) override;
 	
 
 	// read() pulls the latest ambient and object temperatures from the 
@@ -81,13 +81,13 @@ public:
 	
 	// readAddress() returns the MLX90614's configured 7-bit I2C bus address.
 	// A value between 0x01 and 0x7F should be returned.
-	uint8_t readAddress(void);
+    uint8_t getAddress(void) override;
 	
 	// setAddress(<newAdd>) can set the MLX90614's 7-bit I2C bus address.
 	// The <newAdd> parameter should be a value between 0x01 and 0x7F.
 	// The function returns 1 on success and 0 on failure.
 	// The new address won't take effect until the device is reset.
-	uint8_t setAddress(uint8_t newAdd);
+    void setAddress(uint8_t newAdd) override;
 	
 	// readID() reads the 64-bit ID of the MLX90614.
 	// Return value is either 1 on success or 0 on failure.
@@ -116,10 +116,9 @@ public:
 	uint8_t setMin(float minTemp);
 	
 private:
-	uint8_t _deviceAddress; // MLX90614's 7-bit I2C address
+    uint8_t _address; // MLX90614's 7-bit I2C address
 	temperature_units _defaultUnit; // Keeps track of configured temperature unit
 	Bcm2835Interface* _wire;
-	int _id;
 	
 	// These keep track of the raw temperature values read from the sensor:
 	int16_t _rawAmbient, _rawObject, _rawObject2, _rawMax, _rawMin;

@@ -3,13 +3,19 @@
 
 #include <QObject>
 #include <QSharedPointer>
-#include "logic/gpiomanager.h"
 #include "logic/gpiolist.h"
-#include "./../logic/channel.h"
-#include "./../logic/gpio.h"
-#include "./../backend/Sensors/Sensor.h"
-#include "./../backend/Sensors/ADC.hpp"
-#include "./../backend/Sensors/Bcm2835Interface.hpp"
+#include "logic/channel.h"
+#include "logic/gpio.h"
+#include "backend/Sensors/Sensor.h"
+#include "backend/Sensors/ADC.hpp"
+#include "backend/Sensors/Bcm2835Interface.hpp"
+#include "backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.hpp"
+#include "backend/Sensors/AnalogSensor/UVSensor/UVSensor.hpp"
+#include "backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.hpp"
+#include "backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.hpp"
+#include "backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.hpp"
+#include "backend/Sensors/I2CSensor/LightSensor/LightSensor.hpp"
+
 class SensorFactory : public QObject
 {
     Q_OBJECT
@@ -31,6 +37,9 @@ private:
     QSharedPointer<Bcm2835Interface> interface;
     QSharedPointer<ADC> adc;
     const int DEFAULT_INTERVAL_MS = 300000;
+    uint32_t irDefaultAdress = 0x5A;
+    uint8_t numberLightSensors = 0;
+    uint8_t lightAdress[3] = {0x29, 0x39, 0x49};
 };
 
 #endif // SENSORFACTORY_H

@@ -16,15 +16,19 @@
 
 
 
-class HumiditySensor : DigitalSensor, Sensor
+class HumiditySensor : DigitalSensor, public Sensor
 {
 
     public:
-    HumiditySensor(int intervall, uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire);
+    HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wire);
     ~HumiditySensor();
 
-    bool getEvent(sensors_event_t*);
-    void getSensor(sensor_digital_t*);
+    bool getEvent(sensors_event_t*) override;
+    void getDigitalSensor(sensor_digital_t*) override;
+    uint8_t getPin() override;
+    void setPin(uint8_t) override;
+
+
     float calculateHumidity();
 
     private:
@@ -34,7 +38,6 @@ class HumiditySensor : DigitalSensor, Sensor
 
     Bcm2835Interface* _wire;
     uint8_t _pin;
-    uint32_t _sensorID;
     uint16_t _offset = 0;
     uint16_t _sensitivity = 0;
 

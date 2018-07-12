@@ -1,10 +1,9 @@
 #include "./UVSensor.hpp"
 
-UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, uint32_t sensorID, ADC* adc): Sensor(intervall)
+UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, ADC* adc): Sensor(intervall)
 {
     _pinUVin = chUVin;
     _pinRef = chRef;
-    _sensorID = sensorID;
     _adc = adc;
 }
 
@@ -51,7 +50,7 @@ bool UVSensor::getEvent(sensors_event_t* event)
     memset(event, 0, sizeof(sensors_event_t));
 
     event->version   = sizeof(sensors_event_t);
-    event->sensor_id = _sensorID;
+    event->sensor_id = _id;
     event->type      = SENSOR_TYPE_UV;
     event->timestamp = bcm2835_st_read();
 
@@ -65,14 +64,21 @@ bool UVSensor::getEvent(sensors_event_t* event)
 }
 
 
-void UVSensor::getSensor(sensor_analog_t *sensor){
+void UVSensor::getAnalogSensor(sensor_analog_t *sensor){
     memset(sensor, 0, sizeof(sensor_analog_t));
 
     strncpy (sensor->name, "ML8511", sizeof(sensor->name) - 1);
     sensor->name[sizeof(sensor->name)- 1] = 0;
     sensor->version     = 1;
-    sensor->sensor_id   = _sensorID;
+    sensor->sensor_id   = _id;
     sensor->type        = SENSOR_TYPE_UV;
     sensor->channel     = _pinUVin;
 }
 
+void UVSensor::setChannel(uint8_t channel){
+    this->_channel = channel;
+}
+
+uint8_t UVSensor::getChannel(){
+    return this->_channel;
+}

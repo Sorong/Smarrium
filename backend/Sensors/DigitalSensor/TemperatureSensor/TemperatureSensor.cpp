@@ -1,9 +1,8 @@
 #include "TemperatureSensor.hpp"
 
-TemperatureSensor::TemperatureSensor(int intervall, uint8_t pin, int32_t sensorID, Bcm2835Interface* wire): Sensor(intervall)
+TemperatureSensor::TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interface* wire): Sensor(intervall)
 {
     this->_pin = pin;
-    this->_sensorID = sensorID;
     this->_wire = wire;
 }
 
@@ -16,7 +15,7 @@ bool TemperatureSensor::getEvent(sensors_event_t* event){
     memset(event, 0, sizeof(sensors_event_t));
 
     event->version   = sizeof(sensors_event_t);
-    event->sensor_id = _sensorID;
+    event->sensor_id = _id;
     event->type      = SENSOR_TYPE_TEMPERATURE;
     event->timestamp = bcm2835_st_read();
     event->temperature = readTemperature();
@@ -28,7 +27,7 @@ bool TemperatureSensor::getEvent(sensors_event_t* event){
 
 }
 
-void TemperatureSensor::getSensor(sensor_digital_t *sensor)
+void TemperatureSensor::getDigitalSensor(sensor_digital_t *sensor)
 {
 
   memset(sensor, 0, sizeof(sensor_digital_t));
@@ -36,9 +35,17 @@ void TemperatureSensor::getSensor(sensor_digital_t *sensor)
   strncpy (sensor->name, "DS18B20", sizeof(sensor->name) - 1);
   sensor->name[sizeof(sensor->name)- 1] = 0;
   sensor->version     = 1;
-  sensor->sensor_id   = _sensorID;
+  sensor->sensor_id   = _id;
   sensor->type        = SENSOR_TYPE_TEMPERATURE;
   sensor->pin         = _pin;
+}
+
+void TemperatureSensor::setPin(uint8_t pin){
+    this->_pin = pin;
+}
+
+uint8_t TemperatureSensor::getPin(){
+    return this->_pin;
 }
 
 float TemperatureSensor::readTemperature(){
