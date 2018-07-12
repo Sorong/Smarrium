@@ -76,7 +76,7 @@ bool ActuatorList::removeRows(int row, int count, const QModelIndex &parent)
 void ActuatorList::addActuator(const QString &str)
 {
     this->insertRows(actuators.size(), 1);
-    QSharedPointer<Actuator> ptr = QSharedPointer<Actuator>(new Actuator(str.toStdString(), 0, nullptr));
+    QSharedPointer<Actuator> ptr = QSharedPointer<Actuator>(new Actuator(str.toStdString(), nullptr));
     this->actuators[actuators.size() - 1] = ptr;
 }
 

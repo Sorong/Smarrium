@@ -1,12 +1,11 @@
 #include "./Actuator.hpp"
 
-Actuator::Actuator(std::string baseAdress, int id, RCSwitch* rcSwitch){
+Actuator::Actuator(std::string baseAdress, RCSwitch* rcSwitch){
     this->_commandOff = baseAdress;
     this->_commandOn = baseAdress;
     this->_code = baseAdress;
     this->_commandOn.append(ON_SUFFIX);
     this->_commandOff.append(OFF_SUFFIX);
-    this->_id = id;
     this->_switch = rcSwitch;
     this->switchOff();
 }

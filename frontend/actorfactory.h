@@ -11,7 +11,7 @@ class ActorFactory : public QObject
     Q_OBJECT
 public:
     explicit ActorFactory(QObject *parent = nullptr);
-    void addActor(bool flipSwitch[]);
+    void addActuator(bool flipSwitch[]);
 
 signals:
 
