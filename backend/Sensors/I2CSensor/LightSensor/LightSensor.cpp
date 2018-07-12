@@ -1,22 +1,21 @@
 
 #include "LightSensor.hpp"
 
-LightSensor::LightSensor(int intervall, uint8_t addr, int32_t sensorID, Bcm2835Interface *i2c) : Sensor(intervall)
+LightSensor::LightSensor(int intervall, uint8_t address, Bcm2835Interface *i2c) : Sensor(intervall)
 {
-  _addr = addr;
+  _address = address;
   _i2c = i2c;
   _tsl2561Initialised = false;
   _tsl2561AutoGain = false;
   _tsl2561IntegrationTime = TSL2561_INTEGRATIONTIME_13MS;
   _tsl2561Gain = TSL2561_GAIN_1X;
-  _tsl2561SensorID = sensorID;
 }
 
 
 bool LightSensor::init()
 {
   /* Make sure we're actually connected */
-  uint8_t x = _i2c->read8(_addr, TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
+  uint8_t x = _i2c->read8(_address, TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
   if (x & 0xF0 != 0x10) { // ID code for TSL2561
     return false;
     printf("Failed");
@@ -61,7 +60,7 @@ void LightSensor::setIntegrationTime(tsl2561IntegrationTime_t time)
   enable();
 
   /* Update the timing register */
-  _i2c->write8(_addr, TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, time | _tsl2561Gain);
+  _i2c->write8(_address, TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, time | _tsl2561Gain);
 
   /* Update value placeholders */
   _tsl2561IntegrationTime = time;
@@ -84,7 +83,7 @@ void LightSensor::setGain(tsl2561Gain_t gain)
   enable();
 
   /* Update the timing register */
-  _i2c->write8(_addr, TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, _tsl2561IntegrationTime | gain);
+  _i2c->write8(_address, TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, _tsl2561IntegrationTime | gain);
 
   /* Update value placeholders */
   _tsl2561Gain = gain;
@@ -195,7 +194,7 @@ void LightSensor::getLuminosity (uint16_t *broadband, uint16_t *ir)
 void LightSensor::enable(void)
 {
   /* Enable the device by setting the control bit to 0x03 */
-  _i2c->write8(_addr, TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWERON);
+  _i2c->write8(_address, TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWERON);
 }
 
 /**************************************************************************/
@@ -206,7 +205,7 @@ void LightSensor::enable(void)
 void LightSensor::disable(void)
 {
   /* Turn the device off to save power */
-  _i2c->write8(_addr, TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWEROFF);
+  _i2c->write8(_address, TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWEROFF);
 }
 
 /**************************************************************************/
@@ -234,10 +233,10 @@ void LightSensor::getData (uint16_t *broadband, uint16_t *ir)
   }
 
   /* Reads a two byte value from channel 0 (visible + infrared) */
-  *broadband = _i2c->read16(_addr, TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN0_LOW);
+  *broadband = _i2c->read16(_address, TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN0_LOW);
 
   /* Reads a two byte value from channel 1 (infrared) */
-  *ir = _i2c->read16(_addr, TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN1_LOW);
+  *ir = _i2c->read16(_address, TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN1_LOW);
 
   /* Turn the device off to save power */
   disable();
@@ -386,7 +385,7 @@ bool LightSensor::getEvent(sensors_event_t *event)
   memset(event, 0, sizeof(sensors_event_t));
 
   event->version   = sizeof(sensors_event_t);
-  event->sensor_id = _tsl2561SensorID;
+  event->sensor_id = _id;
   event->type      = SENSOR_TYPE_LIGHT;
   event->timestamp = bcm2835_st_read();
 
@@ -407,7 +406,7 @@ bool LightSensor::getEvent(sensors_event_t *event)
                    details about the TSL2561 and its capabilities
 */
 /**************************************************************************/
-void LightSensor::getSensor(sensor_I2C_t *sensor)
+void LightSensor::getI2CSensor(sensor_I2C_t *sensor)
 {
   /* Clear the sensor_t object */
   memset(sensor, 0, sizeof(sensor_I2C_t));
@@ -416,9 +415,17 @@ void LightSensor::getSensor(sensor_I2C_t *sensor)
   strncpy (sensor->name, "TSL2561", sizeof(sensor->name) - 1);
   sensor->name[sizeof(sensor->name)- 1] = 0;
   sensor->version     = 1;
-  sensor->sensor_id   = _tsl2561SensorID;
+  sensor->sensor_id   = _id;
   sensor->type        = SENSOR_TYPE_LIGHT;
-  sensor->adress      = _addr;
+  sensor->address      = _address;
+}
+
+void LightSensor::setAddress(uint8_t address){
+    this->_address = address;
+}
+
+uint8_t LightSensor::getAddress(){
+    return this->_address;
 }
 
 

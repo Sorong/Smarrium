@@ -1,10 +1,9 @@
 #include "InfraredTemperatureSensor.hpp"
 
-IRTemperatureSensor::IRTemperatureSensor(int intervall, uint8_t address, int id, Bcm2835Interface* wire) : Sensor(intervall)
+IRTemperatureSensor::IRTemperatureSensor(int intervall, uint8_t address, Bcm2835Interface* wire) : Sensor(intervall)
 {
 	// Set initial values for all private member variables
-	this->_deviceAddress = address;
-	this->_id = id;
+    this->_address = address;
 	_defaultUnit = TEMP_C;
 	_rawObject = 0;
 	_rawAmbient = 0;
@@ -31,7 +30,7 @@ bool IRTemperatureSensor::getEvent(sensors_event_t* event){
 	return true;
 }
 
-void IRTemperatureSensor::getSensor(sensor_I2C_t* sensor){
+void IRTemperatureSensor::getI2CSensor(sensor_I2C_t* sensor){
 	/* Clear the sensor_t object */
     memset(sensor, 0, sizeof(sensor_I2C_t));
 
@@ -41,8 +40,9 @@ void IRTemperatureSensor::getSensor(sensor_I2C_t* sensor){
 	sensor->version     = 1;
 	sensor->sensor_id   = _id;
 	sensor->type        = SENSOR_TYPE_IRTEMPERATURE;
-    sensor->adress      = _deviceAddress;
+    sensor->address      = _address;
 }
+
 
 uint8_t IRTemperatureSensor::read()
 {
@@ -219,7 +219,7 @@ float IRTemperatureSensor::readEmissivity(void)
 	return 0; // Else return fail
 }
 
-uint8_t IRTemperatureSensor::readAddress(void)
+uint8_t IRTemperatureSensor::getAddress(void)
 {
 	int16_t tempAdd;
 	// Read from the 7-bit I2C address EEPROM storage address:
@@ -232,12 +232,12 @@ uint8_t IRTemperatureSensor::readAddress(void)
 	return 0; // Else return fail
 }
 
-uint8_t IRTemperatureSensor::setAddress(uint8_t newAdd)
+void IRTemperatureSensor::setAddress(uint8_t newAdd)
 {
 	int16_t tempAdd;
 	// Make sure the address is within the proper range:
 	if ((newAdd >= 0x80) || (newAdd == 0x00))
-		return 0; // Return fail if out of range
+        return; // Return fail if out of range
 	// Read from the I2C address address first:
 	tempAdd = I2CReadWord(MLX90614_REGISTER_ADDRESS);
 	
@@ -246,9 +246,8 @@ uint8_t IRTemperatureSensor::setAddress(uint8_t newAdd)
 		tempAdd &= 0xFF00; // Mask out the address (MSB is junk?)
 		tempAdd |= newAdd; // Add the new address
 		
-		return writeEEPROM(MLX90614_REGISTER_ADDRESS, newAdd);
+         writeEEPROM(MLX90614_REGISTER_ADDRESS, newAdd);
 	}	
-	return 0;
 }
 
 uint8_t IRTemperatureSensor::readID(void)
@@ -337,7 +336,7 @@ float IRTemperatureSensor::calcTemperature(int16_t rawTemp)
 }
 
 uint16_t IRTemperatureSensor::I2CReadWord(uint8_t reg){
-	return this->_wire->read16repeatedStart(_deviceAddress, reg);
+    return this->_wire->read16repeatedStart(_address, reg);
 }
 
 uint8_t IRTemperatureSensor::writeEEPROM(uint8_t reg, int16_t data)
@@ -345,11 +344,11 @@ uint8_t IRTemperatureSensor::writeEEPROM(uint8_t reg, int16_t data)
 	// Clear out EEPROM first:
 	//if (this->_wire->write16(_deviceAddress, 0, reg) != 0)
 		//return 0; // If the write failed, return 0
-	this->_wire->write16repeatedStart(_deviceAddress, reg, 0);
+    this->_wire->write16repeatedStart(_address, reg, 0);
 	delay(5); // Delay tErase
 	
 	//uint8_t i2cRet = this->_wire->write16(_deviceAddress, data, reg);
-	this->_wire->write16repeatedStart(_deviceAddress, reg, data);
+    this->_wire->write16repeatedStart(_address, reg, data);
 	delay(5); // Delay tWrite
 	return 0;
 	// if (i2cRet == 0)

@@ -22,11 +22,13 @@
 class TemperatureSensor : DigitalSensor, Sensor{
 
     public:
-    TemperatureSensor(int intervall, uint8_t pin, int32_t sensorID, Bcm2835Interface* wire);
+    TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interface* wire);
     ~TemperatureSensor();
 
-    bool getEvent(sensors_event_t*);
-    void getSensor(sensor_digital_t*);
+    bool getEvent(sensors_event_t*) override;
+    void getDigitalSensor(sensor_digital_t*) override;
+    uint8_t getPin() override;
+    void setPin(uint8_t) override;
     float readTemperature();
 
 
@@ -35,7 +37,6 @@ class TemperatureSensor : DigitalSensor, Sensor{
     void convert();
     Bcm2835Interface* _wire;
     uint8_t _pin;
-    uint32_t _sensorID;
 };
 
 

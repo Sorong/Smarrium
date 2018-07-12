@@ -19,10 +19,8 @@ SOURCES += \
     backend/Sensors/AnalogSensor/UVSensor/UVSensor.cpp \
     backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.cpp \
     backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/DigitalSensor/DigitalSensor.cpp \
     backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.cpp \
     backend/Sensors/I2CSensor/LightSensor/LightSensor.cpp \
-    backend/Sensors/I2CSensor/I2CSensor.cpp \
     backend/Sensors/ADC.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
     backend/Sensors/Sensor.cpp \

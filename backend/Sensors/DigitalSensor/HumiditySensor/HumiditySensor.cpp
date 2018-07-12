@@ -1,9 +1,8 @@
 #include "HumiditySensor.hpp"
 
-HumiditySensor::HumiditySensor(int intervall, uint8_t pin, uint32_t sensorID, Bcm2835Interface *wire): Sensor(intervall)
+HumiditySensor::HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wire): Sensor(intervall)
 {
     _pin = pin;
-    _sensorID = sensorID;
     _wire = wire;
     bcm2835_gpio_fsel(_pin, BCM2835_GPIO_FSEL_INPT);
     this->calibrate();
@@ -41,7 +40,7 @@ bool HumiditySensor::getEvent(sensors_event_t* event)
     memset(event, 0, sizeof(sensors_event_t));
 
     event->version   = sizeof(sensors_event_t);
-    event->sensor_id = _sensorID;
+    event->sensor_id = _id;
     event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
     event->timestamp = bcm2835_st_read();
     event->relative_humidity = calculateHumidity();
@@ -53,7 +52,7 @@ bool HumiditySensor::getEvent(sensors_event_t* event)
 
 }
 
-void HumiditySensor::getSensor(sensor_digital_t *sensor)
+void HumiditySensor::getDigitalSensor(sensor_digital_t *sensor)
 {
     /* Clear the sensor_t object */
     memset(sensor, 0, sizeof(sensor_digital_t));
@@ -62,7 +61,7 @@ void HumiditySensor::getSensor(sensor_digital_t *sensor)
     strncpy (sensor->name, "HH10D", sizeof(sensor->name) - 1);
     sensor->name[sizeof(sensor->name)- 1] = 0;
     sensor->version     = 1;
-    sensor->sensor_id   = _sensorID;
+    sensor->sensor_id   = _id;
     sensor->type        = SENSOR_TYPE_RELATIVE_HUMIDITY;
     sensor->pin         = _pin;
 }

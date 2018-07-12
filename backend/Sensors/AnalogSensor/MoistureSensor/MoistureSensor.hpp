@@ -10,10 +10,12 @@
 class MoistureSensor: AnalogSensor, Sensor{
 
 public:
-    MoistureSensor(int intervall, uint8_t channel, int id, ADC*);
+    MoistureSensor(int intervall, uint8_t channel, ADC*);
 
-    bool getEvent(sensors_event_t*);
-    void getSensor(sensor_analog_t*);
+    bool getEvent(sensors_event_t*) override;
+    void getAnalogSensor(sensor_analog_t*) override;
+    uint8_t getChannel() override;
+    void setChannel(uint8_t) override;
 
     float readMoisture();
 
@@ -22,7 +24,6 @@ private:
 
     ADC* _ADC;
     uint8_t _channel;
-    int _id;
 };
 
 

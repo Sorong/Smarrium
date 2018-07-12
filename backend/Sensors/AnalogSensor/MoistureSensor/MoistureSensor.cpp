@@ -1,8 +1,8 @@
 #include "./MoistureSensor.hpp"
 
-MoistureSensor::MoistureSensor(int intervall, uint8_t channel, int id, ADC* ADC): Sensor(intervall)
+MoistureSensor::MoistureSensor(int intervall, uint8_t channel, ADC* ADC): Sensor(intervall)
 {
-    this->_id = id;
+    //this->_id = id;
     this->_channel = channel;
     this->_ADC = ADC;
 }
@@ -18,7 +18,7 @@ bool MoistureSensor::getEvent(sensors_event_t* event){
     return true;
 }
 
-void MoistureSensor::getSensor(sensor_analog_t* sensor){
+void MoistureSensor::getAnalogSensor(sensor_analog_t* sensor){
     /* Clear the sensor_t object */
   memset(sensor, 0, sizeof(sensor_analog_t));
 
@@ -29,6 +29,14 @@ void MoistureSensor::getSensor(sensor_analog_t* sensor){
   sensor->sensor_id   = _id;
   sensor->type        = SENSOR_TYPE_MOISTURE;
   sensor->channel     = _channel;
+}
+
+void MoistureSensor::setChannel(uint8_t channel){
+    this->_channel = channel;
+}
+
+uint8_t MoistureSensor::getChannel(){
+    return this->_channel;
 }
 
 

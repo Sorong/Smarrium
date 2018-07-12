@@ -2,6 +2,7 @@
 
 Sensor::Sensor(int intervall)
 {
+    this->_id = QUuid::createUuid();
     start(intervall);
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
 }

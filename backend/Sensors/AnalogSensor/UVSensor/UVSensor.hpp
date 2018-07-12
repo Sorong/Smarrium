@@ -9,11 +9,13 @@ class UVSensor: AnalogSensor, Sensor{
 
     public:
 
-    UVSensor(int intervall, uint8_t pin, uint8_t pinRef, uint32_t sensorID, ADC* adc);
+    UVSensor(int intervall, uint8_t pin, uint8_t pinRef, ADC* adc);
     ~UVSensor();
 
-    bool getEvent(sensors_event_t*);
-    void getSensor(sensor_analog_t*);
+    bool getEvent(sensors_event_t*) override;
+    void getAnalogSensor(sensor_analog_t*) override;
+    uint8_t getChannel() override;
+    void setChannel(uint8_t) override;
     float calculateUV();
 
     private:
@@ -23,7 +25,7 @@ class UVSensor: AnalogSensor, Sensor{
 
     uint8_t _pinUVin;
     uint8_t _pinRef;
-    uint32_t _sensorID;
+    uint8_t _channel;
     ADC* _adc;
 
 
