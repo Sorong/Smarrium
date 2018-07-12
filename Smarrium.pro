@@ -26,7 +26,6 @@ SOURCES += \
     backend/Sensors/ADC.cpp \
     backend/Sensors/Bcm2835Interface.cpp \
     backend/Sensors/Sensor.cpp \
-    factories/sensorfactory.cpp \
     logic/configmanager.cpp \
     logic/gpiolist.cpp \
     logic/gpiomanager.cpp \
@@ -36,7 +35,8 @@ SOURCES += \
     logic/channelmanager.cpp \
     logic/channellist.cpp \
     logic/channelmap.cpp \
-    factories/actuator_factory.cpp
+    factories/actuator_factory.cpp \
+    factories/sensor_factory.cpp
 
 RESOURCES += qml.qrc
 
@@ -70,7 +70,6 @@ HEADERS += \
     backend/Sensors/ADC.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
     backend/Sensors/Sensor.h \
-    factories/sensorfactory.h \
     logic/models/actuatorlist.h \
     logic/configmanager.h \
     logic/gpio.h \
@@ -82,7 +81,8 @@ HEADERS += \
     logic/channel.h \
     logic/channellist.h \
     logic/channelmap.h \
-    factories/actuator_factory.h
+    factories/actuator_factory.h \
+    factories/sensor_factory.h
 
 
 DISTFILES += \

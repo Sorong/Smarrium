@@ -5,7 +5,7 @@
 #include "logic/actuatorlist.h"
 #include "logic/gpiomanager.h"
 #include "logic/gpiolist.h"
-#include "factories/sensorfactory.h"
+#include "factories/sensor_factory.h"
 #include "factories/actuator_factory.h"
 
 int main(int argc, char *argv[])
@@ -24,13 +24,16 @@ int main(int argc, char *argv[])
     GPIOList unavailable;
     ActuatorList actuators;
     ActuatorFactory actuatorFactory(actuators);
+    SensorFactory sensorFactory(available);
     manager.getAvailable(&available);
     manager.getUnvailable(&unavailable);
+
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("availablePins", &available);
     context->setContextProperty("unavailablePins", &unavailable);
     context->setContextProperty("actuators", &actuators);
     context->setContextProperty("actuatorFactory", &actuatorFactory);
+    context->setContextProperty("sensorFactory", &sensorFactory);
 
 
     //Ende eigener Code
