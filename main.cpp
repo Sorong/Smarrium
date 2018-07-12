@@ -1,12 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "logic/models/actuatorlist.h"
+#include <QQuickStyle>
+#include "logic/actuatorlist.h"
 #include "logic/gpiomanager.h"
 #include "logic/gpiolist.h"
 
 int main(int argc, char *argv[])
 {
+    QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);

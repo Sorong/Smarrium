@@ -1,4 +1,4 @@
-QT += quick
+QT += quick quickcontrols2
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -28,12 +28,12 @@ SOURCES += \
     backend/Sensors/Sensor.cpp \
     frontend/actorfactory.cpp \
     frontend/sensorfactory.cpp \
-    logic/models/actuatorlist.cpp \
     logic/configmanager.cpp \
     logic/gpiolist.cpp \
     logic/gpiomanager.cpp \
     logic/gpiomap.cpp \
-    main.cpp
+    main.cpp \
+    logic/actuatorlist.cpp
 
 RESOURCES += qml.qrc
 
@@ -74,7 +74,8 @@ HEADERS += \
     logic/gpio.h \
     logic/gpiolist.h \
     logic/gpiomanager.h \
-    logic/gpiomap.h
+    logic/gpiomap.h \
+    logic/actuatorlist.h
 
 
 DISTFILES += \

@@ -7,6 +7,7 @@ Item {
 
     Label {
         id: titleActor
+        anchors.topMargin: 10
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width/5*4
