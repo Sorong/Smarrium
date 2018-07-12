@@ -16,7 +16,7 @@
 
 
 
-class HumiditySensor : DigitalSensor, Sensor
+class HumiditySensor : DigitalSensor, public Sensor
 {
 
     public:

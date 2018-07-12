@@ -145,7 +145,7 @@ tsl2561Gain_t;
     @brief  Class that stores state and functions for interacting with TSL2561 Light Sensor
 */
 /**************************************************************************/
-class LightSensor: I2CSensor, Sensor {
+class LightSensor: I2CSensor, public Sensor {
  public:
   LightSensor(int intervall, uint8_t addr, Bcm2835Interface *i2c);
   //bool begin(void);

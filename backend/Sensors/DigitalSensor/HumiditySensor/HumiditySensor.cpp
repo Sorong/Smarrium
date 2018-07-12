@@ -94,3 +94,11 @@ float HumiditySensor::readFrequenz(){
     frequenz = 500000 / timePeekToBottom;
     return frequenz; //ms to hz
 }
+
+uint8_t HumiditySensor::getPin(){
+    return this->_pin;
+}
+
+void HumiditySensor::setPin(uint8_t pin){
+    this->_pin = pin;
+}

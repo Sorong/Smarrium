@@ -2,6 +2,9 @@
 #define SENSORFACTORY_H
 
 #include <QObject>
+#include <QSharedPointer>
+
+
 #include "./../logic/channel.h"
 #include "./../logic/gpio.h"
 #include "./../backend/Sensors/Sensor.h"

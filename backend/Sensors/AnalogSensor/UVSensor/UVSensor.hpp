@@ -5,7 +5,7 @@
 #include "./../../ADC.hpp"
 #include "./../AnalogSensor.hpp"
 
-class UVSensor: AnalogSensor, Sensor{
+class UVSensor: AnalogSensor, public Sensor{
 
     public:
 

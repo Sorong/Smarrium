@@ -6,8 +6,9 @@
 #include "iostream"
 #include "./../AnalogSensor.hpp"
 #include <bcm2835.h>
+#include <QObject>
 
-class MoistureSensor: AnalogSensor, Sensor{
+class MoistureSensor: AnalogSensor, public Sensor{
 
 public:
     MoistureSensor(int intervall, uint8_t channel, ADC*);

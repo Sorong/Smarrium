@@ -39,7 +39,7 @@ typedef enum temperature_units {
 	TEMP_F
 } temperature_units;
 
-class IRTemperatureSensor : I2CSensor, Sensor
+class IRTemperatureSensor : I2CSensor, public Sensor
 {
 public:
 	// Default constructor, does very little besides setting class variable

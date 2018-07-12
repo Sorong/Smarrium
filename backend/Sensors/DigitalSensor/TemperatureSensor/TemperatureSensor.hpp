@@ -19,7 +19,7 @@
 
 
 
-class TemperatureSensor : DigitalSensor, Sensor{
+class TemperatureSensor : DigitalSensor, public Sensor{
 
     public:
     TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interface* wire);
