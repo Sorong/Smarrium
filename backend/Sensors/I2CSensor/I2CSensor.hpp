@@ -16,6 +16,6 @@ public:
     ~I2CSensor(){}
 
     virtual int getAdress() = 0;
-    virtual void setadress(int) = 0;
+    virtual void setAdress(int) = 0;
     virtual void getI2CSensor(sensor_I2C_t*) = 0;
 };
