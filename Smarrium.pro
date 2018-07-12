@@ -33,7 +33,10 @@ SOURCES += \
     logic/gpiolist.cpp \
     logic/gpiomanager.cpp \
     logic/gpiomap.cpp \
-    main.cpp
+    main.cpp \
+    logic/channelmanager.cpp \
+    logic/channellist.cpp \
+    logic/channelmap.cpp
 
 RESOURCES += qml.qrc
 
@@ -74,7 +77,11 @@ HEADERS += \
     logic/gpio.h \
     logic/gpiolist.h \
     logic/gpiomanager.h \
-    logic/gpiomap.h
+    logic/gpiomap.h \
+    logic/channelmanager.h \
+    logic/channel.h \
+    logic/channellist.h \
+    logic/channelmap.h
 
 
 DISTFILES += \
