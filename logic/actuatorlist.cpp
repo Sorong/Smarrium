@@ -35,23 +35,6 @@ QVariant ActuatorList::data(const QModelIndex &index, int role) const
     return QVariant(QString::fromStdString(this->actuators.at(index.row())->getCode()));
 }
 
-bool ActuatorList::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (data(index, role) != value) {
-        emit dataChanged(index, index, QVector<int>() << role);
-        return true;
-    }
-    return false;
-}
-
-Qt::ItemFlags ActuatorList::flags(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return Qt::NoItemFlags;
-
-    return Qt::ItemIsEditable; // FIXME: Implement me!
-}
-
 bool ActuatorList::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);

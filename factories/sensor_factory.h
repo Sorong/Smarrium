@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include "logic/sensorlist.h"
 #include "logic/gpiolist.h"
 #include "logic/channel.h"
 #include "logic/gpio.h"
@@ -20,7 +21,7 @@ class SensorFactory : public QObject
 {
     Q_OBJECT
 public:
-    explicit SensorFactory(GPIOList& available, QObject *parent = nullptr);
+    explicit SensorFactory(GPIOList& available, SensorList& sensors, QObject *parent = nullptr);
 
     void addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensor);
     void addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensor);
@@ -34,6 +35,7 @@ public slots:
 
 private:
     GPIOList &available;
+    SensorList& sensors;
     QSharedPointer<Bcm2835Interface> interface;
     QSharedPointer<ADC> adc;
     const int DEFAULT_INTERVAL_MS = 300000;

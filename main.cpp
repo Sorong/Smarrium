@@ -22,9 +22,10 @@ int main(int argc, char *argv[])
     GPIOManager manager;
     GPIOList available;
     GPIOList unavailable;
+    SensorList sensors;
     ActuatorList actuators;
     ActuatorFactory actuatorFactory(actuators);
-    SensorFactory sensorFactory(available);
+    SensorFactory sensorFactory(available, sensors);
     manager.getAvailable(&available);
     manager.getUnvailable(&unavailable);
 

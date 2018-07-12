@@ -34,7 +34,8 @@ SOURCES += \
     logic/channellist.cpp \
     logic/channelmap.cpp \
     factories/actuator_factory.cpp \
-    factories/sensor_factory.cpp
+    factories/sensor_factory.cpp \
+    logic/sensorlist.cpp
 
 RESOURCES += qml.qrc
 
@@ -80,7 +81,8 @@ HEADERS += \
     logic/channellist.h \
     logic/channelmap.h \
     factories/actuator_factory.h \
-    factories/sensor_factory.h
+    factories/sensor_factory.h \
+    logic/sensorlist.h
 
 
 DISTFILES += \
