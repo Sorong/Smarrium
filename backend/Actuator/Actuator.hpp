@@ -12,18 +12,18 @@
 class Actuator{
     
     public:
-    Actuator(std::string, int, RCSwitch*);
+    Actuator(std::string, RCSwitch*);
 
     void switchOn();
     void switchOff();
-    int getId();
+    std::string getCode();
     bool isOn();
 
 
     private:
         
         bool _isActive;
-        int _id;
+        std::string _code;
         std::string _commandOn;
         std::string _commandOff;
         RCSwitch* _switch;
