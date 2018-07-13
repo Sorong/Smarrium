@@ -12,6 +12,8 @@ class SensorList : public QAbstractListModel
 public:
     explicit SensorList(QObject *parent = nullptr);
 
+    ~SensorList();
+
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
@@ -25,6 +27,9 @@ public:
 
     // Remove data:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+    void add(Sensor* sensor);
+
 
 private:
      QList<Sensor*> sensorList;

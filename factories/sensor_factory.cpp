@@ -13,64 +13,75 @@ SensorFactory::SensorFactory(GPIOList& available, SensorList& sensors, QObject *
 
 void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensorType){
     qDebug() << "addAnalogSensor";
+    Sensor *ptr = nullptr;
     switch(sensorType){
 
     case SENSOR_TYPE_MOISTURE:
     {
-        QSharedPointer<MoistureSensor> moistureSensor = QSharedPointer<MoistureSensor>(new MoistureSensor(interval, channel, this->adc.data()));
+        ptr = new MoistureSensor(interval, channel, this->adc.data());
         break;
     }
     case SENSOR_TYPE_UV:
     {
         //todo: Change to one channel
-        QSharedPointer<UVSensor> uvSensor = QSharedPointer<UVSensor>(new UVSensor(interval, channel, channel, this->adc.data()));
+        ptr = new UVSensor(interval, channel, channel, this->adc.data());
         break;
     }
     default:
         return;
+    }
+    if(ptr) {
+        this->sensors.add(ptr);
     }
 }
 
 void SensorFactory::addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensorType){
     qDebug() << "addDigitalSensor";
+    Sensor *ptr = nullptr;
     switch(sensorType){
 
     case SENSOR_TYPE_RELATIVE_HUMIDITY:
     {
-        QSharedPointer<HumiditySensor> humiditySensor = QSharedPointer<HumiditySensor>(new HumiditySensor(interval, gpio, this->interface.data()));
+        ptr = new HumiditySensor(interval, gpio, this->interface.data());
         break;
     }
     case SENSOR_TYPE_TEMPERATURE:
     {
-        QSharedPointer<TemperatureSensor> temperatureSensor = QSharedPointer<TemperatureSensor>(new TemperatureSensor(interval, gpio, this->interface.data()));
+        ptr = new TemperatureSensor(interval, gpio, this->interface.data());
         break;
     }
     default:
         return;
+    }
+    if(ptr) {
+        this->sensors.add(ptr);
     }
 }
 
 void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
     qDebug() << "addI2CSensor";
     uint8_t address;
+    Sensor *ptr = nullptr;
 
     switch(sensorType){
-
     case SENSOR_TYPE_IRTEMPERATURE:
     {
         address = irDefaultAdress++;
-        QSharedPointer<IRTemperatureSensor> irTemperatureSensor = QSharedPointer<IRTemperatureSensor>(new IRTemperatureSensor(interval, address, this->interface.data()));
+        ptr = new IRTemperatureSensor(interval, address, this->interface.data());
         break;
     }
     case SENSOR_TYPE_LIGHT:
     {
         address = lightAdress[numberLightSensors];
-        QSharedPointer<LightSensor> irTemperatureSensor = QSharedPointer<LightSensor>(new LightSensor(interval, address, this->interface.data()));
+        ptr = new LightSensor(interval, address, this->interface.data());
         numberLightSensors++;
         break;
     }
     default:
         return;
+    }
+    if(ptr) {
+        this->sensors.add(ptr);
     }
 }
 

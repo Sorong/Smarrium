@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("sensorFactory", &sensorFactory);
     context->setContextProperty("supportedSensors", &supportedSensors);
     context->setContextProperty("availableChannels", &availableChannels);
+    context->setContextProperty("existingSensors", &sensors);
 
 
     //Ende eigener Code

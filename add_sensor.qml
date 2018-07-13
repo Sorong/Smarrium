@@ -26,7 +26,7 @@ Item {
         anchors.topMargin: 20
         anchors.left: titleActor.left
         anchors.right: titleActor.right
-        model: unavailablePins
+        model: existingSensors
         delegate: Component {
             Item {
                 width: parent.width
@@ -52,7 +52,7 @@ Item {
             }
         }
         focus: true
-        onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
+        //onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
 
     }
 

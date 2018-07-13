@@ -6,6 +6,14 @@ SensorList::SensorList(QObject *parent)
 {
 }
 
+SensorList::~SensorList()
+{
+    for(auto p : this->sensorList) {
+        if(p)
+            delete p;
+    }
+}
+
 QVariant SensorList::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
@@ -55,4 +63,12 @@ bool SensorList::removeRows(int row, int count, const QModelIndex &parent)
     }
     endRemoveRows();
     return true;
+}
+
+void SensorList::add(Sensor *sensor)
+{
+    this->insertRows(sensorList.size(), 1);
+    this->sensorList[sensorList.size() - 1] = sensor;
+
+    qDebug() << "add Sensor:  " << sensorList.at(sensorList.size() - 1);
 }
