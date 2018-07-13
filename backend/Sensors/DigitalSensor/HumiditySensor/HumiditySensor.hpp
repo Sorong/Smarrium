@@ -30,6 +30,7 @@ class HumiditySensor : DigitalSensor, public Sensor
 
 
     float calculateHumidity();
+    sensors_type_t getType() const override;
 
     private:
     void calibrate();

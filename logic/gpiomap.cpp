@@ -1,5 +1,3 @@
-
-#include <QMap>
 #include "gpiomap.h"
 
 GPIOMap::GPIOMap()

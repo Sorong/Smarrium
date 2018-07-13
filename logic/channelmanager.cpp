@@ -32,7 +32,7 @@ ChannelList* ChannelManager::getAvailable(ChannelList *ptr) {
     return getChannelList(ptr, true);
 }
 
-ChannelList* ChannelManager::getUnvailable(ChannelList *ptr) {
+ChannelList* ChannelManager::getUnavailable(ChannelList *ptr) {
     if(!ptr) {
         return nullptr;
     }

@@ -114,6 +114,8 @@ public:
 	// maximum and minimum object sensor temperatures.
 	uint8_t setMax(float maxTemp);
 	uint8_t setMin(float minTemp);
+
+    sensors_type_t getType() const override;
 	
 private:
     uint8_t _address; // MLX90614's 7-bit I2C address

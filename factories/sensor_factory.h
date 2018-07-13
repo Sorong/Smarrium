@@ -2,8 +2,10 @@
 #define SENSORFACTORY_H
 
 #include <QObject>
+#include <QSet>
 #include <QSharedPointer>
 #include "logic/sensorlist.h"
+#include "logic/sensorstringlist.h"
 #include "logic/gpiolist.h"
 #include "logic/channel.h"
 #include "logic/gpio.h"
@@ -29,6 +31,10 @@ public:
     void addAnalogSensor(CHANNEL channel, sensors_type_t sensor);
     void addDigitalSensor(GPIO gpio, sensors_type_t sensor);
     void addI2CSensor(sensors_type_t sensor);
+    void getSensorTypes(SensorStringList *list);
+    Q_INVOKABLE bool isAnalog(QString str);
+    Q_INVOKABLE bool isDigital(QString str);
+    Q_INVOKABLE bool isI2C(QString str);
 signals:
 
 public slots:
@@ -36,6 +42,10 @@ public slots:
 private:
     GPIOList &available;
     SensorList& sensors;
+    SensorMap sensorMap;
+    QSet<sensor_type_t> analogSenors;
+    QSet<sensor_type_t> digitalSensors;
+    QSet<sensor_type_t> i2cSensors;
     QSharedPointer<Bcm2835Interface> interface;
     QSharedPointer<ADC> adc;
     const int DEFAULT_INTERVAL_MS = 300000;

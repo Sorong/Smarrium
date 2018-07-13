@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "backend/Sensors/Sensor.h"
+#include "logic/sensormap.h"
 
 class SensorList : public QAbstractListModel
 {
@@ -26,7 +27,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 private:
-     QList<Sensor*> sensors;
+     QList<Sensor*> sensorList;
 };
 
 #endif // SENSORLIST_H

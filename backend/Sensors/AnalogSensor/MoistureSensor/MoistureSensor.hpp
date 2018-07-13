@@ -19,6 +19,7 @@ public:
     void setChannel(uint8_t) override;
 
     float readMoisture();
+    sensors_type_t getType() const override;
 
 
 private:

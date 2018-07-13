@@ -1,10 +1,13 @@
 #include "sensor_factory.h"
 
 
-SensorFactory::SensorFactory(GPIOList& available,SensorList& sensors, QObject *parent) : QObject(parent), available(available), sensors(sensors)
+SensorFactory::SensorFactory(GPIOList& available, SensorList& sensors, QObject *parent) : QObject(parent), available(available), sensors(sensors)
 {
     this->adc = QSharedPointer<ADC>(new ADC());
     this->interface = QSharedPointer<Bcm2835Interface>(new Bcm2835Interface());
+    this->analogSenors = {SENSOR_TYPE_MOISTURE, SENSOR_TYPE_UV};
+    this->digitalSensors = {SENSOR_TYPE_RELATIVE_HUMIDITY, SENSOR_TYPE_TEMPERATURE};
+    this->i2cSensors = {SENSOR_TYPE_IRTEMPERATURE, SENSOR_TYPE_LIGHT};
 }
 
 void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensorType){
@@ -81,4 +84,25 @@ void SensorFactory::addDigitalSensor(GPIO gpio, sensors_type_t sensor)
 void SensorFactory::addI2CSensor(sensors_type_t sensor)
 {
     this->addI2CSensor(DEFAULT_INTERVAL_MS, sensor);
+}
+
+void SensorFactory::getSensorTypes(SensorStringList *list)
+{
+    if(list)
+        list->setSensorStringList(this->sensorMap.getTypes());
+}
+
+bool SensorFactory::isAnalog(QString str)
+{
+    return this->analogSenors.contains(this->sensorMap[str]);
+}
+
+bool SensorFactory::isDigital(QString str)
+{
+    return this->digitalSensors.contains(this->sensorMap[str]);
+}
+
+bool SensorFactory::isI2C(QString str)
+{
+   return this->i2cSensors.contains(this->sensorMap[str]);
 }

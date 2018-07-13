@@ -44,3 +44,8 @@ uint8_t MoistureSensor::getChannel(){
 float MoistureSensor::readMoisture(){
     return (float)_ADC->myAnalogRead(this->_channel);
 }
+
+sensors_type_t MoistureSensor::getType() const
+{
+    return SENSOR_TYPE_MOISTURE;
+}

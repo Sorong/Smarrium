@@ -25,7 +25,7 @@ GPIOList* GPIOManager::getAvailable(GPIOList *ptr) {
     return getGPIOList(ptr, true);
 }
 
-GPIOList* GPIOManager::getUnvailable(GPIOList *ptr) {
+GPIOList* GPIOManager::getUnavailable(GPIOList *ptr) {
     if(!ptr) {
         return nullptr;
     }

@@ -9,14 +9,14 @@
 #include <QUuid>
 
 
-typedef enum
+typedef enum sensor_type_t
 {
-  SENSOR_TYPE_LIGHT                 = (1),
-  SENSOR_TYPE_RELATIVE_HUMIDITY     = (2),
-  SENSOR_TYPE_TEMPERATURE           = (3),
-  SENSOR_TYPE_UV                    = (4),
-  SENSOR_TYPE_IRTEMPERATURE         = (5),
-  SENSOR_TYPE_MOISTURE              = (6)
+    SENSOR_TYPE_LIGHT                 = (1),
+    SENSOR_TYPE_RELATIVE_HUMIDITY     = (2),
+    SENSOR_TYPE_TEMPERATURE           = (3),
+    SENSOR_TYPE_UV                    = (4),
+    SENSOR_TYPE_IRTEMPERATURE         = (5),
+    SENSOR_TYPE_MOISTURE              = (6)
 } sensors_type_t;
 
 /** struct sensor_event_s is used to provide a single sensor event in a common format. */
@@ -52,19 +52,20 @@ class Sensor: public QTimer {
     Q_OBJECT
 
 public:
-  Sensor(int);
-  virtual ~Sensor() {}
-  
-  virtual bool getEvent(sensors_event_t*) = 0;
-  
- public slots:
-  void intervallElapsed();
+    Sensor(int);
+    virtual ~Sensor() {}
 
- signals:
-  void newSensorEvent(sensors_event_t*);
+    virtual bool getEvent(sensors_event_t*) = 0;
+    virtual sensors_type_t getType() const = 0;
 
- protected:
-  QUuid _id;
+public slots:
+    void intervallElapsed();
+
+signals:
+    void newSensorEvent(sensors_event_t*);
+
+protected:
+    QUuid _id;
 
 };
 

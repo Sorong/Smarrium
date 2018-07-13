@@ -4,6 +4,7 @@
 #include <QQuickStyle>
 #include "logic/actuatorlist.h"
 #include "logic/gpiomanager.h"
+#include "logic/channelmanager.h"
 #include "logic/gpiolist.h"
 #include "factories/sensor_factory.h"
 #include "factories/actuator_factory.h"
@@ -20,14 +21,21 @@ int main(int argc, char *argv[])
 
     //Eigener Code atm hier:
     GPIOManager manager;
+    ChannelManager channelManager;
+    ChannelList availableChannels;
+    ChannelList unavailableChannels;
     GPIOList available;
     GPIOList unavailable;
     SensorList sensors;
     ActuatorList actuators;
     ActuatorFactory actuatorFactory(actuators);
+    SensorStringList supportedSensors;
     SensorFactory sensorFactory(available, sensors);
+    sensorFactory.getSensorTypes(&supportedSensors);
     manager.getAvailable(&available);
-    manager.getUnvailable(&unavailable);
+    manager.getUnavailable(&unavailable);
+    channelManager.getAvailable(&availableChannels);
+    channelManager.getUnavailable(&unavailableChannels);
 
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("availablePins", &available);
@@ -35,6 +43,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("actuators", &actuators);
     context->setContextProperty("actuatorFactory", &actuatorFactory);
     context->setContextProperty("sensorFactory", &sensorFactory);
+    context->setContextProperty("supportedSensors", &supportedSensors);
 
 
     //Ende eigener Code

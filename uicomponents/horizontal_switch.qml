@@ -7,7 +7,7 @@ Column {
     Switch {
         checked: parent.checked
         rotation: -90
-        onClicked: function()  {parent.checked= !parent.checked}
+        onClicked: function()  {parent.checked = !parent.checked}
     }
     Label {
         anchors.horizontalCenter: parent.horizontalCenter

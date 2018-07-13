@@ -24,6 +24,11 @@ float UVSensor::calculateUV()
 
 }
 
+sensors_type_t UVSensor::getType() const
+{
+    return SENSOR_TYPE_UV;
+}
+
 float UVSensor::averageAnalogRead(uint8_t pinToRead)
 {
   uint8_t numberOfReadings = 8;

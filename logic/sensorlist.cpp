@@ -10,7 +10,6 @@ QVariant SensorList::headerData(int section, Qt::Orientation orientation, int ro
 {
     if (role != Qt::DisplayRole)
         return QVariant();
-
     if (orientation == Qt::Horizontal)
         return QString("Column %1").arg(section);
     else
@@ -24,7 +23,7 @@ int SensorList::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return this->sensors.count();
+    return this->sensorList.count();
 }
 
 QVariant SensorList::data(const QModelIndex &index, int role) const
@@ -32,14 +31,14 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
     qDebug() << "sensorList" << index.row();
     if (!index.isValid() && role == Qt::DisplayPropertyRole)
         return QVariant();
-    return QVariant("??");
+    return QVariant("sensorMap[this->sensorList.at(index.row())->getType()]");
 }
 
 bool SensorList::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
     for (int i = 0; i < count; i++) {
-        sensors.insert(row, nullptr);
+        sensorList.insert(row, nullptr);
     }
     endInsertRows();
     return true;
@@ -49,10 +48,10 @@ bool SensorList::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     for(int i = 0; i < count; i++) {
-        Sensor* sensor = this->sensors.at(row);
+        Sensor* sensor = this->sensorList.at(row);
         if(sensor)
             delete sensor;
-        this->sensors.removeAt(row);
+        this->sensorList.removeAt(row);
     }
     endRemoveRows();
     return true;

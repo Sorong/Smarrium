@@ -184,7 +184,12 @@ uint8_t IRTemperatureSensor::setMin(float minTemp)
 	// Convert the unit-ed value to a raw ADC value:
 	int16_t rawMin = calcRawTemp(minTemp);
 	// Write that value to the TOMIN EEPROM address:	
-	return writeEEPROM(MLX90614_REGISTER_TOMIN, rawMin);
+    return writeEEPROM(MLX90614_REGISTER_TOMIN, rawMin);
+}
+
+sensors_type_t IRTemperatureSensor::getType() const
+{
+    return SENSOR_TYPE_IRTEMPERATURE;
 }
 
 uint8_t IRTemperatureSensor::setEmissivity(float emis)

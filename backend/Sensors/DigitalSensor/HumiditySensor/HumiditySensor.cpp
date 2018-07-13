@@ -33,6 +33,11 @@ float HumiditySensor::calculateHumidity(){
     return humidity;
 }
 
+sensors_type_t HumiditySensor::getType() const
+{
+    return SENSOR_TYPE_RELATIVE_HUMIDITY;
+}
+
 
 bool HumiditySensor::getEvent(sensors_event_t* event)
 {

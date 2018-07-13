@@ -30,7 +30,7 @@ class TemperatureSensor : DigitalSensor, public Sensor{
     uint8_t getPin() override;
     void setPin(uint8_t) override;
     float readTemperature();
-
+    sensors_type_t getType() const override;
 
     private:
 

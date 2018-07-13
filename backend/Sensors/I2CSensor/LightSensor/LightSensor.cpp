@@ -424,6 +424,11 @@ void LightSensor::setAddress(uint8_t address){
     this->_address = address;
 }
 
+sensors_type_t LightSensor::getType() const
+{
+    return SENSOR_TYPE_LIGHT;
+}
+
 uint8_t LightSensor::getAddress(){
     return this->_address;
 }

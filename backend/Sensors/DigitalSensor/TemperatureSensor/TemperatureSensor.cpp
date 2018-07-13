@@ -74,6 +74,11 @@ float TemperatureSensor::readTemperature(){
     return temp;
 }
 
+sensors_type_t TemperatureSensor::getType() const
+{
+    return SENSOR_TYPE_TEMPERATURE;
+}
+
 void TemperatureSensor::convert(){
     _wire->writeByte(_pin, CONVERT_TEMP);
     for (int i = 0; i < 1000; i++) {

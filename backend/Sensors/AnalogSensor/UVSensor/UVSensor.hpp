@@ -17,6 +17,7 @@ class UVSensor: AnalogSensor, public Sensor{
     uint8_t getChannel() override;
     void setChannel(uint8_t) override;
     float calculateUV();
+    sensors_type_t getType() const override;
 
     private:
     float mapfloat(float x, float inMin, float inMax, float outMin, float outMax);

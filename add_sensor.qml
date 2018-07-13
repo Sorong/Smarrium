@@ -67,7 +67,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("add_analog_sensor.qml")
+            stackView.push("configure.qml")
         }
     }
 
@@ -86,11 +86,16 @@ Item {
         }
     }
     Pane {
+        id: sensorCreatePane
         anchors.top: content.bottom
         anchors.topMargin: 20
         anchors.left: content.left
         width: parent.width * 2/3
         Row {
+            property var selectionChanged: function() {
+                console.log("changed")
+            }
+
             spacing: 5
             Column {
                 Text {
@@ -100,11 +105,14 @@ Item {
                 ComboBox {
                     id: digitalSensorSelector
                     textRole: "display"
-                    model: availablePins
+                    width: sensorCreatePane.width * 0.25
+                    model: supportedSensors
+                    onCurrentIndexChanged: parent.selectionChanged
                 }
             }
 
             Column {
+                id: sensorOptions
                 Text {
                     text: "GPIO: "
                 }
@@ -112,13 +120,14 @@ Item {
                 ComboBox {
                     id: digitalGPIOSelector
                     textRole: "display"
+                    width: sensorCreatePane.width * 0.25
                     model: availablePins
                 }
             }
 
             RoundButton {
                 id: add
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.bottom: parent.bottom
                 icon { source:"/icons/svg/ic_add_48px.svg"}
                 onClicked: {
                     actuators.setSender(availablePins.at(gpioSelector.currentIndex))

@@ -14,7 +14,7 @@ public:
     ChannelManager();
     virtual ~ChannelManager();
     ChannelList* getAvailable(ChannelList*);
-    ChannelList* getUnvailable(ChannelList*);
+    ChannelList* getUnavailable(ChannelList*);
     QString pinToString(CHANNEL);
     CHANNEL stringToPin(const QString&);
 signals:

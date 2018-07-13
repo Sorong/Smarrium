@@ -165,6 +165,7 @@ class LightSensor: I2CSensor, public Sensor {
 
   uint8_t getAddress() override;
   void setAddress(uint8_t) override;
+  sensors_type_t getType() const override;
 
  private:
   Bcm2835Interface *_i2c;
