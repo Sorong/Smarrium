@@ -28,6 +28,5 @@ void SensorMap::addItem(const sensors_type_t &type, const QString &str)
 }
 
 QStringList SensorMap::getTypes() {
-    qDebug() << this->mapToString.values();
     return QStringList(this->mapToString.values());
 }

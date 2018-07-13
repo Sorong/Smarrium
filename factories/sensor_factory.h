@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QSet>
 #include <QSharedPointer>
+#include <logic/channelmap.h>
+#include <logic/gpiomap.h>
 #include "logic/sensorlist.h"
 #include "logic/sensorstringlist.h"
 #include "logic/gpiolist.h"
@@ -28,8 +30,11 @@ public:
     void addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensor);
     void addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensor);
     void addI2CSensor(int interval, sensors_type_t sensor);
+    Q_INVOKABLE void addAnalogSensor(QString channel, QString sensor);
     void addAnalogSensor(CHANNEL channel, sensors_type_t sensor);
+    Q_INVOKABLE void addDigitalSensor(QString gpio, QString sensor);
     void addDigitalSensor(GPIO gpio, sensors_type_t sensor);
+    Q_INVOKABLE void addI2CSensor(QString sensor);
     void addI2CSensor(sensors_type_t sensor);
     void getSensorTypes(SensorStringList *list);
     Q_INVOKABLE bool isAnalog(QString str);
@@ -43,6 +48,8 @@ private:
     GPIOList &available;
     SensorList& sensors;
     SensorMap sensorMap;
+    GPIOMap gpioMap;
+    ChannelMap channelMap;
     QSet<sensor_type_t> analogSenors;
     QSet<sensor_type_t> digitalSensors;
     QSet<sensor_type_t> i2cSensors;

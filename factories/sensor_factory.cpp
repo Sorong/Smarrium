@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "sensor_factory.h"
 
 
@@ -11,7 +12,7 @@ SensorFactory::SensorFactory(GPIOList& available, SensorList& sensors, QObject *
 }
 
 void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensorType){
-
+    qDebug() << "addAnalogSensor";
     switch(sensorType){
 
     case SENSOR_TYPE_MOISTURE:
@@ -31,6 +32,7 @@ void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_
 }
 
 void SensorFactory::addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensorType){
+    qDebug() << "addDigitalSensor";
     switch(sensorType){
 
     case SENSOR_TYPE_RELATIVE_HUMIDITY:
@@ -49,6 +51,7 @@ void SensorFactory::addDigitalSensor(int interval, GPIO gpio, sensors_type_t sen
 }
 
 void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
+    qDebug() << "addI2CSensor";
     uint8_t address;
 
     switch(sensorType){
@@ -71,14 +74,34 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
     }
 }
 
+void SensorFactory::addAnalogSensor(QString channel, QString sensor)
+{
+    sensor_type_t type = this->sensorMap[sensor];
+    CHANNEL chan = this->channelMap[channel];
+    this->addAnalogSensor(chan, type);
+}
+
 void SensorFactory::addAnalogSensor(CHANNEL channel, sensors_type_t sensor)
 {
     this->addAnalogSensor(DEFAULT_INTERVAL_MS, channel, sensor);
 }
 
+void SensorFactory::addDigitalSensor(QString gpio, QString sensor)
+{
+    sensor_type_t type = this->sensorMap[sensor];
+    GPIO pin = this->gpioMap[gpio];
+    this->addDigitalSensor(pin, type);
+}
+
 void SensorFactory::addDigitalSensor(GPIO gpio, sensors_type_t sensor)
 {
     this->addDigitalSensor(DEFAULT_INTERVAL_MS, gpio, sensor);
+}
+
+void SensorFactory::addI2CSensor(QString sensor)
+{
+       sensor_type_t type = this->sensorMap[sensor];
+       this->addI2CSensor(type);
 }
 
 void SensorFactory::addI2CSensor(sensors_type_t sensor)
