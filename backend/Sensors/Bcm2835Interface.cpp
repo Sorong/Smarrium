@@ -1,31 +1,32 @@
 #include "Bcm2835Interface.hpp"
 
 Bcm2835Interface::Bcm2835Interface(){
+    qDebug() << "bcm2835_init";
     if (!bcm2835_init())
     {
-    printf("bcm2835_init failed. Are you running as root??\n");
-    
+        qDebug() << "bcm2835_init failed. Are you running as root??\n";
     }
 }
 
 uint8_t Bcm2835Interface::read8(uint8_t address, uint8_t reg){
-    printf("%d", reg);
     char data[2];
     memset(data, 0, sizeof(char));
     bcm2835_i2c_begin();
     data[0] = reg;
-    bcm2835_i2c_set_baudrate(25000);
+
+
+    bcm2835_i2c_set_baudrate(2500);
     bcm2835_i2c_setSlaveAddress(address);
             
 	int err = bcm2835_i2c_write(data, 1);
 	if( err != BCM2835_I2C_REASON_OK ) {
 
-		printf("Read8: Unable to write command register %02x\n",err);
+        //printf("Read8: Unable to write command register %02x\n",err);
 		return 0;
 	}
 	err = bcm2835_i2c_read(data, 1);
 	if( err != BCM2835_I2C_REASON_OK ) {
-		printf("Read8: Unable to read last command response %02x\n",err);
+        //printf("Read8: Unable to read last command response %02x\n",err);
 		return 0;
 	}
 

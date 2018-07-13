@@ -1,4 +1,5 @@
 #include "HumiditySensor.hpp"
+#include <QDebug>
 
 HumiditySensor::HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wire): Sensor(intervall)
 {
