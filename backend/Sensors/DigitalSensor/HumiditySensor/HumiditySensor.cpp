@@ -5,7 +5,7 @@ HumiditySensor::HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wir
     _pin = pin;
     _wire = wire;
     bcm2835_gpio_fsel(_pin, BCM2835_GPIO_FSEL_INPT);
-    this->calibrate();
+    //this->calibrate();
 }
 
 HumiditySensor::~HumiditySensor(){
@@ -27,9 +27,6 @@ void HumiditySensor::calibrate(){
 float HumiditySensor::calculateHumidity(){
     double frequenz = readFrequenz();
     float humidity = float((_offset - frequenz) * _sensitivity) / float(4096);
-    printf("%d\n", _offset);
-    printf("%d\n", _sensitivity);
-    printf("%f\n", frequenz);
     return humidity;
 }
 
@@ -59,10 +56,8 @@ bool HumiditySensor::getEvent(sensors_event_t* event)
 
 void HumiditySensor::getDigitalSensor(sensor_digital_t *sensor)
 {
-    /* Clear the sensor_t object */
     memset(sensor, 0, sizeof(sensor_digital_t));
 
-    /* Insert the sensor name in the fixed length char array */
     strncpy (sensor->name, "HH10D", sizeof(sensor->name) - 1);
     sensor->name[sizeof(sensor->name)- 1] = 0;
     sensor->version     = 1;
@@ -78,7 +73,7 @@ float HumiditySensor::readFrequenz(){
     long frequenz;
     long timePeekToBottom = 0;
 
-    for(int cycle = 0; cycle < 5000; cycle++){
+    for(int cycle = 0; cycle < AVERAGE_READING; cycle++){
         while(bcm2835_gpio_lev(_pin) == LOW){
 
         }
@@ -90,10 +85,9 @@ float HumiditySensor::readFrequenz(){
         difference = ((t2.tv_sec * 1000000000L) + t2.tv_nsec)
                    - ((t1.tv_sec * 1000000000L) + t1.tv_nsec);
         timePeekToBottom += difference;
-        //printf("Combined: %d\n", timePeekToBottom);
-        //printf("Difference: %d\n", difference);
+
     }
-    timePeekToBottom /= 5000; //Durschnittliche Zeit in ns
+    timePeekToBottom /= AVERAGE_READING; //Durschnittliche Zeit in ns
     timePeekToBottom /= 1000; //ns to ms
 
     frequenz = 500000 / timePeekToBottom;

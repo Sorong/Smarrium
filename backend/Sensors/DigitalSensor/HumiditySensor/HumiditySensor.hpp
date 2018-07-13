@@ -12,6 +12,7 @@
 #define SENSITIVITY_ADDR_HIGH   (0x0B)
 #define OFFSET_ADDR_LOW         (0x0C)
 #define OFFSET_ADDR_HIGH        (0x0D)
+#define AVERAGE_READING         1000
 
 
 

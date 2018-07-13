@@ -61,11 +61,6 @@ float TemperatureSensor::readTemperature(){
     for (int i = 0; i < 9; i++) {
         data[i] = _wire->readByte(_pin);
     }
-    //uint8_t crc = crc8(data, 9);
-
-    //if(crc!=0){
-    //    return -2000;
-    //}
 
     int t1 = data[0];
     int t2 = data[1];
