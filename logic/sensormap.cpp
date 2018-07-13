@@ -3,12 +3,12 @@
 
 SensorMap::SensorMap()
 {
-    addItem(SENSOR_TYPE_LIGHT, "Substrat-Hygrometer");
+    addItem(SENSOR_TYPE_LIGHT, "Lichtsensor");
     addItem(SENSOR_TYPE_RELATIVE_HUMIDITY, "Hygrometer");
     addItem(SENSOR_TYPE_TEMPERATURE, "Thermometer");
     addItem(SENSOR_TYPE_UV, "UV-Messer");
     addItem(SENSOR_TYPE_IRTEMPERATURE, "Infrarot-Thermometer");
-    addItem(SENSOR_TYPE_MOISTURE, "Infrarottemperatursensor");
+    addItem(SENSOR_TYPE_MOISTURE, "Substrat-Hygrometer");
 }
 
 const QString &SensorMap::operator[](const sensor_type_t &type)

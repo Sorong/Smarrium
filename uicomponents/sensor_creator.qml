@@ -2,46 +2,66 @@ import QtQuick 2.0
 import QtQuick.Controls 2.3
 
 Row {
-//    property var selectionChanged: function() {
-//        console.log("changed")
-//    }
+    id: sensorCreator
+    property var onSelectionChanged: function(item) {
+        sensorOptions.typeChange(item)
+    }
+    Component.onCompleted: function() {
+        this.onSelectionChanged(supportedSensors.at(sensorSelector.currentIndex))
+    }
 
-//    spacing: 5
-//    Column {
-//        Text {
-//            text: "Sensortyp: "
-//        }
+    spacing: 5
+    Column {
+        Text {
+            text: "Sensortyp: "
+        }
 
-//        ComboBox {
-//            id: digitalSensorSelector
-//            textRole: "display"
-//            width: sensorCreatePane.width * 0.25
-//            model: supportedSensors
-//            onCurrentIndexChanged: parent.selectionChanged
-//        }
-//    }
+        ComboBox {
+            id: sensorSelector
+            textRole: "display"
+            width: sensorCreatePane.width * 0.25
+            model: supportedSensors
+            onCurrentIndexChanged: sensorCreator.onSelectionChanged(model.at(currentIndex))
+        }
+    }
 
-//    Column {
-//        id: sensorOptions
-//        Text {
-//            text: "GPIO: "
-//        }
+    Column {
+        id: sensorOptions
+        property var typeChange: function(type) {
+            if (sensorFactory.isAnalog(type)) {
+                sensorOptionText.text = "Channel: "
+                sensorOptionSelector.enabled = true
+                sensorOptionSelector.model = availableChannels
+            } else if (sensorFactory.isDigital(type)) {
+                sensorOptionText.text = "GPIO: "
+                sensorOptionSelector.enabled = true
+                sensorOptionSelector.model = availablePins
+            } else {
+                sensorOptionText.text = "keine Optionen verfügbar"
+                sensorOptionSelector.enabled = false
+                sensorOptionSelector.model = undefined
+            }
+        }
 
-//        ComboBox {
-//            id: digitalGPIOSelector
-//            textRole: "display"
-//            width: sensorCreatePane.width * 0.25
-//            model: availablePins
-//        }
-//    }
+        Text {
+            id: sensorOptionText
+            text: parent.type ? parent.type : ""
+        }
 
-//    RoundButton {
-//        id: add
-//        anchors.bottom: parent.bottom
-//        icon { source:"/icons/svg/ic_add_48px.svg"}
-//        onClicked: {
-//            actuators.setSender(availablePins.at(gpioSelector.currentIndex))
-//            availablePins.removeAt(gpioSelector.currentIndex)
-//        }
-//    }
+        ComboBox {
+            id: sensorOptionSelector
+            textRole: "display"
+            width: sensorCreatePane.width * 0.25
+        }
+    }
+
+    RoundButton {
+        id: add
+        anchors.bottom: parent.bottom
+        icon { source:"/icons/svg/ic_add_48px.svg"}
+        onClicked: {
+            actuators.setSender(availablePins.at(gpioSelector.currentIndex))
+            availablePins.removeAt(gpioSelector.currentIndex)
+        }
+    }
 }

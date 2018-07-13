@@ -91,49 +91,10 @@ Item {
         anchors.topMargin: 20
         anchors.left: content.left
         width: parent.width * 2/3
-        Row {
-            property var selectionChanged: function() {
-                console.log("changed")
-            }
-
-            spacing: 5
-            Column {
-                Text {
-                    text: "Sensortyp: "
-                }
-
-                ComboBox {
-                    id: digitalSensorSelector
-                    textRole: "display"
-                    width: sensorCreatePane.width * 0.25
-                    model: supportedSensors
-                    onCurrentIndexChanged: parent.selectionChanged
-                }
-            }
-
-            Column {
-                id: sensorOptions
-                Text {
-                    text: "GPIO: "
-                }
-
-                ComboBox {
-                    id: digitalGPIOSelector
-                    textRole: "display"
-                    width: sensorCreatePane.width * 0.25
-                    model: availablePins
-                }
-            }
-
-            RoundButton {
-                id: add
-                anchors.bottom: parent.bottom
-                icon { source:"/icons/svg/ic_add_48px.svg"}
-                onClicked: {
-                    actuators.setSender(availablePins.at(gpioSelector.currentIndex))
-                    availablePins.removeAt(gpioSelector.currentIndex)
-                }
-            }
+        Component.onCompleted: function() {
+            var component = Qt.createComponent("uicomponents/sensor_creator.qml")
+            if (component.status === Component.Ready)
+                component.createObject(sensorCreatePane);
         }
     }
 

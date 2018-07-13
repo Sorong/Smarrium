@@ -19,6 +19,8 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    Q_INVOKABLE QString at(int index);
+
 private:
     QStringList stringList;
 };

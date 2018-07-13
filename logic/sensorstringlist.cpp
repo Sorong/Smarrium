@@ -8,6 +8,7 @@ SensorStringList::SensorStringList(QObject *parent)
 void SensorStringList::setSensorStringList(QStringList list)
 {
     this->stringList = list;
+    this->stringList.sort();
 }
 
 QVariant SensorStringList::headerData(int section, Qt::Orientation orientation, int role) const
@@ -35,4 +36,9 @@ QVariant SensorStringList::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
     return QVariant(this->stringList.at(index.row()));
+}
+
+QString SensorStringList::at(int index)
+{
+    return this->stringList.at(index);
 }
