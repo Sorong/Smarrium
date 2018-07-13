@@ -74,6 +74,15 @@ sensors_type_t TemperatureSensor::getType() const
     return SENSOR_TYPE_TEMPERATURE;
 }
 
+QString TemperatureSensor::getSort(){
+    return this->sort;
+}
+
+QString TemperatureSensor::toString(){
+    return QString("Temperatursensor, GPIO PIN: " + this->_pin);
+}
+
+
 void TemperatureSensor::convert(){
     _wire->writeByte(_pin, CONVERT_TEMP);
     for (int i = 0; i < 1000; i++) {

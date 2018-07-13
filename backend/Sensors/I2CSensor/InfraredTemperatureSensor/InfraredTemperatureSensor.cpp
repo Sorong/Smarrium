@@ -16,6 +16,15 @@ void IRTemperatureSensor::enableAutoRange(bool enable){
 	return;
 }
 
+QString IRTemperatureSensor::getSort(){
+    return this->sort;
+}
+
+QString IRTemperatureSensor::toString(){
+    return QString("Infrarottermometer");
+}
+
+
 bool IRTemperatureSensor::getEvent(sensors_event_t* event){
 	readObject();
 	memset(event, 0, sizeof(sensors_event_t));

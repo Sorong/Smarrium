@@ -16,10 +16,12 @@ class UVSensor: AnalogSensor, public Sensor{
     void getAnalogSensor(sensor_analog_t*) override;
     uint8_t getChannel() override;
     void setChannel(uint8_t) override;
-    float calculateUV();
+    QString toString() override;
     sensors_type_t getType() const override;
+    QString getSort() override;
 
     private:
+    float calculateUV();
     float mapfloat(float x, float inMin, float inMax, float outMin, float outMax);
     float averageAnalogRead(uint8_t pin);
 

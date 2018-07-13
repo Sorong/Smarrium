@@ -39,7 +39,7 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
     qDebug() << "sensorList" << index.row();
     if (!index.isValid() && role == Qt::DisplayPropertyRole)
         return QVariant();
-    return QVariant("sensorMap[this->sensorList.at(index.row())->getType()]");
+    return this->sensorList.at(index.row())->toString();
 }
 
 bool SensorList::insertRows(int row, int count, const QModelIndex &parent)

@@ -22,6 +22,10 @@ public:
     virtual uint8_t getPin() = 0;
     virtual void setPin(uint8_t) = 0;
     virtual void getDigitalSensor(sensor_digital_t*) = 0;
+
+
+protected:
+    QString sort = "digital";
 };
 
 #endif

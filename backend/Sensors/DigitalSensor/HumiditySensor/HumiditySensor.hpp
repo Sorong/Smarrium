@@ -28,6 +28,8 @@ class HumiditySensor : DigitalSensor, public Sensor
     void getDigitalSensor(sensor_digital_t*) override;
     uint8_t getPin() override;
     void setPin(uint8_t) override;
+    QString getSort() override;
+    QString toString() override;
 
 
     float calculateHumidity();

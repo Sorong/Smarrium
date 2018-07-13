@@ -7,6 +7,7 @@
 #include <string.h>
 #include <QTimer>
 #include <QUuid>
+#include <QString>
 
 
 typedef enum sensor_type_t
@@ -57,7 +58,13 @@ public:
 
     virtual bool getEvent(sensors_event_t*) = 0;
     virtual sensors_type_t getType() const = 0;
-    QUuid getId();
+    virtual QString getSort() = 0;
+    virtual QString toString() = 0;
+
+    int getInterval();
+    void setInterval(int inerval);
+    QString getId();
+
 
 public slots:
     void intervallElapsed();
@@ -67,6 +74,8 @@ signals:
 
 protected:
     QUuid _id;
+    int _interval;
+
 
 };
 

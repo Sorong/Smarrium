@@ -29,6 +29,15 @@ sensors_type_t UVSensor::getType() const
     return SENSOR_TYPE_UV;
 }
 
+QString UVSensor::getSort(){
+    return this->sort;
+}
+
+QString UVSensor::toString(){
+    return QStringLiteral("UV-Sensor, Kanal: %1").arg(this->_channel);
+}
+
+
 float UVSensor::averageAnalogRead(uint8_t pinToRead)
 {
   uint8_t numberOfReadings = 8;

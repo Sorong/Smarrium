@@ -31,6 +31,8 @@ class TemperatureSensor : DigitalSensor, public Sensor{
     void setPin(uint8_t) override;
     float readTemperature();
     sensors_type_t getType() const override;
+    QString getSort() override;
+    QString toString() override;
 
     private:
 

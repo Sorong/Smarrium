@@ -429,6 +429,15 @@ sensors_type_t LightSensor::getType() const
     return SENSOR_TYPE_LIGHT;
 }
 
+QString LightSensor::getSort(){
+    return this->sort;
+}
+
+QString LightSensor::toString(){
+    return QString("Lichtsensor");
+}
+
+
 uint8_t LightSensor::getAddress(){
     return this->_address;
 }
