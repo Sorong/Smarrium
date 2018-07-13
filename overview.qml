@@ -16,19 +16,66 @@ Item {
         horizontalAlignment: Text.AlignHCenter
     }
 
-
-    Label {
+    ComboBox {
         id: content
         anchors.top: titleActor.bottom
         anchors.topMargin: 20
-        text: qsTr("ALorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,")
-        font.pointSize: 8
-        lineHeight: 1
-        fontSizeMode: Text.FixedSize
         anchors.left: titleActor.left
         anchors.right: titleActor.right
-        wrapMode: Text.WordWrap
-        font.weight: Font.Light
+        width: parent.width * 2/3
+        model: actuators
+        onCurrentIndexChanged: function() {
+            if(currentIndex >= 0)
+                sensorList.model = model.at(currentIndex).getManager().getSensors();
+        }
+       Component.onCompleted: onCurrentIndexChanged()
+    }
+
+    ListView {
+        id: sensorList
+        width: 200; height: 250
+        anchors.top: content.bottom
+        anchors.topMargin: 20
+        anchors.left: content.left
+        anchors.right: content.right
+        model: ""
+        delegate: Component {
+            Item {
+                width: parent.width
+                height: 40
+                Column {
+                    //anchors.centerIn: parent
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: 'Pin: ' + display
+                    }
+                }
+                Column {
+                    Text {
+                        text: 'Configuration: '
+                    }
+
+                    TextArea {
+
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: content.currentIndex = index
+                }
+            }
+        }
+        highlight: Rectangle {
+            color: 'lightgrey'
+            Text {
+                anchors.centerIn: parent
+                color: 'white'
+            }
+        }
+        focus: true
+        //onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
+
     }
 
     Button {

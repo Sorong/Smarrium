@@ -9,7 +9,7 @@ ActuatorFactory::ActuatorFactory(ActuatorList& actuators, QObject *parent) :  QO
 
 void ActuatorFactory::addActuator(QList<bool> flipSwitch){
     qDebug() << "addActuator";
-    std::string socketCombination("");
+    QString socketCombination("");
     for(int index = 0; index < flipSwitch.size(); index++){
         socketCombination.append(flipSwitch[index] ? "0" : "F");
     }

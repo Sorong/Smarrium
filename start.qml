@@ -55,6 +55,9 @@ Item {
         anchors.bottomMargin: 20
         anchors.right: content.right
         anchors.rightMargin: 0
+        onClicked: {
+            stackView.push("overview.qml")
+        }
     }
 
     Button {
@@ -68,6 +71,9 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         anchors.topMargin: 6
+        onClicked: {
+            stackView.push("overview.qml")
+        }
     }
 
 }

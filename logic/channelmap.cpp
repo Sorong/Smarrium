@@ -1,5 +1,5 @@
 #include <QMap>
-#include "channelmap.h".h"
+#include "channelmap.h"
 
 ChannelMap::ChannelMap()
 {

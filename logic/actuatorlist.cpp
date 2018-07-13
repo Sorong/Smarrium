@@ -32,7 +32,7 @@ QVariant ActuatorList::data(const QModelIndex &index, int role) const
     qDebug() << "actuatorlist" << index.row();
     if (!index.isValid() && role == Qt::DisplayPropertyRole)
         return QVariant();
-    return QVariant(QString::fromStdString(this->actuators.at(index.row())->getCode()));
+    return QVariant(this->actuators.at(index.row())->getCode());
 }
 
 bool ActuatorList::insertRows(int row, int count, const QModelIndex &parent)
@@ -55,15 +55,23 @@ bool ActuatorList::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
+QHash<int, QByteArray> ActuatorList::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[TypeRole] = "type";
+    roles[CodeRole] = "code";
+    return roles;
+}
+
 void ActuatorList::addActuator(const QSharedPointer<Actuator> actuator)
 {
     this->insertRows(actuators.size(), 1);
     this->actuators[actuators.size() - 1] = actuator;
 }
 
-const QString ActuatorList::at(int index)
+const Actuator& ActuatorList::at(int index)
 {
-    return QString::fromStdString(this->actuators.at(index)->getCode());
+    return *this->actuators.at(index);
 }
 
 bool ActuatorList::removeAt(int index)

@@ -7,6 +7,11 @@ Sensor::Sensor(int intervall)
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
 }
 
+QUuid Sensor::getId()
+{
+    return this->_id;
+}
+
 void Sensor::intervallElapsed(){
     sensors_event_t* event = new sensors_event_t();
     this->getEvent(event);

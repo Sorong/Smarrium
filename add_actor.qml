@@ -43,7 +43,7 @@ Item {
                        // anchors.horizontalCenter: parent.horizontalCenter
                         Text {                
                             anchors.verticalCenter: parent.verticalCenter
-                            text: (index+1) + '. Adresse:  ' + display
+                            text: (index+1) + '. Adresse:  ' + code
                         }
                         RoundButton {
                             anchors.right: parent.right

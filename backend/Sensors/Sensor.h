@@ -57,6 +57,7 @@ public:
 
     virtual bool getEvent(sensors_event_t*) = 0;
     virtual sensors_type_t getType() const = 0;
+    QUuid getId();
 
 public slots:
     void intervallElapsed();

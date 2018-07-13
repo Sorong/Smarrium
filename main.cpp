@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
     context->setContextProperty("availableChannels", &availableChannels);
     context->setContextProperty("existingSensors", &sensors);
 
-
     //Ende eigener Code
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

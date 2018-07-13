@@ -13,6 +13,10 @@ class ActuatorList : public QAbstractListModel
     Q_OBJECT
 
 public:
+    enum Roles {
+        TypeRole = Qt::UserRole + 1,
+        CodeRole
+    };
     explicit ActuatorList(QObject *parent = nullptr);
 
     // Header:
@@ -29,9 +33,12 @@ public:
     // Remove data:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+    QHash<int, QByteArray> roleNames() const override;
+
+
     void addActuator(const QSharedPointer<Actuator> actuator);
 
-    Q_INVOKABLE const QString at(int index);
+    Q_INVOKABLE const Actuator& at(int index);
 
     Q_INVOKABLE bool removeAt(int index);
 
