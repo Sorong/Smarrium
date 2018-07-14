@@ -1,13 +1,14 @@
 #include "./backend/Sensors/Sensor.h"
 
-Sensor::Sensor(int intervall)
+Sensor::Sensor(int interval)
 {
     this->_id = QUuid::createUuid();
-    start(intervall);
+    this->_interval = interval;
+    start(interval);
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
 }
 
-QUuid Sensor::getId()
+QUuid Sensor::getUuid()
 {
     return this->_id;
 }
@@ -17,3 +18,19 @@ void Sensor::intervallElapsed(){
     this->getEvent(event);
     emit newSensorEvent(event);
 }
+
+int Sensor::getInterval(){
+    return this->_interval;
+}
+
+
+void Sensor::setInterval(int interval){
+    stop();
+    start(interval);
+}
+
+QString Sensor::getId(){
+    return this->_id.toString();
+}
+
+

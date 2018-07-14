@@ -10,6 +10,13 @@ class SensorList : public QAbstractListModel
     Q_OBJECT
 
 public:
+    enum Roles {
+        TypeRole = Qt::UserRole + 1,
+        NameRole,
+        IntervalRole,
+        UuidRole
+    };
+
     explicit SensorList(QObject *parent = nullptr);
 
     ~SensorList();
@@ -27,6 +34,8 @@ public:
 
     // Remove data:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+    QHash<int, QByteArray> roleNames() const override;
 
     void add(Sensor* sensor);
 

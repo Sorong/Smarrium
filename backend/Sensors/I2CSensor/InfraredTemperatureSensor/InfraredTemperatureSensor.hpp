@@ -51,6 +51,8 @@ public:
     bool getEvent(sensors_event_t*) override;
 
     void getI2CSensor(sensor_I2C_t*) override;
+    QString getSort() override;
+    QString toString() override;
 	
 
 	// read() pulls the latest ambient and object temperatures from the 

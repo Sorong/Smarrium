@@ -7,6 +7,7 @@
 #include <string.h>
 #include <QTimer>
 #include <QUuid>
+#include <QString>
 
 
 typedef enum sensor_type_t
@@ -50,6 +51,10 @@ typedef struct{
 
 class Sensor: public QTimer {
     Q_OBJECT
+    Q_PROPERTY(QString name READ toString)
+    Q_PROPERTY(QString interval READ getInterval)
+    Q_PROPERTY(QString uuid READ getId)
+    //Q_PROPERTY(QString connection READ getConnection)
 
 public:
     Sensor(int);
@@ -57,7 +62,14 @@ public:
 
     virtual bool getEvent(sensors_event_t*) = 0;
     virtual sensors_type_t getType() const = 0;
-    QUuid getId();
+    virtual QString getSort() = 0;
+    Q_INVOKABLE virtual QString toString() = 0;
+
+    Q_INVOKABLE int getInterval();
+    void setInterval(int inerval);
+    QUuid getUuid();
+    Q_INVOKABLE QString getId();
+
 
 public slots:
     void intervallElapsed();
@@ -67,6 +79,8 @@ signals:
 
 protected:
     QUuid _id;
+    int _interval;
+
 
 };
 

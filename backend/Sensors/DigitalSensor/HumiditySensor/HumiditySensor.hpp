@@ -12,6 +12,7 @@
 #define SENSITIVITY_ADDR_HIGH   (0x0B)
 #define OFFSET_ADDR_LOW         (0x0C)
 #define OFFSET_ADDR_HIGH        (0x0D)
+#define AVERAGE_READING         1000
 
 
 
@@ -27,6 +28,8 @@ class HumiditySensor : DigitalSensor, public Sensor
     void getDigitalSensor(sensor_digital_t*) override;
     uint8_t getPin() override;
     void setPin(uint8_t) override;
+    QString getSort() override;
+    QString toString() override;
 
 
     float calculateHumidity();

@@ -5,6 +5,7 @@
 #include "bcm2835.h"
 #include <cstdio>
 #include <string.h>
+#include <QDebug>
 
 
 class Bcm2835Interface{

@@ -38,7 +38,8 @@ SOURCES += \
     logic/sensormap.cpp \
     logic/sensorstringlist.cpp \
     logic/actuatormanager.cpp \
-    logic/qmlcontextmanager.cpp
+    logic/qmlcontextmanager.cpp \
+    backend/Actuator/actuatorcamera.cpp
 
 RESOURCES += qml.qrc
 
@@ -50,7 +51,7 @@ QMAKE_CXXFLAGS += -DRPI
 QML_DESIGNER_IMPORT_PATH =
 
 INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
-LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835
+LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835 -lraspicam
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -88,7 +89,8 @@ HEADERS += \
     logic/sensormap.h \
     logic/sensorstringlist.h \
     logic/actuatormanager.h \
-    logic/qmlcontextmanager.h
+    logic/qmlcontextmanager.h \
+    backend/Actuator/actuatorcamera.h
 
 
 DISTFILES += \

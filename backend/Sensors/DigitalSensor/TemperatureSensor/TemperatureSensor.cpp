@@ -61,11 +61,6 @@ float TemperatureSensor::readTemperature(){
     for (int i = 0; i < 9; i++) {
         data[i] = _wire->readByte(_pin);
     }
-    //uint8_t crc = crc8(data, 9);
-
-    //if(crc!=0){
-    //    return -2000;
-    //}
 
     int t1 = data[0];
     int t2 = data[1];
@@ -78,6 +73,15 @@ sensors_type_t TemperatureSensor::getType() const
 {
     return SENSOR_TYPE_TEMPERATURE;
 }
+
+QString TemperatureSensor::getSort(){
+    return this->sort;
+}
+
+QString TemperatureSensor::toString(){
+    return QString("Temperatursensor, GPIO PIN: " + this->_pin);
+}
+
 
 void TemperatureSensor::convert(){
     _wire->writeByte(_pin, CONVERT_TEMP);

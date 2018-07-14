@@ -3,14 +3,13 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 
-
 #include "logic/qmlcontextmanager.h"
-
-
 
 int main(int argc, char *argv[])
 {
     wiringPiSetup();
+    ActuatorCamera camera;
+    camera.takePicture();
     QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

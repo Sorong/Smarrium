@@ -37,9 +37,37 @@ int SensorList::rowCount(const QModelIndex &parent) const
 QVariant SensorList::data(const QModelIndex &index, int role) const
 {
     qDebug() << "sensorList" << index.row();
-    if (!index.isValid() && role == Qt::DisplayPropertyRole)
+
+    if (!index.isValid() && role == Qt::DisplayPropertyRole){
         return QVariant();
-    return QVariant("sensorMap[this->sensorList.at(index.row())->getType()]");
+    }
+    switch(role){
+
+    case NameRole:
+        return this->sensorList.at(index.row())->toString();
+
+    case IntervalRole:
+        return this->sensorList.at(index.row())->getInterval();
+
+    case UuidRole:
+        return this->sensorList.at(index.row())->getId();
+
+    default:
+        return QVariant();
+
+    }
+
+}
+
+QHash<int, QByteArray> SensorList::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[TypeRole] = "type";
+    roles[NameRole] = "name";
+    roles[IntervalRole] = "interval";
+    //roles[ConnectionRole] = "connection";
+    roles[UuidRole] = "uuid";
+    return roles;
 }
 
 bool SensorList::insertRows(int row, int count, const QModelIndex &parent)

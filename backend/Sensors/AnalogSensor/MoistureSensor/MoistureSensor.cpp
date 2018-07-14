@@ -40,6 +40,16 @@ uint8_t MoistureSensor::getChannel(){
 }
 
 
+QString MoistureSensor::getSort(){
+    return this->sort;
+}
+
+QString MoistureSensor::toString(){
+
+    return QStringLiteral("Bodenfeuchtigkeitsmesser, Kanal: %1").arg(this->_channel);
+}
+
+
 
 float MoistureSensor::readMoisture(){
     return (float)_ADC->myAnalogRead(this->_channel);

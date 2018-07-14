@@ -35,7 +35,7 @@ Item {
                     anchors.centerIn: parent
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: 'Pin: ' + display
+                        text: (index + 1) + ' ' + name + ', Interval: ' + interval + ', UUID: ' + uuid
                     }
                 }
                 MouseArea {

@@ -22,6 +22,9 @@ public:
     virtual uint8_t getAddress() = 0;
     virtual void setAddress(uint8_t) = 0;
     virtual void getI2CSensor(sensor_I2C_t*) = 0;
+
+protected:
+    QString sort = "IC2";
 };
 
 

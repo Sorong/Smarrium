@@ -8,6 +8,7 @@
 #include <bcm2835.h>
 #include <QObject>
 
+
 class MoistureSensor: AnalogSensor, public Sensor{
 
 public:
@@ -17,9 +18,11 @@ public:
     void getAnalogSensor(sensor_analog_t*) override;
     uint8_t getChannel() override;
     void setChannel(uint8_t) override;
-
-    float readMoisture();
     sensors_type_t getType() const override;
+    QString getSort() override;
+    QString toString() override;
+    float readMoisture();
+
 
 
 private:

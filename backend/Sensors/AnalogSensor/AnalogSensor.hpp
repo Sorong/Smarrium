@@ -23,6 +23,9 @@ public:
     virtual uint8_t getChannel() = 0;
     virtual void setChannel(uint8_t) = 0;
     virtual void getAnalogSensor(sensor_analog_t*) = 0;
+
+protected:
+    QString sort = "analog";
 };
 
 
