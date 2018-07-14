@@ -1,4 +1,4 @@
-#include "TemperatureSensor.hpp"
+﻿#include "TemperatureSensor.hpp"
 
 TemperatureSensor::TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interface* wire): Sensor(intervall)
 {
@@ -90,9 +90,5 @@ void TemperatureSensor::convert(){
             break;
         }
     }
-}
-
-void TemperatureSensor::enableAutoRange(bool){
-
 }
 
