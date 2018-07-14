@@ -26,7 +26,7 @@ Item {
         anchors.topMargin: 20
         anchors.left: titleActor.left
         anchors.right: titleActor.right
-        model: existingSensors
+        model: sensors
         delegate: Component {
             Item {
                 width: parent.width
@@ -67,7 +67,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("configure.qml")
+            stackView.push("overview.qml")
         }
     }
 

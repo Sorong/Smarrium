@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <logic/actuatormanager.h>
 
-class Actuator : public QObject{
-    Q_OBJECT
+class Actuator {
+    Q_GADGET
     Q_PROPERTY(QString code READ getCode)
 public:
     Actuator(QString, RCSwitch*);
@@ -22,7 +22,7 @@ public:
     Q_INVOKABLE QString& getCode();
     bool isOn();
 
-    Q_INVOKABLE const ActuatorManager& getManager();
+    Q_INVOKABLE ActuatorManager& getManager();
 private:
     ActuatorManager manager;
     bool _isActive;
@@ -33,5 +33,4 @@ private:
 
 
 };
-
 #endif

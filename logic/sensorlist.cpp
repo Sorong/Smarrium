@@ -72,3 +72,8 @@ void SensorList::add(Sensor *sensor)
 
     qDebug() << "add Sensor:  " << sensorList.at(sensorList.size() - 1);
 }
+
+bool SensorList::isEmpty()
+{
+    return this->sensorList.isEmpty();
+}

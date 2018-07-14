@@ -37,7 +37,8 @@ SOURCES += \
     logic/sensorlist.cpp \
     logic/sensormap.cpp \
     logic/sensorstringlist.cpp \
-    logic/actuatormanager.cpp
+    logic/actuatormanager.cpp \
+    logic/qmlcontextmanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -86,7 +87,8 @@ HEADERS += \
     logic/sensorlist.h \
     logic/sensormap.h \
     logic/sensorstringlist.h \
-    logic/actuatormanager.h
+    logic/actuatormanager.h \
+    logic/qmlcontextmanager.h
 
 
 DISTFILES += \

@@ -42,6 +42,15 @@ public:
 
     Q_INVOKABLE bool removeAt(int index);
 
+    Q_INVOKABLE bool isEmpty();
+
+public slots:
+    void selectActuator(int index);
+
+signals:
+    void onSelect(Actuator*);
+
+
 private:
     QList<QSharedPointer<Actuator>> actuators;
     GPIOMap gpioMap;

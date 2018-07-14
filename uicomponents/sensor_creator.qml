@@ -46,12 +46,12 @@ Row {
                 sensorOptionText.text = "Channel: "
                 sensorOptionSelector.enabled = true
                 mode = 0
-                sensorOptionSelector.model = availableChannels
+                sensorOptionSelector.model = channelAvailable
             } else if (sensorFactory.isDigital(type)) {
                 sensorOptionText.text = "GPIO: "
                 mode = 1
                 sensorOptionSelector.enabled = true
-                sensorOptionSelector.model = availablePins
+                sensorOptionSelector.model = gpioAvailable
             } else {
                 sensorOptionText.text = "keine Optionen verfügbar"
                 mode = 2
@@ -89,14 +89,14 @@ Row {
         onClicked: function() {
             switch(this.mode) {
             case 1: //Digital
-                availablePins.removeAt(this.index)
+                gpioAvailable.removeAt(this.index)
                 sensorFactory.addDigitalSensor(this.option, this.sensor)
                 break;
             case 2: //I2C
                 sensorFactory.addI2CSensor(this.sensor)
                 break;
             default: //Analog
-                availableChannels.removeAt(this.index)
+                channelAvailable.removeAt(this.index)
                 sensorFactory.addAnalogSensor(this.option, this.sensor)
             }
 

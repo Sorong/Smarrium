@@ -78,3 +78,15 @@ bool ActuatorList::removeAt(int index)
 {
     return removeRows(index, 1);
 }
+
+bool ActuatorList::isEmpty()
+{
+    return this->actuators.isEmpty();
+}
+
+void ActuatorList::selectActuator(int index)
+{
+    if(index >= 0 && index < this->actuators.length()) {
+        emit onSelect(this->actuators.at(index).data());
+    }
+}

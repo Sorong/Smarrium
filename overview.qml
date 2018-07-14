@@ -23,12 +23,16 @@ Item {
         anchors.left: titleActor.left
         anchors.right: titleActor.right
         width: parent.width * 2/3
+        textRole: "code"
         model: actuators
         onCurrentIndexChanged: function() {
-            if(currentIndex >= 0)
-                sensorList.model = model.at(currentIndex).getManager().getSensors();
+            if(currentIndex >= 0) {
+                model.selectActuator(currentIndex);
+                sensorList.model = selectedSensors
+            }
+
         }
-       Component.onCompleted: onCurrentIndexChanged()
+        Component.onCompleted: onCurrentIndexChanged()
     }
 
     ListView {
@@ -38,7 +42,6 @@ Item {
         anchors.topMargin: 20
         anchors.left: content.left
         anchors.right: content.right
-        model: ""
         delegate: Component {
             Item {
                 width: parent.width

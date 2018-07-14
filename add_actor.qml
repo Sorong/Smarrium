@@ -29,8 +29,8 @@ Item {
         anchors.right: titleActor.right
         model: actuators
         ScrollBar.vertical: ScrollBar {
-                active: true
-                }
+            active: true
+        }
         delegate: Component {
             Item {
                 width: parent.width
@@ -38,23 +38,23 @@ Item {
                 Rectangle {
                     //anchors.centerIn: parent
                     //Row {
-                       anchors.fill: parent
-                       border.color: "lightgray"
-                       // anchors.horizontalCenter: parent.horizontalCenter
-                        Text {                
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: (index+1) + '. Adresse:  ' + code
+                    anchors.fill: parent
+                    border.color: "lightgray"
+                    // anchors.horizontalCenter: parent.horizontalCenter
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: (index+1) + '. Adresse:  ' + code
+                    }
+                    RoundButton {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        icon {
+                            source:"/icons/svg/ic_delete_forever_48px.svg"
                         }
-                        RoundButton {
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                            icon {
-                                source:"/icons/svg/ic_delete_forever_48px.svg"
-                            }
-                            onClicked: function() {
-                                actuators.removeAt(index)
-                            }
+                        onClicked: function() {
+                            actuators.removeAt(index)
                         }
+                    }
                     //}
                 }
             }
@@ -106,7 +106,7 @@ Item {
                     var component = Qt.createComponent("uicomponents/horizontal_switch.qml")
                     if (component.status === Component.Ready)
                         var sw = component.createObject(switches);
-                        sw.text = qsTr(names[i])
+                    sw.text = qsTr(names[i])
                 }
             }
         }
@@ -121,11 +121,11 @@ Item {
         icon { source:"/icons/svg/ic_add_48px.svg"}
         spacing: 7
         onClicked: function() {
-                var list = []
-                for(var i = 0; i < switches.children.length; i++) {
-                    list.push(switches.children[i].checked)
-                }
-                actuatorFactory.addActuator(list)
+            var list = []
+            for(var i = 0; i < switches.children.length; i++) {
+                list.push(switches.children[i].checked)
+            }
+            actuatorFactory.addActuator(list)
         }
     }
 }

@@ -2,8 +2,12 @@ import QtQuick 2.0
 import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.2
 
+
 Item {
     id: start_
+    StackView.onActivating:  function() {
+        btnReview.enabled = !actuators.isEmpty()
+    }
     //anchors.fill: parent
 
     Label {
@@ -33,10 +37,10 @@ Item {
     Button {
         id: btnNewConfig
         height: 40
-        text: qsTr("Neue Konfiguration anlegen")
+        text: qsTr("Konfiguration anlegen")
         anchors.leftMargin: 0
         anchors.left: content.left
-        anchors.bottom: btnExistingConfig.top
+        anchors.bottom: btnReview.top
         anchors.bottomMargin: 20
         anchors.right: content.right
         anchors.rightMargin: 0
@@ -46,24 +50,10 @@ Item {
     }
 
     Button {
-        id: btnExistingConfig
-        height: 40
-        text: qsTr("Existierende Konfiguration ändern")
-        anchors.leftMargin: 0
-        anchors.left: content.left
-        anchors.bottom: btnReview.top
-        anchors.bottomMargin: 20
-        anchors.right: content.right
-        anchors.rightMargin: 0
-        onClicked: {
-            stackView.push("overview.qml")
-        }
-    }
-
-    Button {
         id: btnReview
         height: 40
-        text: qsTr("24h Rückblick betrachten")
+        enabled: !actuators.isEmpty()
+        text: qsTr("Konfiguration betrachten")
         anchors.leftMargin: 0
         anchors.left: content.left
         anchors.bottom: parent.bottom
@@ -74,7 +64,7 @@ Item {
         onClicked: {
             stackView.push("overview.qml")
         }
-    }
 
+    }
 }
 

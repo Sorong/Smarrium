@@ -30,6 +30,7 @@ public:
 
     void add(Sensor* sensor);
 
+    Q_INVOKABLE bool isEmpty();
 
 private:
      QList<Sensor*> sensorList;

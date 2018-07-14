@@ -31,7 +31,7 @@ QString& Actuator::getCode(){
     return this->_code;
 }
 
-const ActuatorManager &Actuator::getManager()
+ActuatorManager &Actuator::getManager()
 {
     return this->manager;
 }
