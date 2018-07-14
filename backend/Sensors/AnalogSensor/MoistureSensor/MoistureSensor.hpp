@@ -20,7 +20,6 @@ public:
     void setChannel(uint8_t) override;
     sensors_type_t getType() const override;
     QString getSort() override;
-    QString toString() override;
     float readMoisture();
 
 

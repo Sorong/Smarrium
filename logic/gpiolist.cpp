@@ -61,6 +61,9 @@ bool GPIOList::insertRows(int row, int count, const QModelIndex &parent)
 }
 
 bool GPIOList::removeAt(int index) {
+    if(index < 0 || index >= this->gpioList.size()) {
+        return false;
+    }
     return removeRows(index, 1);
 }
 

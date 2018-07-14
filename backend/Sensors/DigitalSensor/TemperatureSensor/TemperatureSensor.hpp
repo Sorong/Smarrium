@@ -21,7 +21,7 @@
 
 class TemperatureSensor : DigitalSensor, public Sensor{
 
-    public:
+public:
     TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interface* wire);
     ~TemperatureSensor();
 
@@ -32,9 +32,8 @@ class TemperatureSensor : DigitalSensor, public Sensor{
     float readTemperature();
     sensors_type_t getType() const override;
     QString getSort() override;
-    QString toString() override;
 
-    private:
+private:
 
     void convert();
     Bcm2835Interface* _wire;

@@ -20,7 +20,7 @@
 class HumiditySensor : DigitalSensor, public Sensor
 {
 
-    public:
+public:
     HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wire);
     ~HumiditySensor();
 
@@ -29,16 +29,14 @@ class HumiditySensor : DigitalSensor, public Sensor
     uint8_t getPin() override;
     void setPin(uint8_t) override;
     QString getSort() override;
-    QString toString() override;
 
 
     float calculateHumidity();
     sensors_type_t getType() const override;
 
-    private:
+private:
     void calibrate();
     float readFrequenz();
-
 
     Bcm2835Interface* _wire;
     uint8_t _pin;

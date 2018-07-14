@@ -4,6 +4,7 @@ TemperatureSensor::TemperatureSensor(int intervall, uint8_t pin, Bcm2835Interfac
 {
     this->_pin = pin;
     this->_wire = wire;
+    this->name = "Temperatursensor, GPIO PIN: " + QString::number(this->_pin);
 }
 
 TemperatureSensor::~TemperatureSensor(){
@@ -77,11 +78,6 @@ sensors_type_t TemperatureSensor::getType() const
 QString TemperatureSensor::getSort(){
     return this->sort;
 }
-
-QString TemperatureSensor::toString(){
-    return QString("Temperatursensor, GPIO PIN: " + this->_pin);
-}
-
 
 void TemperatureSensor::convert(){
     _wire->writeByte(_pin, CONVERT_TEMP);

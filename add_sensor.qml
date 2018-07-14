@@ -29,13 +29,13 @@ Item {
         model: sensors
         delegate: Component {
             Item {
-                width: parent.width
+                width: content.width
                 height: 40
                 Column {
-                    anchors.centerIn: parent
+                    //anchors.centerIn: parent
+                    //width: parent.width
                     Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: (index + 1) + ' ' + name + ', Interval: ' + interval + ', UUID: ' + uuid
+                        text: name + ', Interval: ' + interval + ', UUID: ' + uuid
                     }
                 }
                 MouseArea {

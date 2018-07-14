@@ -5,6 +5,7 @@ UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, ADC* adc): Sens
     _pinUVin = chUVin;
     _pinRef = chRef;
     _adc = adc;
+    this->name = "UV-Sensor, Kanal: " + QString::number(this->_channel);
 }
 
 UVSensor::~UVSensor()
@@ -32,11 +33,6 @@ sensors_type_t UVSensor::getType() const
 QString UVSensor::getSort(){
     return this->sort;
 }
-
-QString UVSensor::toString(){
-    return QStringLiteral("UV-Sensor, Kanal: %1").arg(this->_channel);
-}
-
 
 float UVSensor::averageAnalogRead(uint8_t pinToRead)
 {

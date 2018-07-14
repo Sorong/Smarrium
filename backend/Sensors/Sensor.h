@@ -63,7 +63,7 @@ public:
     virtual bool getEvent(sensors_event_t*) = 0;
     virtual sensors_type_t getType() const = 0;
     virtual QString getSort() = 0;
-    Q_INVOKABLE virtual QString toString() = 0;
+    Q_INVOKABLE virtual const QString& toString();
 
     Q_INVOKABLE int getInterval();
     void setInterval(int inerval);
@@ -80,6 +80,7 @@ signals:
 protected:
     QUuid _id;
     int _interval;
+    QString name;
 
 
 };

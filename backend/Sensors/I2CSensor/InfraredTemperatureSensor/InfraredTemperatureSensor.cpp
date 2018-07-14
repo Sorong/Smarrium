@@ -10,6 +10,7 @@ IRTemperatureSensor::IRTemperatureSensor(int intervall, uint8_t address, Bcm2835
 	_rawObject2 = 0;
 	_rawMax = 0;
 	_rawMin = 0;
+    this->name = "Infrarottermometer";
 }
 
 void IRTemperatureSensor::enableAutoRange(bool enable){
@@ -18,10 +19,6 @@ void IRTemperatureSensor::enableAutoRange(bool enable){
 
 QString IRTemperatureSensor::getSort(){
     return this->sort;
-}
-
-QString IRTemperatureSensor::toString(){
-    return QString("Infrarottermometer");
 }
 
 
