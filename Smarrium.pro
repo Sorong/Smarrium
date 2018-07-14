@@ -1,4 +1,4 @@
-QT += quick
+QT += quick quickcontrols2 svg
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -13,39 +13,45 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp \
-    frontend/example.cpp \
-    logic/gpiomanager.cpp \
-    frontend/actorfactory.cpp \
-    frontend/sensorfactory.cpp \
-    logic/gpiolist.cpp \
-    logic/gpiomap.cpp \
-    backend/Sensors/HumiditySensor/HumiditySensor.cpp \
-    backend/Sensors/LightSensor/LightSensor.cpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/UVSensor/UVSensor.cpp \
-    backend/Sensors/Bcm2835Interface.cpp \
-    backend/Actuator/Actuator.cpp \
-    logic/Models/actuatorlist.cpp \
     backend/Actuator/Actuator.cpp \
     backend/RCSwitch/RCSwitch.cpp \
-    backend/Sensors/HumiditySensor/HumiditySensor.cpp \
-    backend/Sensors/LightSensor/LightSensor.cpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.cpp \
-    backend/Sensors/UVSensor/UVSensor.cpp \
-    backend/Sensors/Bcm2835Interface.cpp
-
+    backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.cpp \
+    backend/Sensors/AnalogSensor/UVSensor/UVSensor.cpp \
+    backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.cpp \
+    backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.cpp \
+    backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.cpp \
+    backend/Sensors/I2CSensor/LightSensor/LightSensor.cpp \
+    backend/Sensors/ADC.cpp \
+    backend/Sensors/Bcm2835Interface.cpp \
+    backend/Sensors/Sensor.cpp \
+    logic/gpiolist.cpp \
+    logic/gpiomanager.cpp \
+    logic/gpiomap.cpp \
+    main.cpp \
+    logic/actuatorlist.cpp \
+    logic/channelmanager.cpp \
+    logic/channellist.cpp \
+    logic/channelmap.cpp \
+    factories/actuator_factory.cpp \
+    factories/sensor_factory.cpp \
+    logic/sensorlist.cpp \
+    logic/sensormap.cpp \
+    logic/sensorstringlist.cpp \
+    logic/actuatormanager.cpp \
+    logic/qmlcontextmanager.cpp \
+    backend/Actuator/actuatorcamera.cpp
 
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
+QMAKE_CXXFLAGS += -DRPI
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
 
 INCLUDEPATH += $$[QT_SYSROOT]/usr/local/include
-LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835
+LIBS += -L$$[QT_SYSROOT]/usr/local/lib -lwiringPi -lbcm2835 -lraspicam
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -53,32 +59,42 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    frontend/example.h \
-    logic/gpio.h \
-    logic/gpiomanager.h \
-    frontend/actorfactory.h \
-    frontend/sensorfactory.h \
-    logic/gpiolist.h \
-    logic/gpiomap.h \
-    backend/Sensors/HumiditySensor/HumiditySensor.hpp \
-    backend/Sensors/LightSensor/LightSensor.hpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
-    backend/Sensors/UVSensor/UVSensor.hpp \
-    backend/Sensors/Bcm2835Interface.hpp \
-    backend/Sensors/Sensor.h \
-    logic/configmanager.h \
-    backend/Actuator/Actuator.hpp \
-    logic/Models/actuatorlist.h \
     backend/Actuator/Actuator.hpp \
     backend/RCSwitch/RCSwitch.h \
-    backend/Sensors/HumiditySensor/HumiditySensor.hpp \
-    backend/Sensors/LightSensor/LightSensor.hpp \
-    backend/Sensors/TemperatureSensor/TemperatureSensor.hpp \
-    backend/Sensors/UVSensor/UVSensor.hpp \
+    backend/Sensors/AnalogSensor/MoistureSensor/MoistureSensor.hpp \
+    backend/Sensors/AnalogSensor/UVSensor/UVSensor.hpp \
+    backend/Sensors/AnalogSensor/AnalogSensor.hpp \
+    backend/Sensors/DigitalSensor/HumiditySensor/HumiditySensor.hpp \
+    backend/Sensors/DigitalSensor/TemperatureSensor/TemperatureSensor.hpp \
+    backend/Sensors/DigitalSensor/DigitalSensor.hpp \
+    backend/Sensors/I2CSensor/InfraredTemperatureSensor/InfraredTemperatureSensor.hpp \
+    backend/Sensors/I2CSensor/LightSensor/LightSensor.hpp \
+    backend/Sensors/I2CSensor/I2CSensor.hpp \
+    backend/Sensors/ADC.hpp \
     backend/Sensors/Bcm2835Interface.hpp \
-    backend/Sensors/Sensor.h
+    backend/Sensors/Sensor.h \
+    logic/models/actuatorlist.h \
+    logic/gpio.h \
+    logic/gpiolist.h \
+    logic/gpiomanager.h \
+    logic/gpiomap.h \
+    logic/actuatorlist.h \
+    logic/channelmanager.h \
+    logic/channel.h \
+    logic/channellist.h \
+    logic/channelmap.h \
+    factories/actuator_factory.h \
+    factories/sensor_factory.h \
+    logic/sensorlist.h \
+    logic/sensormap.h \
+    logic/sensorstringlist.h \
+    logic/actuatormanager.h \
+    logic/qmlcontextmanager.h \
+    backend/Actuator/actuatorcamera.h
 
-DISTFILES +=
+
+DISTFILES += \
+    logic/.dummy
 
 target.path = /home/pi
 INSTALLS += target

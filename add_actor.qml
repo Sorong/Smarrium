@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Window 2.10
 import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
 
 Item {
     id: addActor
@@ -9,10 +10,11 @@ Item {
 
     Label {
         id: titleActor
+        anchors.topMargin: 10
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width/5*4
-        text: qsTr("Modul hinzufügen")
+        text: qsTr("Aktor hinzufügen")
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }
@@ -25,34 +27,38 @@ Item {
         anchors.topMargin: 20
         anchors.left: titleActor.left
         anchors.right: titleActor.right
-        model: unavailablePins
+        model: actuators
+        ScrollBar.vertical: ScrollBar {
+            active: true
+        }
         delegate: Component {
-                    Item {
-                        width: parent.width
-                        height: 40
-                        Column {
-                            anchors.centerIn: parent
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: 'Pin: ' + display
-                            }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: content.currentIndex = index
-                        }
-                    }
-                }
-                highlight: Rectangle {
-                    color: 'lightgrey'
+            Item {
+                width: parent.width
+                height: 40
+                Rectangle {
+                    //anchors.centerIn: parent
+                    //Row {
+                    anchors.fill: parent
+                    border.color: "lightgray"
+                    // anchors.horizontalCenter: parent.horizontalCenter
                     Text {
-                        anchors.centerIn: parent
-                        color: 'white'
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: (index+1) + '. Adresse:  ' + code
                     }
+                    RoundButton {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        icon {
+                            source:"/icons/svg/ic_delete_forever_48px.svg"
+                        }
+                        onClicked: function() {
+                            actuators.removeAt(index)
+                        }
+                    }
+                    //}
                 }
-                focus: true
-                onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
-
+            }
+        }
     }
 
     Button {
@@ -85,25 +91,41 @@ Item {
         }
     }
 
-    ComboBox {
-        id: gpioSelector
-        textRole: "display"
+    Pane {
+        id: actorSelector
         anchors.top: content.bottom
         anchors.topMargin: 20
-        model: availablePins
         anchors.left: content.left
         width: parent.width * 2/3
+        Row {
+            id: switches
+
+            Component.onCompleted: function() {
+                var names = ["1", "2", "3", "4", "5", "A", "B","C", "D", "E"]
+                for(var i = 0; i < names.length; i++) {
+                    var component = Qt.createComponent("uicomponents/horizontal_switch.qml")
+                    if (component.status === Component.Ready)
+                        var sw = component.createObject(switches);
+                    sw.text = qsTr(names[i])
+                }
+            }
+        }
     }
 
-   RoundButton {
+    RoundButton {
         id: add
         anchors.topMargin: 20
         anchors.top: content.bottom
-        anchors.left: gpioSelector.right
+        anchors.left: actorSelector.right
         anchors.leftMargin: 10
-        text: "+"
-        onClicked: {
-            availablePins.removeAt(gpioSelector.currentIndex)
+        icon { source:"/icons/svg/ic_add_48px.svg"}
+        spacing: 7
+        onClicked: function() {
+            var list = []
+            for(var i = 0; i < switches.children.length; i++) {
+                list.push(switches.children[i].checked)
+            }
+            actuatorFactory.addActuator(list)
         }
     }
 }

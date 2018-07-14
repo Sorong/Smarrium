@@ -5,9 +5,7 @@
 
 GPIOManager::GPIOManager() :
     available({
-              GPIO::GPIO_0,
-              GPIO::GPIO_1,
-              GPIO::GPIO_2
+              GPIO::GPIO_7
               })
 {
 
@@ -27,7 +25,7 @@ GPIOList* GPIOManager::getAvailable(GPIOList *ptr) {
     return getGPIOList(ptr, true);
 }
 
-GPIOList* GPIOManager::getUnvailable(GPIOList *ptr) {
+GPIOList* GPIOManager::getUnavailable(GPIOList *ptr) {
     if(!ptr) {
         return nullptr;
     }
@@ -43,7 +41,7 @@ QString GPIOManager::pinToString(GPIO gpio)
 
 GPIO GPIOManager::stringToPin(const QString& str)
 {
-   return this->map[str];
+    return this->map[str];
 }
 
 GPIOList* GPIOManager::getGPIOList(GPIOList *ptr, bool available) {
@@ -63,10 +61,10 @@ GPIOList* GPIOManager::getGPIOList(GPIOList *ptr, bool available) {
 
 void GPIOManager::availableChanged(QString str) {
     emit addUnavailable(str);
-    qDebug() << "availableChanged";
+    qDebug() << "availableChanged" << str;
 }
 
 void GPIOManager::unavailableChanged(QString str) {
     emit addAvailable(str);
-    qDebug() << "unavailableChanged";
+    qDebug() << "unavailableChanged" << str;
 }

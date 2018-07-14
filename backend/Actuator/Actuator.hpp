@@ -3,32 +3,34 @@
 
 #define OFF_SUFFIX "F0"
 #define ON_SUFFIX "0F"
-
-#include "./../Sensor.h"
+#include <QObject>
+#include "./../Sensors/Sensor.h"
 #include "./../RCSwitch/RCSwitch.h"
 #include <string>
 #include <stdio.h>
+#include <logic/actuatormanager.h>
 
-class Actuator{
-    
-    public:
-    Actuator(std::string, int, RCSwitch*);
+class Actuator {
+    Q_GADGET
+    Q_PROPERTY(QString code READ getCode)
+public:
+    Actuator(QString, RCSwitch*);
+    virtual ~Actuator();
 
     void switchOn();
     void switchOff();
-    int getId();
+    Q_INVOKABLE QString& getCode();
     bool isOn();
 
+    Q_INVOKABLE ActuatorManager& getManager();
+private:
+    ActuatorManager manager;
+    bool _isActive;
+    QString _code;
+    std::string _commandOn;
+    std::string _commandOff;
+    RCSwitch* _switch;
 
-    private:
-        
-        bool _isActive;
-        int _id;
-        std::string _commandOn;
-        std::string _commandOff;
-        RCSwitch* _switch;
-        
 
 };
-
 #endif

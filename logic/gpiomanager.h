@@ -13,7 +13,7 @@ public:
     GPIOManager();
     virtual ~GPIOManager();
     GPIOList* getAvailable(GPIOList*);
-    GPIOList* getUnvailable(GPIOList*);
+    GPIOList* getUnavailable(GPIOList*);
     QString pinToString(GPIO);
     GPIO stringToPin(const QString&);
 signals:

@@ -3,36 +3,61 @@ import QtQuick.Window 2.10
 import QtQuick.Controls 2.3
 
 Item {
-    id: addSensor
+    id: addActor
+    property alias content: content
     //anchors.fill: parent
 
     Label {
-        id: titleSensor
+        id: titleActor
+        anchors.topMargin: 10
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width/5*4
-        text: qsTr("Sensoren hinzufügen")
+        text: qsTr("Digitalen Sensor hinzufügen")
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }
+    //Test
 
-
-    Label {
+    ListView {
         id: content
-        anchors.top: titleSensor.bottom
+        width: 200; height: 250
+        anchors.top: titleActor.bottom
         anchors.topMargin: 20
-        text: qsTr("ALorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,")
-        font.pointSize: 8
-        lineHeight: 1
-        fontSizeMode: Text.FixedSize
-        anchors.left: titleSensor.left
-        anchors.right: titleSensor.right
-        wrapMode: Text.WordWrap
-        font.weight: Font.Light
+        anchors.left: titleActor.left
+        anchors.right: titleActor.right
+        model: sensors
+        delegate: Component {
+            Item {
+                width: parent.width
+                height: 40
+                Column {
+                    anchors.centerIn: parent
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: (index + 1) + ' ' + name + ', Interval: ' + interval + ', UUID: ' + uuid
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: content.currentIndex = index
+                }
+            }
+        }
+        highlight: Rectangle {
+            color: 'lightgrey'
+            Text {
+                anchors.centerIn: parent
+                color: 'white'
+            }
+        }
+        focus: true
+        //onCurrentItemChanged: console.log(model.at(content.currentIndex) + ' selected')
+
     }
 
     Button {
-        id: btnNewActor
+        id: btnNewSensor
         height: 40
         text: qsTr("Weiter")
         anchors.leftMargin: 0
@@ -42,9 +67,10 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("configure.qml")
+            stackView.push("overview.qml")
         }
     }
+
     Button {
         id: btnBack
         height: 40
@@ -59,4 +85,20 @@ Item {
             stackView.pop()
         }
     }
+    Pane {
+        id: sensorCreatePane
+        anchors.top: content.bottom
+        anchors.topMargin: 20
+        anchors.left: content.left
+        width: parent.width * 2/3
+        Component.onCompleted: function() {
+            var component = Qt.createComponent("uicomponents/sensor_creator.qml")
+            if (component.status === Component.Ready)
+                component.createObject(sensorCreatePane);
+        }
+    }
+
+
+
+
 }
