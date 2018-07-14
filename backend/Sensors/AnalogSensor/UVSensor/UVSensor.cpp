@@ -34,6 +34,11 @@ QString UVSensor::getSort(){
     return this->sort;
 }
 
+SensorBaseType UVSensor::getRawType()
+{
+    return SensorBaseType::UV;
+}
+
 float UVSensor::averageAnalogRead(uint8_t pinToRead)
 {
   uint8_t numberOfReadings = 8;

@@ -49,6 +49,11 @@ float MoistureSensor::readMoisture(){
     return (float)_ADC->myAnalogRead(this->_channel);
 }
 
+SensorBaseType MoistureSensor::getRawType()
+{
+    return SensorBaseType::HUMIDITY;
+}
+
 sensors_type_t MoistureSensor::getType() const
 {
     return SENSOR_TYPE_MOISTURE;

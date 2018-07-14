@@ -33,6 +33,7 @@ public:
 
     float calculateHumidity();
     sensors_type_t getType() const override;
+    SensorBaseType  getRawType() override;
 
 private:
     void calibrate();

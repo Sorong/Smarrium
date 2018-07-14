@@ -37,6 +37,11 @@ sensors_type_t HumiditySensor::getType() const
     return SENSOR_TYPE_RELATIVE_HUMIDITY;
 }
 
+SensorBaseType  HumiditySensor::getRawType()
+{
+    return SensorBaseType::HUMIDITY;
+}
+
 QString HumiditySensor::getSort(){
     return this->sort;
 }

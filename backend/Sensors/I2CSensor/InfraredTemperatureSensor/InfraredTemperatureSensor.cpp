@@ -198,6 +198,11 @@ sensors_type_t IRTemperatureSensor::getType() const
     return SENSOR_TYPE_IRTEMPERATURE;
 }
 
+SensorBaseType IRTemperatureSensor::getRawType()
+{
+    return SensorBaseType::TEMPERATURE;
+}
+
 uint8_t IRTemperatureSensor::setEmissivity(float emis)
 {
 	// Make sure emissivity is between 0.1 and 1.0

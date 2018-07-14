@@ -39,7 +39,8 @@ SOURCES += \
     logic/sensorstringlist.cpp \
     logic/actuatormanager.cpp \
     logic/qmlcontextmanager.cpp \
-    backend/Actuator/actuatorcamera.cpp
+    backend/Actuator/actuatorcamera.cpp \
+    backend/Sensors/sensorbasetype.cpp
 
 RESOURCES += qml.qrc
 
@@ -90,7 +91,8 @@ HEADERS += \
     logic/sensorstringlist.h \
     logic/actuatormanager.h \
     logic/qmlcontextmanager.h \
-    backend/Actuator/actuatorcamera.h
+    backend/Actuator/actuatorcamera.h \
+    backend/Sensors/sensorbasetype.h
 
 
 DISTFILES += \

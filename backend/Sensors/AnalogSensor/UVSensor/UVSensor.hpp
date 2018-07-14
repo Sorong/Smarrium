@@ -18,6 +18,7 @@ public:
     void setChannel(uint8_t) override;
     sensors_type_t getType() const override;
     QString getSort() override;
+    SensorBaseType  getRawType() override;
 
 private:
     float calculateUV();

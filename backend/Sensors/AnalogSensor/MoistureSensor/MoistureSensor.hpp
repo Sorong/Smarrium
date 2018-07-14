@@ -21,6 +21,7 @@ public:
     sensors_type_t getType() const override;
     QString getSort() override;
     float readMoisture();
+    SensorBaseType getRawType() override;
 
 
 

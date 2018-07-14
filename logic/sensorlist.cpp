@@ -41,13 +41,12 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
     if (!index.isValid() && role == Qt::DisplayPropertyRole){
         return QVariant();
     }
-    QString s;
     switch(role){
+    case TypeRole:
+        return QVariant(this->sensorList.at(index.row())->getRawType());
 
     case NameRole:
-        s = this->sensorList.at(index.row())->toString();
-        qDebug()  << s;
-        return QVariant(s);
+        return QVariant(this->sensorList.at(index.row())->toString());
 
     case IntervalRole:
         return QVariant(this->sensorList.at(index.row())->getInterval());

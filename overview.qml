@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
+import SensorBaseType 1.0
 
 Item {
     id: addActor
@@ -71,30 +72,17 @@ Item {
         anchors.right: content.right
         delegate: Component {
             Item {
-                width: parent.width
-                height: 40
-                Column {
-                    //anchors.centerIn: parent
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: (index + 1) + ' ' + name + ', Interval: ' + interval + ', UUID: ' + uuid
+                Component.onCompleted: function() {
+                    var component = Qt.createComponent("uicomponents/sensor_view.qml")
+                    //TODO: different sensor_view for each raw type
+                    console.log(SensorBaseType.UV);
+                    if (component.status === Component.Ready) {
+                        component.selectMode(type)
+                        component.createObject(this);
                     }
                 }
-//                Column {
-//                    Text {
-//                        text: 'Configuration: '
-//                    }
-
-//                    TextArea {
-
-//                    }
-//                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: sensorList.currentIndex = index
-                }
             }
+
         }
         highlight: Rectangle {
             color: 'lightgrey'

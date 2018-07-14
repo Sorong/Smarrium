@@ -32,6 +32,7 @@ public:
     float readTemperature();
     sensors_type_t getType() const override;
     QString getSort() override;
+    SensorBaseType  getRawType() override;
 
 private:
 

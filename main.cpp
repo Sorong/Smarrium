@@ -15,6 +15,8 @@ int main(int argc, char *argv[])
     camera.takePicture();
     QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qRegisterMetaType<SensorBaseType>("SensorBaseType");
+    qmlRegisterUncreatableType<BaseType>("SensorBaseType", 1, 0, "SensorBaseType", "Not creatable as it is an enum type");
 
     QGuiApplication app(argc, argv);
 

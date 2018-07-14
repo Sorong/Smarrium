@@ -79,6 +79,11 @@ QString TemperatureSensor::getSort(){
     return this->sort;
 }
 
+SensorBaseType  TemperatureSensor::getRawType()
+{
+    return SensorBaseType::TEMPERATURE;
+}
+
 void TemperatureSensor::convert(){
     _wire->writeByte(_pin, CONVERT_TEMP);
     for (int i = 0; i < 1000; i++) {

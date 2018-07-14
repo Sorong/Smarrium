@@ -7,7 +7,6 @@
         <file>overview.qml</file>
         <file>uicomponents/horizontal_switch.qml</file>
         <file>uicomponents/sensor_creator.qml</file>
-        <file>uicomponents/sensor_overview.qml</file>
         <file>uicomponents/sensor_view.qml</file>
     </qresource>
     <qresource prefix="/icons">
