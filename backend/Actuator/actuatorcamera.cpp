@@ -29,15 +29,15 @@ void ActuatorCamera::takePicture()
 
 }
 
-QImage ActuatorCamera::retrivePicture()
-{
-    QProcess pythonScript;
-    QStringList params;
-    params << "script.py -arg1 picture1, -arg2 picture2";
-    pythonScript.start("python", params);
-    pythonScript.waitForFinished(-1);
-    QString p_stdout = p.readAll();
-    qDebug() << p_stdout;
-    return QVariant();
-}
+//QImage ActuatorCamera::retrivePicture()
+//{
+//    QProcess pythonScript;
+//    QStringList params;
+//    params << "script.py -arg1 picture1, -arg2 picture2";
+//    pythonScript.start("python", params);
+//    pythonScript.waitForFinished(-1);
+//    QString p_stdout = p.readAll();
+//    qDebug() << p_stdout;
+//    return QVariant();
+//}
 
