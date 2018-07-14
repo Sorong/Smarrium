@@ -8,10 +8,13 @@
 #include "logic/gpiolist.h"
 #include "factories/sensor_factory.h"
 #include "factories/actuator_factory.h"
+#include "backend/Actuator/actuatorcamera.h"
 
 int main(int argc, char *argv[])
 {
     wiringPiSetup();
+    ActuatorCamera camera;
+    camera.takePicture();
     QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

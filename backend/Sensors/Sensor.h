@@ -51,6 +51,10 @@ typedef struct{
 
 class Sensor: public QTimer {
     Q_OBJECT
+    Q_PROPERTY(QString name READ toString)
+    Q_PROPERTY(QString interval READ getInterval)
+    Q_PROPERTY(QString uuid READ getId)
+    //Q_PROPERTY(QString connection READ getConnection)
 
 public:
     Sensor(int);
@@ -59,11 +63,12 @@ public:
     virtual bool getEvent(sensors_event_t*) = 0;
     virtual sensors_type_t getType() const = 0;
     virtual QString getSort() = 0;
-    virtual QString toString() = 0;
+    Q_INVOKABLE virtual QString toString() = 0;
 
-    int getInterval();
+    Q_INVOKABLE int getInterval();
     void setInterval(int inerval);
-    QString getId();
+    QUuid getUuid();
+    Q_INVOKABLE QString getId();
 
 
 public slots:

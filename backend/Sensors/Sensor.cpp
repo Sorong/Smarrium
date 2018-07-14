@@ -8,7 +8,7 @@ Sensor::Sensor(int interval)
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
 }
 
-QUuid Sensor::getId()
+QUuid Sensor::getUuid()
 {
     return this->_id;
 }
