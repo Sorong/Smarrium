@@ -15,7 +15,7 @@ public:
 
     void takePicture();
 
-    QImage retriveDifferencePicture();
+    //QImage retriveDifferencePicture();
 
 signals:
 
@@ -24,6 +24,7 @@ public slots:
 private:
     QImage referncePicture;
     QImage differancePicture;
+    QImage picture;
 
     raspicam::RaspiCam camera;
 
