@@ -4,7 +4,6 @@
         <file>add_sensor.qml</file>
         <file>start.qml</file>
         <file>add_actor.qml</file>
-        <file>configure.qml</file>
         <file>overview.qml</file>
         <file>uicomponents/horizontal_switch.qml</file>
         <file>uicomponents/sensor_creator.qml</file>

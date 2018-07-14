@@ -16,24 +16,51 @@ Item {
         horizontalAlignment: Text.AlignHCenter
     }
 
-    ComboBox {
+    Pane {
         id: content
         anchors.top: titleActor.bottom
         anchors.topMargin: 20
         anchors.left: titleActor.left
         anchors.right: titleActor.right
         width: parent.width * 2/3
-        textRole: "code"
-        model: actuators
-        onCurrentIndexChanged: function() {
-            if(currentIndex >= 0) {
-                model.selectActuator(currentIndex);
-                sensorList.model = selectedSensors
-            }
+        Column {
+            ComboBox {
+                width: content.width
+                textRole: "code"
+                model: actuators
+                onCurrentIndexChanged: function() {
+                    if(currentIndex >= 0) {
+                        model.selectActuator(currentIndex);
+                        sensorList.model = selectedSensors
+                    }
 
+                }
+                Component.onCompleted: onCurrentIndexChanged()
+            }
+            Row {
+                ComboBox {
+                    id: sensorAdd
+                    width: content.width - add.width
+                    textRole: "name"
+                    model: sensors
+
+                }
+
+                RoundButton {
+                    id: add
+                    anchors.bottom: parent.bottom
+                    icon { source:"/icons/svg/ic_add_48px.svg"}
+                    onClicked: function() {
+                        sensors.selectSensor(sensorAdd.currentIndex);
+                    }
+                }
+            }
         }
-        Component.onCompleted: onCurrentIndexChanged()
     }
+
+
+
+
 
     ListView {
         id: sensorList
@@ -50,22 +77,22 @@ Item {
                     //anchors.centerIn: parent
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: 'Pin: ' + display
+                        text: (index + 1) + ' ' + name + ', Interval: ' + interval + ', UUID: ' + uuid
                     }
                 }
-                Column {
-                    Text {
-                        text: 'Configuration: '
-                    }
+//                Column {
+//                    Text {
+//                        text: 'Configuration: '
+//                    }
 
-                    TextArea {
+//                    TextArea {
 
-                    }
-                }
+//                    }
+//                }
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: content.currentIndex = index
+                    onClicked: sensorList.currentIndex = index
                 }
             }
         }

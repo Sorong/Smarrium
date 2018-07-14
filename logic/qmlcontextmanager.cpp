@@ -32,7 +32,11 @@ void QMLContextManager::selectActuator(Actuator *actuator)
     if(!actuator) {
         return;
     }
+    if(this->selectedSensors) {
+        this->existingSensors.disconnect(this->selectedSensors);
+    }
     QQmlContext * context = this->engine.rootContext();
     this->selectedSensors = &(actuator->getManager().getSensors());
     context->setContextProperty("selectedSensors", this->selectedSensors);
+    connect(&this->existingSensors, &SensorList::onSelect, this->selectedSensors, &SensorList::addUnique);
 }

@@ -12,6 +12,10 @@ ActuatorCamera::ActuatorCamera()
 void ActuatorCamera::takePicture()
 {
     this->camera.open();
+    if(!this->camera.isOpened()) {
+        qDebug() << "Not opened" << "does it work?";
+        return;
+    }
     QThread::sleep(3);
     this->camera.grab();
     unsigned char* rawData = new unsigned char[ camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];

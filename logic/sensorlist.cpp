@@ -70,6 +70,13 @@ QHash<int, QByteArray> SensorList::roleNames() const
     return roles;
 }
 
+void SensorList::selectSensor(int index)
+{
+    if(index >= 0 && index < this->sensorList.length()) {
+        emit onSelect(this->sensorList.at(index));
+    }
+}
+
 bool SensorList::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
@@ -95,10 +102,26 @@ bool SensorList::removeRows(int row, int count, const QModelIndex &parent)
 
 void SensorList::add(Sensor *sensor)
 {
+    if(!sensor) {
+        return;
+    }
     this->insertRows(sensorList.size(), 1);
     this->sensorList[sensorList.size() - 1] = sensor;
 
     qDebug() << "add Sensor:  " << sensorList.at(sensorList.size() - 1);
+}
+
+void SensorList::addUnique(Sensor *sensor)
+{
+    if(!sensor) {
+        return;
+    }
+    for(auto s : this->sensorList) {
+        if(s->getId() == sensor->getId()) {
+            return;
+        }
+    }
+    this->add(sensor);
 }
 
 bool SensorList::isEmpty()
