@@ -1,5 +1,6 @@
 #include <QDebug>
-#include "actuator_factory.h"
+#include <backend/Sensors/sensorconfig.h>
+#include "actuatorfactory.h"
 
 ActuatorFactory::ActuatorFactory(ActuatorList& actuators, QObject *parent) :  QObject(parent), actuators(actuators)
 {
@@ -16,4 +17,17 @@ void ActuatorFactory::addActuator(QList<bool> flipSwitch){
     QSharedPointer<Actuator> actuator = QSharedPointer<Actuator>(new Actuator(socketCombination, this->rcSwitch.data()));
     this->actuators.addActuator(actuator);
 }
+
+void ActuatorFactory::createActuatorConfig(Actuator &actuator, Sensor &sensor, SensorConfig& config)
+{
+    ActuatorManager &manager = actuator.getManager();
+    manager.registerSensor(sensor, config);
+}
+
+void ActuatorFactory::createActuatorConfig(QString uuid, QString config)
+{
+    emit onCreateActuatorConfig(uuid, config);
+}
+
+
 //TODO: Remove

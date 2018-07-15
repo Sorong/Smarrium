@@ -432,7 +432,7 @@ sensors_type_t LightSensor::getType() const
 
 SensorBaseType LightSensor::getRawType()
 {
-    return SensorBaseType::LIGHT;
+    return SensorBaseType::LUX;
 }
 
 QString LightSensor::getSort(){

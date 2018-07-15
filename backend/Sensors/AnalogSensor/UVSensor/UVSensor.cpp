@@ -5,7 +5,7 @@ UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, ADC* adc): Sens
     _pinUVin = chUVin;
     _pinRef = chRef;
     _adc = adc;
-    this->name = "UV-Sensor, Kanal: " + QString::number(this->_channel);
+    this->name = "UV-Sensor, Kanal: " + QString::number(this->_pinUVin);
 }
 
 UVSensor::~UVSensor()

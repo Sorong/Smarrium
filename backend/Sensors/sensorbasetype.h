@@ -8,9 +8,10 @@ class BaseType
 public:
     enum Type {
         UV,
-        LIGHT,
+        LUX,
         TEMPERATURE,
-        HUMIDITY
+        HUMIDITY,
+        CLOCK
     };
     Q_ENUM(Type)
 private:

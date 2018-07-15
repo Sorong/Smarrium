@@ -72,6 +72,11 @@ QHash<int, QByteArray> SensorList::roleNames() const
     return roles;
 }
 
+const QList<Sensor *> &SensorList::getRawData()
+{
+    return this->sensorList;
+}
+
 void SensorList::selectSensor(int index)
 {
     if(index >= 0 && index < this->sensorList.length()) {

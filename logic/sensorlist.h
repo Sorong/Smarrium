@@ -37,6 +37,8 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
+    const QList<Sensor*>& getRawData();
+
 public slots:
     void selectSensor(int index);
 

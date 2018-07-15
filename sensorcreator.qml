@@ -92,7 +92,7 @@ Item {
         anchors.left: content.left
         width: parent.width * 2/3
         Component.onCompleted: function() {
-            var component = Qt.createComponent("uicomponents/sensor_creator.qml")
+            var component = Qt.createComponent("uicomponents/_sensorcreator.qml")
             if (component.status === Component.Ready)
                 component.createObject(sensorCreatePane);
         }

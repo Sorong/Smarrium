@@ -44,15 +44,32 @@ Item {
                     width: content.width - add.width
                     textRole: "name"
                     model: sensors
+                    delegate: ItemDelegate {
+                        text: name
+                        width: parent.width
+                        onClicked: function() {
+                            add.uuid = uuid;
+                            add.config = configFactory.getConfig(type);
+                        }
+                        Component.onCompleted: this.onClicked()
+                    }
+
+
 
                 }
 
                 RoundButton {
                     id: add
+                    property string uuid: ""
+                    property string config: ""
                     anchors.bottom: parent.bottom
                     icon { source:"/icons/svg/ic_add_48px.svg"}
                     onClicked: function() {
+                        if(this.uuid === "" || this.config === "") {
+                            return;
+                        }
                         sensors.selectSensor(sensorAdd.currentIndex);
+                        actuatorFactory.createActuatorConfig(this.uuid, this.config);
                     }
                 }
             }
@@ -73,11 +90,28 @@ Item {
         delegate: Component {
             Item {
                 Component.onCompleted: function() {
-                    var component = Qt.createComponent("uicomponents/sensor_view.qml")
-                    //TODO: different sensor_view for each raw type
-                    console.log(SensorBaseType.UV);
-                    if (component.status === Component.Ready) {
-                        component.selectMode(type)
+                    var component = undefined;
+                    switch (type) {
+                    case SensorBaseType.UV:
+                        console.log("UV");
+                        return  Qt.createComponent("uicomponents/sensorviews/uv.qml")
+                    case SensorBaseType.LUX:
+                        console.log("UV");
+                        return  Qt.createComponent("uicomponents/sensorviews/lux.qml")
+                    case SensorBaseType.HUMIDITY:
+                        console.log("HUMIDITY");
+                        return Qt.createComponent("uicomponents/sensorviews/humidity.qml")
+                    case SensorBaseType.TEMPERATURE:
+                        console.log("TEMPERATURE");
+                        return Qt.createComponent("uicomponents/sensorviews/temperature.qml")
+                    case SensorBaseType.CLOCK:
+                        console.log("CLOCK");
+                        return Qt.createComponent("uicomponents/sensorviews/clock.qml")
+                    default:
+                        console.log("default");
+                        break;
+                    }
+                    if (component && component.status === Component.Ready) {
                         component.createObject(this);
                     }
                 }

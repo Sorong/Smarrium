@@ -3,10 +3,9 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 
-#include <backend/Actuator/actuatorcamera.h>
+#include "backend/Actuator/actuatorcamera.h"
 
 #include "logic/qmlcontextmanager.h"
-#include "./backend/Actuator/actuatorcamera.h"
 
 int main(int argc, char *argv[])
 {
