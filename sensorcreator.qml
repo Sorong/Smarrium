@@ -32,9 +32,11 @@ Item {
                 width: content.width
                 height: 40
                 Column {
+                    anchors.verticalCenter: parent.verticalCenter
                     //anchors.centerIn: parent
                     //width: parent.width
                     Text {
+
                         text: name + ', Interval: ' + interval + ', UUID: ' + uuid
                     }
                 }

@@ -15,7 +15,7 @@ void ActuatorManager::registerActuator(Actuator &actuator)
 bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
 {
     qDebug() << "Config added for:" << sensor.toString() << " Config: " << config;
-    this->sensorList.add(&sensor);
+    this->sensorList.addUnique(&sensor);
     this->configurations[&sensor] = &config;
     this->sensorIds[sensor.getId()] = &sensor;
     connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));

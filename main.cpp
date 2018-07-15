@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<SensorBaseType>("SensorBaseType");
     qmlRegisterUncreatableType<BaseType>("SensorBaseType", 1, 0, "SensorBaseType", "Not creatable as it is an enum type");
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     QMLContextManager manager(engine);

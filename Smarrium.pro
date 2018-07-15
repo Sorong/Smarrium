@@ -1,4 +1,4 @@
-QT += quick quickcontrols2 svg
+QT += quick quickcontrols2 svg charts
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -42,7 +42,9 @@ SOURCES += \
     backend/Sensors/sensorconfig.cpp \
     factories/sensorfactory.cpp \
     factories/actuatorfactory.cpp \
-    factories/configfactory.cpp
+    factories/configfactory.cpp \
+    backend/Sensors/VirtualSensor/virtualsensor.cpp \
+    backend/Sensors/VirtualSensor/Clock/clocksensor.cpp
 
 RESOURCES += qml.qrc
 
@@ -96,7 +98,9 @@ HEADERS += \
     backend/Sensors/sensorconfig.h \
     factories/sensorfactory.h \
     factories/actuatorfactory.h \
-    factories/configfactory.h
+    factories/configfactory.h \
+    backend/Sensors/VirtualSensor/virtualsensor.h \
+    backend/Sensors/VirtualSensor/Clock/clocksensor.h
 
 
 DISTFILES += \
