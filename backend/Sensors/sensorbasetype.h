@@ -11,7 +11,8 @@ public:
         LUX,
         TEMPERATURE,
         HUMIDITY,
-        CLOCK
+        CLOCK,
+        CAMERA
     };
     Q_ENUM(Type)
 private:

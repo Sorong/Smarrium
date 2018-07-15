@@ -1,9 +1,10 @@
-#include "actuatorcamera.h"
+#include "camera.h"
 #include <QDebug>
 #include <fstream>
 #include <iostream>
 #include <QThread>
-ActuatorCamera::ActuatorCamera() : defaultImage(CAMERA_WIDTH, CAMERA_HEIGHT, QImage::Format_RGBA8888)
+
+Camera::Camera() : defaultImage(CAMERA_WIDTH, CAMERA_HEIGHT, QImage::Format_RGBA8888), VirtualSensor(EVENT_INTERVAL)
 {
     defaultImage.fill(Qt::GlobalColor::blue);
     this->referenceImageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
@@ -11,41 +12,41 @@ ActuatorCamera::ActuatorCamera() : defaultImage(CAMERA_WIDTH, CAMERA_HEIGHT, QIm
     this->camera.open();
 }
 
-void ActuatorCamera::takeReferncePicture(){
+void Camera::takeReferncePicture(){
     this->takePicture(this->referenceImageData);
     QImage image(this->referenceImageData, CAMERA_WIDTH, CAMERA_HEIGHT, QImage::Format_RGB888);
     this->referenceImage = image.copy();
 
 }
-void ActuatorCamera::takePicture(unsigned char* rawData)
+void Camera::takePicture(unsigned char* rawData)
 {
 
     this->camera.grab();
     this->camera.retrieve( rawData, raspicam::RASPICAM_FORMAT_RGB);
 }
 
-void ActuatorCamera::takePicture(){
+void Camera::takePicture(){
     this->camera.grab();
     this->camera.retrieve( this->imageData, raspicam::RASPICAM_FORMAT_RGB);
     QImage imageTemp(this->imageData, CAMERA_WIDTH, CAMERA_HEIGHT, QImage::Format_RGB888);
     this->image = imageTemp.copy();
 }
 
-QImage ActuatorCamera::getReferenceImage(){
+QImage Camera::getReferenceImage(){
     if(this->referenceImage.format() == QImage::Format_Invalid){
         return this->defaultImage;
     }
     return this->referenceImage;
 }
 
-QImage ActuatorCamera::getImage(){
+QImage Camera::getImage(){
     if(this->image.format() == QImage::Format_Invalid){
         return this->defaultImage;
     }
     return this->image;
 }
 
-bool ActuatorCamera::saveReference(){
+bool Camera::saveReference(){
     if(!this->referenceImage.save(directory + "/referenz.ppm")){
         qDebug() << "Refernze nicht gespeichert";
         return false;
@@ -53,7 +54,7 @@ bool ActuatorCamera::saveReference(){
     return true;
 }
 
-bool ActuatorCamera::saveImage(){
+bool Camera::saveImage(){
     if(!this->image.save(directory + "/image.ppm")){
         qDebug() << "Image nicht gespeichert";
         return false;
@@ -63,7 +64,7 @@ bool ActuatorCamera::saveImage(){
 
 
 
-QImage ActuatorCamera::retriveDifferencePicture()
+QImage Camera::retriveDifferencePicture()
 {
     QString returnSuccess = "Done\n";
 
@@ -90,3 +91,31 @@ QImage ActuatorCamera::retriveDifferencePicture()
     return this->differencePicture;
 }
 
+sensors_type_t Camera::getType() const{
+    return SENSOR_TYPE_CAMERA;
+}
+
+bool Camera::getEvent(sensors_event_t *event)
+{
+
+    memset(event, 0, sizeof(sensors_event_t));
+
+    event->version   = sizeof(sensors_event_t);
+    event->sensor_id = _id;
+    event->type      = SENSOR_TYPE_CAMERA;
+    event->timestamp = QTime::currentTime();
+
+    if (event->light == 65536) {
+        return false;
+    }
+    return true;
+}
+
+QString Camera::getSort(){
+    return "Camera";
+}
+
+
+SensorBaseType Camera::getRawType(){
+    return SensorBaseType::CAMERA;
+}

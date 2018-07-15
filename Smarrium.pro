@@ -37,14 +37,14 @@ SOURCES += \
     logic/sensorstringlist.cpp \
     logic/actuatormanager.cpp \
     logic/qmlcontextmanager.cpp \
-    backend/Actuator/actuatorcamera.cpp \
     backend/Sensors/sensorbasetype.cpp \
     backend/Sensors/sensorconfig.cpp \
     factories/sensorfactory.cpp \
     factories/actuatorfactory.cpp \
     factories/configfactory.cpp \
     backend/Sensors/VirtualSensor/virtualsensor.cpp \
-    backend/Sensors/VirtualSensor/Clock/clocksensor.cpp
+    backend/Sensors/VirtualSensor/Clock/clocksensor.cpp \
+    backend/Sensors/VirtualSensor/Camera/camera.cpp \
 
 RESOURCES += qml.qrc
 
@@ -93,14 +93,14 @@ HEADERS += \
     logic/sensorstringlist.h \
     logic/actuatormanager.h \
     logic/qmlcontextmanager.h \
-    backend/Actuator/actuatorcamera.h \
     backend/Sensors/sensorbasetype.h \
     backend/Sensors/sensorconfig.h \
     factories/sensorfactory.h \
     factories/actuatorfactory.h \
     factories/configfactory.h \
     backend/Sensors/VirtualSensor/virtualsensor.h \
-    backend/Sensors/VirtualSensor/Clock/clocksensor.h
+    backend/Sensors/VirtualSensor/Clock/clocksensor.h \
+    backend/Sensors/VirtualSensor/Camera/camera.h \
 
 
 DISTFILES += \

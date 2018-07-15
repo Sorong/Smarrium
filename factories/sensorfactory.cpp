@@ -24,7 +24,7 @@ void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_
     case SENSOR_TYPE_UV:
     {
         //todo: Change to one channel
-        ptr = new UVSensor(interval, channel, channel, this->adc.data());
+        ptr = new UVSensor(interval, channel, this->adc.data());
         break;
     }
     default:

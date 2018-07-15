@@ -5,14 +5,17 @@
 #include <QPicture>
 #include <QImage>
 #include <QProcess>
+#include "./../virtualsensor.h"
+#include "./../../Sensor.h"
 
 #define CAMERA_WIDTH 1280
 #define CAMERA_HEIGHT 920
-class ActuatorCamera : public QTimer
+#define EVENT_INTERVAL 1800000
+class Camera : VirtualSensor
 {
     Q_OBJECT
 public:
-    ActuatorCamera();
+    Camera();
 
     void takePicture(unsigned char *rawData);
     void takePicture();
@@ -24,6 +27,11 @@ public:
 
     bool saveReference();
     bool saveImage();
+
+    bool getEvent(sensors_event_t*) override;
+    sensors_type_t getType() const override;
+    SensorBaseType getRawType() override;
+    QString getSort() override;
 
 signals:
 

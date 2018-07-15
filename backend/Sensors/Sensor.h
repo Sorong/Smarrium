@@ -2,8 +2,6 @@
 #define SENSOR_H
 
 
-#include "sensorbasetype.h"
-
 #include <wiringPi.h>
 #include <bcm2835.h>
 #include <string.h>
@@ -11,6 +9,7 @@
 #include <QUuid>
 #include <QString>
 #include "sensorbasetype.h"
+#include <QTime>
 
 typedef enum sensor_type_t
 {
@@ -19,7 +18,9 @@ typedef enum sensor_type_t
     SENSOR_TYPE_TEMPERATURE           = (3),
     SENSOR_TYPE_UV                    = (4),
     SENSOR_TYPE_IRTEMPERATURE         = (5),
-    SENSOR_TYPE_MOISTURE              = (6)
+    SENSOR_TYPE_MOISTURE              = (6),
+    SENSOR_TYPE_CAMERA                = (7),
+    SENSOR_TYPE_CLOCK                 = (8)
 } sensors_type_t;
 
 /** struct sensor_event_s is used to provide a single sensor event in a common format. */
@@ -29,7 +30,7 @@ typedef struct
     QUuid sensor_id;                        /**< unique sensor identifier */
     int32_t type;                             /**< sensor type */
     int32_t reserved0;                        /**< reserved */
-    int32_t timestamp;                        /**< time is in milliseconds */
+    QTime timestamp;                        /**< QTime of day */
     union
     {
         float           temperature;          /**< temperature is in degrees centigrade (Celsius) */
@@ -37,9 +38,8 @@ typedef struct
         float           relative_humidity;    /**< relative humidity in percent */
         float           voltage;              /**< voltage in volts (V) */
         float           uv;                   /**< UV light value */
-        float           irTemperature;
-        float           moisture;
-
+        float           irTemperature;        /** IR Temperatur */
+        float           moisture;             /** Substrate Humidity */
     };
 } sensors_event_t;
 

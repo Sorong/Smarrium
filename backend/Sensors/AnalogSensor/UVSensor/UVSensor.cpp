@@ -1,11 +1,10 @@
 #include "./UVSensor.hpp"
 
-UVSensor::UVSensor(int intervall, uint8_t chUVin, uint8_t chRef, ADC* adc): Sensor(intervall)
+UVSensor::UVSensor(int intervall, uint8_t channel, ADC* adc): Sensor(intervall)
 {
-    _pinUVin = chUVin;
-    _pinRef = chRef;
+    _channel = channel;
     _adc = adc;
-    this->name = "UV-Sensor, Kanal: " + QString::number(this->_pinUVin);
+    this->name = "UV-Sensor, Kanal: " + QString::number(this->_channel);
 }
 
 UVSensor::~UVSensor()
@@ -15,11 +14,10 @@ UVSensor::~UVSensor()
 
 float UVSensor::calculateUV()
 {
-    uint32_t uvLevel = averageAnalogRead(_pinUVin);
-    uint32_t refLevel = averageAnalogRead(_pinRef);
+    uint32_t refLevel = averageAnalogRead(_channel);
 
-    float outputVoltage = 3.3 / refLevel * uvLevel;
-    float uvIntensity = mapfloat(outputVoltage, 0.99, 2.8, 0.0, 15.0);
+    float uvLevel = 3.3 / refLevel * uvLevel;
+    float uvIntensity = mapfloat(uvLevel, 0.99, 2.8, 0.0, 15.0);
 
     return uvIntensity;
 
@@ -67,7 +65,7 @@ bool UVSensor::getEvent(sensors_event_t* event)
     event->version   = sizeof(sensors_event_t);
     event->sensor_id = _id;
     event->type      = SENSOR_TYPE_UV;
-    event->timestamp = bcm2835_st_read();
+    event->timestamp = QTime::currentTime();
 
     /* Calculate the actual lux value */
     event->uv = calculateUV();
@@ -87,7 +85,7 @@ void UVSensor::getAnalogSensor(sensor_analog_t *sensor){
     sensor->version     = 1;
     sensor->sensor_id   = _id;
     sensor->type        = SENSOR_TYPE_UV;
-    sensor->channel     = _pinUVin;
+    sensor->channel     = _channel;
 }
 
 void UVSensor::setChannel(uint8_t channel){

@@ -29,7 +29,7 @@ bool IRTemperatureSensor::getEvent(sensors_event_t* event){
 	event->version   = sizeof(sensors_event_t);
 	event->sensor_id = _id;
 	event->type      = SENSOR_TYPE_IRTEMPERATURE;
-	event->timestamp = bcm2835_st_read();
+    event->timestamp = QTime::currentTime();
 	
 	event->irTemperature = object();
 

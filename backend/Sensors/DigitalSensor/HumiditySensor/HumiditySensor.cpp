@@ -54,7 +54,7 @@ bool HumiditySensor::getEvent(sensors_event_t* event)
     event->version   = sizeof(sensors_event_t);
     event->sensor_id = _id;
     event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
-    event->timestamp = bcm2835_st_read();
+    event->timestamp = QTime::currentTime();
     event->relative_humidity = calculateHumidity();
 
     if (event->relative_humidity == -2000) {

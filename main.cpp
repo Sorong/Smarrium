@@ -4,14 +4,14 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 
-#include "backend/Actuator/actuatorcamera.h"
+#include "backend/Sensors/VirtualSensor/Camera/camera.h"
 
 #include "logic/qmlcontextmanager.h"
 
 int main(int argc, char *argv[])
 {
     wiringPiSetup();
-    ActuatorCamera camera;
+    Camera camera;
     camera.takePicture();
     camera.retriveDifferencePicture();
     QQuickStyle::setStyle("Material");
