@@ -28,7 +28,7 @@ Row {
         ComboBox {
             id: sensorSelector
             textRole: "display"
-            width: sensorCreatePane.width * 0.25
+            width: sensorCreatorPane.width * 0.40
             model: supportedSensors
             onCurrentIndexChanged: function() {
                 if(currentIndex >= 0)
@@ -69,7 +69,7 @@ Row {
         ComboBox {
             id: sensorOptionSelector
             textRole: "display"
-            width: sensorCreatePane.width * 0.25
+            width: sensorCreatorPane.width * 0.40
             onCurrentIndexChanged: function() {
                 if(model === undefined || currentIndex < 0) {
                     return
