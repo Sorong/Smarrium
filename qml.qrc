@@ -1,10 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>sensorcreator.qml</file>
-        <file>start.qml</file>
-        <file>actuatorcreator.qml</file>
-        <file>overview.qml</file>
         <file>uicomponents/_sensorcreator.qml</file>
         <file>uicomponents/_actuatorcreator.qml</file>
         <file>uicomponents/sensorviews/clock.qml</file>
