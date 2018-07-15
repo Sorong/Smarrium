@@ -9,6 +9,7 @@ LightSensor::LightSensor(int intervall, uint8_t address, Bcm2835Interface *i2c) 
   _tsl2561AutoGain = false;
   _tsl2561IntegrationTime = TSL2561_INTEGRATIONTIME_13MS;
   _tsl2561Gain = TSL2561_GAIN_1X;
+  this->name = "Lichtsensor";
 }
 
 
@@ -429,13 +430,15 @@ sensors_type_t LightSensor::getType() const
     return SENSOR_TYPE_LIGHT;
 }
 
+SensorBaseType LightSensor::getRawType()
+{
+    return SensorBaseType::LUX;
+}
+
 QString LightSensor::getSort(){
     return this->sort;
 }
 
-QString LightSensor::toString(){
-    return QString("Lichtsensor");
-}
 
 
 uint8_t LightSensor::getAddress(){

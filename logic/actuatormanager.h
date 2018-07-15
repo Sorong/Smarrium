@@ -5,6 +5,8 @@
 #include <QList>
 #include <QSharedPointer>
 
+#include <backend/Sensors/sensorconfig.h>
+
 #include "./backend/Sensors/Sensor.h"
 #include "sensorlist.h"
 
@@ -15,7 +17,7 @@ class ActuatorManager : public QObject
 public:
     explicit ActuatorManager(QObject *parent = nullptr);
     void registerActuator(Actuator& actuator);
-    bool registerSensor(Sensor* , sensor_config*);
+    bool registerSensor(Sensor& sensor, SensorConfig& config);
     Q_INVOKABLE SensorList& getSensors();
 
 signals:
@@ -25,7 +27,7 @@ public slots:
 
 private:
     SensorList sensorList;
-    QMap<Sensor*, sensor_config*> configurations;
+    QMap<Sensor*, SensorConfig*> configurations;
     QMap<QUuid, Sensor*> sensorIds;
 
     Actuator* _actuator;

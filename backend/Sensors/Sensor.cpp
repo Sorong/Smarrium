@@ -8,6 +8,11 @@ Sensor::Sensor(int interval)
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
 }
 
+const QString &Sensor::toString()
+{
+    return this->name;
+}
+
 QUuid Sensor::getUuid()
 {
     return this->_id;

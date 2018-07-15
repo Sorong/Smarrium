@@ -32,7 +32,7 @@ Row {
             model: supportedSensors
             onCurrentIndexChanged: function() {
                 if(currentIndex >= 0)
-                sensorCreator.onSelectionChanged(model.at(currentIndex))
+                    sensorCreator.onSelectionChanged(model.at(currentIndex))
             }
 
         }
@@ -89,15 +89,17 @@ Row {
         onClicked: function() {
             switch(this.mode) {
             case 1: //Digital
-                gpioAvailable.removeAt(this.index)
-                sensorFactory.addDigitalSensor(this.option, this.sensor)
+                if (gpioAvailable.removeAt(this.index)) {
+                    sensorFactory.addDigitalSensor(this.option, this.sensor)
+                }
                 break;
             case 2: //I2C
                 sensorFactory.addI2CSensor(this.sensor)
                 break;
             default: //Analog
-                channelAvailable.removeAt(this.index)
-                sensorFactory.addAnalogSensor(this.option, this.sensor)
+                if (channelAvailable.removeAt(this.index)) {
+                    sensorFactory.addAnalogSensor(this.option, this.sensor)
+                }
             }
 
         }

@@ -1,6 +1,5 @@
 #ifndef ACTUATORCAMERA_H
 #define ACTUATORCAMERA_H
-
 #include <raspicam/raspicam.h>
 #include <QTimer>
 #include <QPicture>

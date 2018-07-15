@@ -42,15 +42,17 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     switch(role){
+    case TypeRole:
+        return QVariant(this->sensorList.at(index.row())->getRawType());
 
     case NameRole:
-        return this->sensorList.at(index.row())->toString();
+        return QVariant(this->sensorList.at(index.row())->toString());
 
     case IntervalRole:
-        return this->sensorList.at(index.row())->getInterval();
+        return QVariant(this->sensorList.at(index.row())->getInterval());
 
     case UuidRole:
-        return this->sensorList.at(index.row())->getId();
+        return QVariant(this->sensorList.at(index.row())->getId());
 
     default:
         return QVariant();
@@ -68,6 +70,18 @@ QHash<int, QByteArray> SensorList::roleNames() const
     //roles[ConnectionRole] = "connection";
     roles[UuidRole] = "uuid";
     return roles;
+}
+
+const QList<Sensor *> &SensorList::getRawData()
+{
+    return this->sensorList;
+}
+
+void SensorList::selectSensor(int index)
+{
+    if(index >= 0 && index < this->sensorList.length()) {
+        emit onSelect(this->sensorList.at(index));
+    }
 }
 
 bool SensorList::insertRows(int row, int count, const QModelIndex &parent)
@@ -95,10 +109,26 @@ bool SensorList::removeRows(int row, int count, const QModelIndex &parent)
 
 void SensorList::add(Sensor *sensor)
 {
+    if(!sensor) {
+        return;
+    }
     this->insertRows(sensorList.size(), 1);
     this->sensorList[sensorList.size() - 1] = sensor;
 
     qDebug() << "add Sensor:  " << sensorList.at(sensorList.size() - 1);
+}
+
+void SensorList::addUnique(Sensor *sensor)
+{
+    if(!sensor) {
+        return;
+    }
+    for(auto s : this->sensorList) {
+        if(s->getId() == sensor->getId()) {
+            return;
+        }
+    }
+    this->add(sensor);
 }
 
 bool SensorList::isEmpty()

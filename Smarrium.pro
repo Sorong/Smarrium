@@ -1,4 +1,4 @@
-QT += quick quickcontrols2 svg
+QT += quick quickcontrols2 svg charts
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -32,14 +32,19 @@ SOURCES += \
     logic/channelmanager.cpp \
     logic/channellist.cpp \
     logic/channelmap.cpp \
-    factories/actuator_factory.cpp \
-    factories/sensor_factory.cpp \
     logic/sensorlist.cpp \
     logic/sensormap.cpp \
     logic/sensorstringlist.cpp \
     logic/actuatormanager.cpp \
     logic/qmlcontextmanager.cpp \
-    backend/Actuator/actuatorcamera.cpp
+    backend/Actuator/actuatorcamera.cpp \
+    backend/Sensors/sensorbasetype.cpp \
+    backend/Sensors/sensorconfig.cpp \
+    factories/sensorfactory.cpp \
+    factories/actuatorfactory.cpp \
+    factories/configfactory.cpp \
+    backend/Sensors/VirtualSensor/virtualsensor.cpp \
+    backend/Sensors/VirtualSensor/Clock/clocksensor.cpp
 
 RESOURCES += qml.qrc
 
@@ -83,14 +88,19 @@ HEADERS += \
     logic/channel.h \
     logic/channellist.h \
     logic/channelmap.h \
-    factories/actuator_factory.h \
-    factories/sensor_factory.h \
     logic/sensorlist.h \
     logic/sensormap.h \
     logic/sensorstringlist.h \
     logic/actuatormanager.h \
     logic/qmlcontextmanager.h \
-    backend/Actuator/actuatorcamera.h
+    backend/Actuator/actuatorcamera.h \
+    backend/Sensors/sensorbasetype.h \
+    backend/Sensors/sensorconfig.h \
+    factories/sensorfactory.h \
+    factories/actuatorfactory.h \
+    factories/configfactory.h \
+    backend/Sensors/VirtualSensor/virtualsensor.h \
+    backend/Sensors/VirtualSensor/Clock/clocksensor.h
 
 
 DISTFILES += \

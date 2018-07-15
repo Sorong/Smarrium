@@ -5,6 +5,7 @@ MoistureSensor::MoistureSensor(int intervall, uint8_t channel, ADC* ADC): Sensor
     //this->_id = id;
     this->_channel = channel;
     this->_ADC = ADC;
+    this->name = "Bodenfeuchtigkeitsmesser, Kanal: "  + QString::number(this->_channel);
 }
 
 bool MoistureSensor::getEvent(sensors_event_t* event){
@@ -20,15 +21,15 @@ bool MoistureSensor::getEvent(sensors_event_t* event){
 
 void MoistureSensor::getAnalogSensor(sensor_analog_t* sensor){
     /* Clear the sensor_t object */
-  memset(sensor, 0, sizeof(sensor_analog_t));
+    memset(sensor, 0, sizeof(sensor_analog_t));
 
-  /* Insert the sensor name in the fixed length char array */
-  strncpy (sensor->name, "MoistSensor", sizeof(sensor->name) - 1);
-  sensor->name[sizeof(sensor->name)- 1] = 0;
-  sensor->version     = 1;
-  sensor->sensor_id   = _id;
-  sensor->type        = SENSOR_TYPE_MOISTURE;
-  sensor->channel     = _channel;
+    /* Insert the sensor name in the fixed length char array */
+    strncpy (sensor->name, "MoistSensor", sizeof(sensor->name) - 1);
+    sensor->name[sizeof(sensor->name)- 1] = 0;
+    sensor->version     = 1;
+    sensor->sensor_id   = _id;
+    sensor->type        = SENSOR_TYPE_MOISTURE;
+    sensor->channel     = _channel;
 }
 
 void MoistureSensor::setChannel(uint8_t channel){
@@ -44,15 +45,13 @@ QString MoistureSensor::getSort(){
     return this->sort;
 }
 
-QString MoistureSensor::toString(){
-
-    return QStringLiteral("Bodenfeuchtigkeitsmesser, Kanal: %1").arg(this->_channel);
-}
-
-
-
 float MoistureSensor::readMoisture(){
     return (float)_ADC->myAnalogRead(this->_channel);
+}
+
+SensorBaseType MoistureSensor::getRawType()
+{
+    return SensorBaseType::HUMIDITY;
 }
 
 sensors_type_t MoistureSensor::getType() const

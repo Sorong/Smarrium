@@ -14,10 +14,14 @@ class ActuatorFactory : public QObject
 public:
     explicit ActuatorFactory(ActuatorList&, QObject *parent = nullptr);
     Q_INVOKABLE void addActuator(QList<bool> flipSwitch);
-
+    void createActuatorConfig(Actuator& actuator, Sensor& sensor, SensorConfig& config);
 signals:
+    void onCreateActuatorConfig(QString uuid, QString config);
 
 public slots:
+    //bool ActuatorManager::registerSensor(Sensor* sensor, sensor_config* config)
+
+    Q_INVOKABLE void createActuatorConfig(QString uuid, QString config);
 
 private:
    ActuatorList& actuators;

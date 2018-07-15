@@ -37,9 +37,19 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
+    const QList<Sensor*>& getRawData();
+
+public slots:
+    void selectSensor(int index);
+
     void add(Sensor* sensor);
 
+    void addUnique(Sensor* sensor);
+
     Q_INVOKABLE bool isEmpty();
+
+signals:
+    void onSelect(Sensor* sensor);
 
 private:
      QList<Sensor*> sensorList;

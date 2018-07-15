@@ -106,35 +106,35 @@
 /** TSL2561 I2C Registers */
 enum
 {
-  TSL2561_REGISTER_CONTROL          = 0x00, // Control/power register 
-  TSL2561_REGISTER_TIMING           = 0x01, // Set integration time register
-  TSL2561_REGISTER_THRESHHOLDL_LOW  = 0x02, // Interrupt low threshold low-byte
-  TSL2561_REGISTER_THRESHHOLDL_HIGH = 0x03, // Interrupt low threshold high-byte
-  TSL2561_REGISTER_THRESHHOLDH_LOW  = 0x04, // Interrupt high threshold low-byte
-  TSL2561_REGISTER_THRESHHOLDH_HIGH = 0x05, // Interrupt high threshold high-byte
-  TSL2561_REGISTER_INTERRUPT        = 0x06, // Interrupt settings
-  TSL2561_REGISTER_CRC              = 0x08, // Factory use only
-  TSL2561_REGISTER_ID               = 0x0A, // TSL2561 identification setting
-  TSL2561_REGISTER_CHAN0_LOW        = 0x0C, // Light data channel 0, low byte
-  TSL2561_REGISTER_CHAN0_HIGH       = 0x0D, // Light data channel 0, high byte
-  TSL2561_REGISTER_CHAN1_LOW        = 0x0E, // Light data channel 1, low byte
-  TSL2561_REGISTER_CHAN1_HIGH       = 0x0F  // Light data channel 1, high byte
+    TSL2561_REGISTER_CONTROL          = 0x00, // Control/power register
+    TSL2561_REGISTER_TIMING           = 0x01, // Set integration time register
+    TSL2561_REGISTER_THRESHHOLDL_LOW  = 0x02, // Interrupt low threshold low-byte
+    TSL2561_REGISTER_THRESHHOLDL_HIGH = 0x03, // Interrupt low threshold high-byte
+    TSL2561_REGISTER_THRESHHOLDH_LOW  = 0x04, // Interrupt high threshold low-byte
+    TSL2561_REGISTER_THRESHHOLDH_HIGH = 0x05, // Interrupt high threshold high-byte
+    TSL2561_REGISTER_INTERRUPT        = 0x06, // Interrupt settings
+    TSL2561_REGISTER_CRC              = 0x08, // Factory use only
+    TSL2561_REGISTER_ID               = 0x0A, // TSL2561 identification setting
+    TSL2561_REGISTER_CHAN0_LOW        = 0x0C, // Light data channel 0, low byte
+    TSL2561_REGISTER_CHAN0_HIGH       = 0x0D, // Light data channel 0, high byte
+    TSL2561_REGISTER_CHAN1_LOW        = 0x0E, // Light data channel 1, low byte
+    TSL2561_REGISTER_CHAN1_HIGH       = 0x0F  // Light data channel 1, high byte
 };
 
 /** Three options for how long to integrate readings for */
 typedef enum
 {
-  TSL2561_INTEGRATIONTIME_13MS      = 0x00,    // 13.7ms
-  TSL2561_INTEGRATIONTIME_101MS     = 0x01,    // 101ms
-  TSL2561_INTEGRATIONTIME_402MS     = 0x02     // 402ms
+    TSL2561_INTEGRATIONTIME_13MS      = 0x00,    // 13.7ms
+    TSL2561_INTEGRATIONTIME_101MS     = 0x01,    // 101ms
+    TSL2561_INTEGRATIONTIME_402MS     = 0x02     // 402ms
 }
 tsl2561IntegrationTime_t;
 
 /** TSL2561 offers 2 gain settings */
 typedef enum
 {
-  TSL2561_GAIN_1X                   = 0x00,    // No gain
-  TSL2561_GAIN_16X                  = 0x10,    // 16x gain
+    TSL2561_GAIN_1X                   = 0x00,    // No gain
+    TSL2561_GAIN_16X                  = 0x10,    // 16x gain
 }
 tsl2561Gain_t;
 
@@ -146,41 +146,41 @@ tsl2561Gain_t;
 */
 /**************************************************************************/
 class LightSensor: I2CSensor, public Sensor {
- public:
-  LightSensor(int intervall, uint8_t addr, Bcm2835Interface *i2c);
-  //bool begin(void);
-  bool begin(Bcm2835Interface *interface);
-  bool init();
-  
-  /* TSL2561 Functions */
-  void enableAutoRange(bool enable);
-  void setIntegrationTime(tsl2561IntegrationTime_t time);
-  void setGain(tsl2561Gain_t gain);
-  void getLuminosity (uint16_t *broadband, uint16_t *ir);
-  uint32_t calculateLux(uint16_t broadband, uint16_t ir);
-  
-  /* Unified Sensor API Functions */  
-  bool getEvent(sensors_event_t*) override;
-  void getI2CSensor(sensor_I2C_t*) override;
-  QString getSort() override;
-  QString toString() override;
+public:
+    LightSensor(int intervall, uint8_t addr, Bcm2835Interface *i2c);
+    //bool begin(void);
+    bool begin(Bcm2835Interface *interface);
+    bool init();
 
-  uint8_t getAddress() override;
-  void setAddress(uint8_t) override;
-  sensors_type_t getType() const override;
+    /* TSL2561 Functions */
+    void enableAutoRange(bool enable);
+    void setIntegrationTime(tsl2561IntegrationTime_t time);
+    void setGain(tsl2561Gain_t gain);
+    void getLuminosity (uint16_t *broadband, uint16_t *ir);
+    uint32_t calculateLux(uint16_t broadband, uint16_t ir);
 
- private:
-  Bcm2835Interface *_i2c;
- 
-  int8_t _address;
-  bool _tsl2561Initialised;
-  bool _tsl2561AutoGain;
-  tsl2561IntegrationTime_t _tsl2561IntegrationTime;
-  tsl2561Gain_t _tsl2561Gain;
-  
-  void     enable (void);
-  void     disable (void);
-  void     getData (uint16_t *broadband, uint16_t *ir);
+    /* Unified Sensor API Functions */
+    bool getEvent(sensors_event_t*) override;
+    void getI2CSensor(sensor_I2C_t*) override;
+    QString getSort() override;
+
+    uint8_t getAddress() override;
+    void setAddress(uint8_t) override;
+    sensors_type_t getType() const override;
+    SensorBaseType getRawType() override;
+
+private:
+    Bcm2835Interface *_i2c;
+
+    int8_t _address;
+    bool _tsl2561Initialised;
+    bool _tsl2561AutoGain;
+    tsl2561IntegrationTime_t _tsl2561IntegrationTime;
+    tsl2561Gain_t _tsl2561Gain;
+
+    void     enable (void);
+    void     disable (void);
+    void     getData (uint16_t *broadband, uint16_t *ir);
 };
 
 #endif // ADAFRUIT_TSL2561_H

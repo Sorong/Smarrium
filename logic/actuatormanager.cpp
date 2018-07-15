@@ -1,5 +1,7 @@
 #include "actuatormanager.h"
 #include "backend/Actuator/Actuator.hpp"
+#include <QDebug>
+#include <QJsonDocument>
 
 ActuatorManager::ActuatorManager(QObject *parent) : QObject(parent)
 {
@@ -10,12 +12,13 @@ void ActuatorManager::registerActuator(Actuator &actuator)
     this->_actuator = &actuator;
 }
 
-bool ActuatorManager::registerSensor(Sensor* sensor, sensor_config* config)
+bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
 {
-    this->sensorList.add(sensor);
-    this->configurations[sensor] = config;
-    this->sensorIds[sensor->getId()] = sensor;
-    connect(sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventRecived(sensors_event_t*)));
+    qDebug() << "Config added for:" << sensor.toString() << " Config: " << config;
+    this->sensorList.addUnique(&sensor);
+    this->configurations[&sensor] = &config;
+    this->sensorIds[sensor.getId()] = &sensor;
+    connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));
     return true;
 }
 
@@ -29,7 +32,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
     if(!_actuator) {
         return;
     }
-    sensor_config* config = this->configurations[sensorIds[event->sensor_id]];
+    SensorConfig* config = this->configurations[sensorIds[event->sensor_id]];
     float eventData = 0;
     switch(event->type){
 
@@ -50,11 +53,11 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         break;
 
     }
-    if(config->minValue < eventData){
+    if(config->getMinValue() < eventData){
         this->_actuator->switchOn();
     }
 
-    else if(config->maxValue > eventData){
+    else if(config->getMaxValue() > eventData){
         this->_actuator->switchOff();
     }
 

@@ -7,6 +7,7 @@ HumiditySensor::HumiditySensor(int intervall, uint8_t pin, Bcm2835Interface *wir
     _wire = wire;
     bcm2835_gpio_fsel(_pin, BCM2835_GPIO_FSEL_INPT);
     this->calibrate();
+    this->name = "Hygrometer, GPIO PIN: " + QString::number(this->_pin);
 }
 
 HumiditySensor::~HumiditySensor(){
@@ -36,15 +37,14 @@ sensors_type_t HumiditySensor::getType() const
     return SENSOR_TYPE_RELATIVE_HUMIDITY;
 }
 
+SensorBaseType  HumiditySensor::getRawType()
+{
+    return SensorBaseType::HUMIDITY;
+}
+
 QString HumiditySensor::getSort(){
     return this->sort;
 }
-
-QString HumiditySensor::toString(){
-    return QString("Hygrometer, GPIO PIN: " + this->_pin);
-}
-
-
 
 bool HumiditySensor::getEvent(sensors_event_t* event)
 {

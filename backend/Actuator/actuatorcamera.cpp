@@ -19,6 +19,7 @@ void ActuatorCamera::takeReferncePicture(){
 }
 void ActuatorCamera::takePicture(unsigned char* rawData)
 {
+
     this->camera.grab();
     this->camera.retrieve( rawData, raspicam::RASPICAM_FORMAT_RGB);
 }

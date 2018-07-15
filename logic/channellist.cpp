@@ -61,6 +61,9 @@ bool ChannelList::insertRows(int row, int count, const QModelIndex &parent)
 }
 
 bool ChannelList::removeAt(int index) {
+    if(index < 0 || index >= this->channelList.size()) {
+        return false;
+    }
     return removeRows(index, 1);
 }
 

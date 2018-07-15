@@ -52,7 +52,6 @@ public:
 
     void getI2CSensor(sensor_I2C_t*) override;
     QString getSort() override;
-    QString toString() override;
 	
 
 	// read() pulls the latest ambient and object temperatures from the 
@@ -118,6 +117,7 @@ public:
 	uint8_t setMin(float minTemp);
 
     sensors_type_t getType() const override;
+    SensorBaseType getRawType() override;
 	
 private:
     uint8_t _address; // MLX90614's 7-bit I2C address

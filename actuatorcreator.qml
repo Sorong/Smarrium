@@ -72,7 +72,7 @@ Item {
         anchors.right: content.right
         anchors.rightMargin: 0
         onClicked: {
-            stackView.push("add_sensor.qml")
+            stackView.push("sensorcreator.qml")
         }
     }
 
@@ -103,7 +103,7 @@ Item {
             Component.onCompleted: function() {
                 var names = ["1", "2", "3", "4", "5", "A", "B","C", "D", "E"]
                 for(var i = 0; i < names.length; i++) {
-                    var component = Qt.createComponent("uicomponents/horizontal_switch.qml")
+                    var component = Qt.createComponent("uicomponents/_actuatorcreator.qml")
                     if (component.status === Component.Ready)
                         var sw = component.createObject(switches);
                     sw.text = qsTr(names[i])

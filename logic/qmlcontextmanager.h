@@ -11,8 +11,9 @@
 #include "sensorstringlist.h"
 
 
-#include <factories/actuator_factory.h>
-#include <factories/sensor_factory.h>
+#include <factories/actuatorfactory.h>
+#include <factories/sensorfactory.h>
+#include <factories/configfactory.h>
 
 class QMLContextManager : public QObject
 {
@@ -25,6 +26,9 @@ signals:
 
 public slots:
     void selectActuator(Actuator *actuator);
+    void createConfig(QString uuid, QString config);
+    //(QString uuid, QString config);
+    //void setActuatorConfig(Actuator* actuator, Sensor* sensor, QString config);
 
 private:
     QQmlApplicationEngine& engine;
@@ -42,7 +46,8 @@ private:
 
     QSharedPointer<ActuatorFactory> actuatorFactory;
     QSharedPointer<SensorFactory>  sensorFactory;
-    //Actuator *selectedActuator; notwendig?
+    QSharedPointer<ConfigFactory> configFactory;
+    Actuator *selectedActuator;
     ActuatorList *selectedActuators;
     SensorList *selectedSensors;
 };
