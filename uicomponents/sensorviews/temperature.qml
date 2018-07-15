@@ -1,11 +1,18 @@
 import QtQuick 2.0
 import QtCharts 2.2
 
-Row {
+//Rectangle {
     ChartView {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
         antialiasing: true
+        //width: sensorList.width *0.5
+        //width: 100
+        //anchors.left: parent.left
+        //anchors.bottom: parent.bottom
+        //width: sensorList.width * 0.7
+        //height: parent.height
+        //width: parent.width
 
         // Define x-axis to be used with the series instead of default one
         ValueAxis {
@@ -35,4 +42,4 @@ Row {
             }
         }
     }
-}
+//}
