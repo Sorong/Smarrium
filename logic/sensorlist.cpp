@@ -36,8 +36,6 @@ int SensorList::rowCount(const QModelIndex &parent) const
 
 QVariant SensorList::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "sensorList" << index.row();
-
     if (!index.isValid() && role == Qt::DisplayPropertyRole){
         return QVariant();
     }

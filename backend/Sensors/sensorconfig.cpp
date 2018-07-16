@@ -6,14 +6,20 @@ SensorConfig::SensorConfig(QJsonObject json) : QJsonObject(json)
 {
 }
 
-float SensorConfig::getMinValue()
+float SensorConfig::getMinValue(int time)
 {
-    return 0; //TODO: Logik
+    QString key(time);
+    QJsonValue v = (*this)[key];
+    v = v["min"];
+    return v.toDouble(); //TODO: Logik
 }
 
-float SensorConfig::getMaxValue()
+float SensorConfig::getMaxValue(int time)
 {
-    return 50; //TODO: Logik
+    QString key(time);
+    QJsonValue v = (*this)[key];
+    v = v["max"];
+    return v.toDouble(); //TODO: Logik
 }
 
 QString SensorConfig::toString()

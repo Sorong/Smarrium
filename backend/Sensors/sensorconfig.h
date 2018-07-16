@@ -9,8 +9,8 @@ class SensorConfig : public QJsonObject
 {
 public:
     SensorConfig(QJsonObject json);
-    float getMinValue();
-    float getMaxValue();
+    float getMinValue(int );
+    float getMaxValue(int );
     QString toString();
 };
 

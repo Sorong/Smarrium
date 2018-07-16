@@ -66,11 +66,11 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         eventData = event->moisture;
         break;
     }
-    if(config->getMinValue() < eventData){
+    if(config->getMinValue(QTime::currentTime().hour()) < eventData){
         this->_actuator->switchOn();
     }
 
-    else if(config->getMaxValue() > eventData){
+    else if(config->getMaxValue(QTime::currentTime().hour()) > eventData){
         this->_actuator->switchOff();
     }
 
