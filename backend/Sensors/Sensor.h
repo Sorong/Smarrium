@@ -44,19 +44,13 @@ typedef struct
 } sensors_event_t;
 
 
-typedef struct{
 
-    QUuid   sensorId;
-    float   minValue;
-    float   maxValue;
-}sensor_config;
 
 class Sensor: public QTimer {
     Q_OBJECT
     Q_PROPERTY(QString name READ toString)
     Q_PROPERTY(QString interval READ getInterval)
     Q_PROPERTY(QString uuid READ getId)
-    //Q_PROPERTY(QString connection READ getConnection)
 
 public:
     Sensor(int);
@@ -70,6 +64,9 @@ public:
     void setInterval(int inerval);
     QUuid getUuid();
     Q_INVOKABLE QString getId();
+    QList<float> getEventValueLog();
+    float getLastEventValaue();
+
 
 
 public slots:
@@ -82,6 +79,11 @@ protected:
     QUuid _id;
     int _interval;
     QString name;
+    QList<float> eventValueLog;
+
+private:
+    void logEvent(sensors_event_t*);
+    int lastCheckedHour;
 
 
 };
