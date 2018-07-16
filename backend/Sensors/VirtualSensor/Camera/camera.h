@@ -28,6 +28,8 @@ public:
     bool saveReference();
     bool saveImage();
 
+    QImage getDefaultImage();
+
     bool getEvent(sensors_event_t*) override;
     sensors_type_t getType() const override;
     SensorBaseType getRawType() override;

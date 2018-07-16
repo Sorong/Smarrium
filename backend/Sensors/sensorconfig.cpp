@@ -24,7 +24,9 @@ float SensorConfig::getMaxValue(int time)
 
 QString SensorConfig::toString()
 {
+
     QJsonObject *obj = this;
     QJsonDocument doc(*obj);
     return QString(doc.toJson(QJsonDocument::Compact));
+
 }

@@ -23,4 +23,8 @@
         <file>defaultconfigs/temperature.json</file>
         <file>defaultconfigs/uv.json</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>images/script.py</file>
+        <file>images/default.ppm</file>
+    </qresource>
 </RCC>
