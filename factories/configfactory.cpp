@@ -32,7 +32,6 @@ QString ConfigFactory::getConfig(SensorBaseType type)
               "\"Ignore\": "
                        "true"
               "}";
-    }
 
     case SensorBaseType::TEMPERATURE:
         return "{"
@@ -77,6 +76,7 @@ QString ConfigFactory::getConfig(SensorBaseType type)
               "}";
 
     case SensorBaseType::CLOCK:
-        return "{\"start\": 8, \"stop\": 16}"
-
+        return "{\"start\": 8, \"stop\": 16}";
+    }
+    return "{}";
 }

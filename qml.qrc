@@ -13,5 +13,6 @@
         <file>svg/ic_add_48px.svg</file>
         <file>svg/ic_remove_circle_48px.svg</file>
         <file>svg/ic_delete_forever_48px.svg</file>
+        <file>svg/ic_save_48px.svg</file>
     </qresource>
 </RCC>

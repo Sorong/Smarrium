@@ -51,7 +51,7 @@ float MoistureSensor::readMoisture(){
 
 SensorBaseType MoistureSensor::getRawType()
 {
-    return SensorBaseType::HUMIDITY;
+    return SensorBaseType::SUBSTRAT_HUMIDITY;
 }
 
 sensors_type_t MoistureSensor::getType() const

@@ -1,13 +1,14 @@
 import QtQuick 2.0
 import QtCharts 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4 as QSS1_4
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 
 
 Row{
 
     Rectangle {
-        width: sensorListPane.width * 0.2
+        width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
         color: "red"
@@ -58,24 +59,29 @@ Row{
     }
 
     Rectangle {
+        id: jsonPane
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         anchors.margins: 5
         border.color: "lightgray"
         color: "green"
         Text {
-            text: "Description:"
+            id: extendedConfig
+            text: "Erweiterte Konfigurationen:"
         }
         ScrollView {
-            anchors.fill: parent
-            anchors.margins: 5
+            //anchors.top : extendedConfig.bottom
 
-            TextArea {
-                //anchors.verticalCenter: parent.verticalCenter
-                text: '<b>Name:</b> ' + name
+            QSS1_4.TextArea {
+//                width: jsonPane.width - 10
+//                height: jsonPane.height - extendedConfig.height - 10
+                //anchors.fill: jsonPane
+                id: jsonStringArea
+                text: JSON.stringify(JSON.parse(configFactory.getConfig(type)), null, 2)
                 style: TextAreaStyle {
                     backgroundColor : "white"
                 }
+                wrapMode: TextArea.NoWrap
             }
         }
     }
@@ -111,6 +117,44 @@ Row{
                 BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
                 BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
                 BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
+            }
+        }
+
+    }
+    Rectangle {
+        width: sensorListPane.width * 0.03
+        height: sensorListPane.height * 0.5
+        border.color: "lightgray"
+        color: "red"
+
+        RoundButton {
+            id: applyConfig
+            anchors.bottom: removeSensor.top
+            property int mode : 0
+            property int index: 0
+            property string sensor : ""
+            property string option: ""
+            icon { source:"/icons/svg/ic_save_48px.svg"}
+            onClicked: function() {
+                console.log(jsonStringArea.text)
+                var jsonString = JSON.parse(jsonStringArea.text)
+
+                console.log(jsonString.json);
+                // expected output: 42
+
+                console.log(jsonString.json);
+            }
+        }
+        RoundButton {
+            id: removeSensor
+            anchors.bottom: parent.bottom
+            property int mode : 0
+            property int index: 0
+            property string sensor : ""
+            property string option: ""
+            icon { source:"/icons/svg/ic_remove_circle_48px.svg"}
+            onClicked: function() {
+
             }
         }
 
