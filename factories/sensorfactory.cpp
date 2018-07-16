@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <backend/Sensors/VirtualSensor/Camera/camera.h>
+#include <backend/Sensors/VirtualSensor/Clock/clocksensor.h>
 #include "sensorfactory.h"
 
 
@@ -79,6 +80,9 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
     }
     case SENSOR_TYPE_CAMERA:
         ptr = new Camera();
+        break;
+    case SENSOR_TYPE_CLOCK:
+        ptr = new ClockSensor();
         break;
     default:
         return;

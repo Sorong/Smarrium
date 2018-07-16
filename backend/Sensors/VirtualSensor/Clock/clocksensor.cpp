@@ -2,7 +2,7 @@
 
 ClockSensor::ClockSensor() : VirtualSensor(CLOCK_RESOLUTION)
 {
-
+    this->name = "Uhr";
 }
 
 bool ClockSensor::getEvent(sensors_event_t *event){

@@ -11,7 +11,7 @@ Row{
         width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -23,8 +23,7 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
-        color: "blue"
-        border.color: "blue"
+        color: "azure"
         Image {
             width : parent.width
             height : parent.height
@@ -83,7 +82,7 @@ Row{
         width: sensorListPane.width * 0.03
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
-        color: "red"
+        color: "azure"
 
 //        RoundButton {
 //            id: applyConfig

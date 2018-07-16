@@ -4,7 +4,7 @@
 #include "./../virtualsensor.h"
 
 #define CLOCK_RESOLUTION 60000
-class ClockSensor : VirtualSensor
+class ClockSensor : public VirtualSensor
 {
 public:
     ClockSensor();

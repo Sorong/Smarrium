@@ -10,8 +10,7 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -19,51 +18,44 @@ Row{
         }
 
     }
-
     Rectangle {
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
-        color: "blue"
-        border.color: "blue"
-        ChartView {
-            title: name
-            anchors.fill: parent
-            antialiasing: true
-
-            ValueAxis {
-                id: valueAxis
-                min: 2000
-                max: 2011
-                tickCount: 12
-                labelFormat: "%.0f"
-            }
-
-            AreaSeries {
-                axisX: valueAxis
-                upperSeries: LineSeries {
-                    XYPoint { x: 2000; y: 1 }
-                    XYPoint { x: 2001; y: 1 }
-                    XYPoint { x: 2002; y: 1 }
-                    XYPoint { x: 2003; y: 1 }
-                    XYPoint { x: 2004; y: 1 }
-                    XYPoint { x: 2005; y: 0 }
-                    XYPoint { x: 2006; y: 1 }
-                    XYPoint { x: 2007; y: 1 }
-                    XYPoint { x: 2008; y: 4 }
-                    XYPoint { x: 2009; y: 3 }
-                    XYPoint { x: 2010; y: 2 }
-                    XYPoint { x: 2011; y: 1 }
-                }
-            }
+        color: "azure"
+        Timer {
+            interval: 500; running: true; repeat: true;
+            onTriggered: textClock.timeChange()
         }
+        Text {
+            id: textClock
+            property var timeChange : function() {
+                var today = new Date();
+                var h = today.getHours(); //Berlin
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                textClock.text = h + ":" + m + ":" + s + " (UTC)";
+            }
+            property var checkTime: function(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+            font.pointSize: 24
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            text : ""
+        }
+
     }
+
 
     Rectangle {
         id: jsonPane
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         anchors.margins: 5
-        border.color: "black"
+        color: "azure"
         Text {
             id: extendedConfig
             text: "Erweiterte Konfigurationen:"
@@ -104,46 +96,17 @@ Row{
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             text: "Controllpanel"
         }
-        Image {
-            width : parent.width
-            height : parent.height
-            source: "/images/images/default.ppm"
-        }
-    }
-
-    Rectangle {
-        width: sensorListPane.width * 0.18
-        height: sensorListPane.height * 0.5
-        color: "blue"
-        border.color: "blue"
-        ChartView {
-            title: "Vorschau"
-            anchors.fill: parent
-            theme: ChartView.ChartThemeBrownSand
-
-            BoxPlotSeries {
-                id: plotSeries
-                name: "Income"
-                BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
-                BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
-                BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
-                BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
-                BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
-            }
-        }
-
     }
     Rectangle {
         width: sensorListPane.width * 0.03
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
-        color: "red"
+        color: "azure"
 
         RoundButton {
             id: applyConfig
