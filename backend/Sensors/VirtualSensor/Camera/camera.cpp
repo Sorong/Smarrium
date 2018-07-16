@@ -9,6 +9,8 @@ Camera::Camera() : defaultImage(":/images/images/default.ppm"), VirtualSensor(EV
     this->referenceImageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->imageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->camera.open();
+    QThread::sleep(2);
+    this->takeReferncePicture();
     this->lastSaveFile = ":/images/images/default.ppm";
     this->name = "Kamera";
 }
@@ -72,7 +74,7 @@ QImage Camera::retriveDifferencePicture()
     QProcess pythonScript;
     QString program = "python";
     QStringList params;
-    params <<  directory + "script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/difference.ppm";
+    params <<  directory + "/script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/difference.ppm";
     if(!saveReference()){
         return this->defaultImage;
     }
@@ -100,16 +102,15 @@ sensors_type_t Camera::getType() const{
 bool Camera::getEvent(sensors_event_t *event)
 {
 
+    this->takePicture();
+    this->retriveDifferencePicture();
+
     memset(event, 0, sizeof(sensors_event_t));
 
     event->version   = sizeof(sensors_event_t);
     event->sensor_id = _id;
     event->type      = SENSOR_TYPE_CAMERA;
     event->timestamp = QTime::currentTime();
-
-    if (event->light == 65536) {
-        return false;
-    }
     return true;
 }
 

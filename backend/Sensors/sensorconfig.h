@@ -15,7 +15,7 @@ public:
     float getMinValue(int );
     float getMaxValue(int );
     bool minIsOff();
-    bool ignoreSwitch();
+    bool ignoreSwitches();
     QString toString();
 };
 

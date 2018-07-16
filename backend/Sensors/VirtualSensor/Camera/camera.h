@@ -10,7 +10,7 @@
 
 #define CAMERA_WIDTH 1280
 #define CAMERA_HEIGHT 920
-#define EVENT_INTERVAL 1800000
+#define EVENT_INTERVAL 5000
 class Camera : public VirtualSensor
 {
     Q_OBJECT

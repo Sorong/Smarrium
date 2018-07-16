@@ -71,7 +71,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         eventData = event->moisture;
         break;
     }
-
+    qDebug() << "Wert: " << eventData;
     if (config->minIsOff()){
         if(config->getMinValue(QTime::currentTime().hour()) < eventData){
             this->_actuator->switchOff();
