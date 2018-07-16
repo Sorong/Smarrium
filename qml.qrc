@@ -15,4 +15,12 @@
         <file>svg/ic_delete_forever_48px.svg</file>
         <file>svg/ic_save_48px.svg</file>
     </qresource>
+    <qresource prefix="/configs">
+        <file>defaultconfigs/clock.json</file>
+        <file>defaultconfigs/lux.json</file>
+        <file>defaultconfigs/rel_humidity.json</file>
+        <file>defaultconfigs/substrat_humidity.json</file>
+        <file>defaultconfigs/temperature.json</file>
+        <file>defaultconfigs/uv.json</file>
+    </qresource>
 </RCC>

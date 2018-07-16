@@ -1,5 +1,11 @@
 #include "configfactory.h"
 
+#include <QFile>
+#include <QDebug>
+#include <QMessageBox>
+#include <qjsondocument.h>
+#include <qtextstream.h>
+
 ConfigFactory::ConfigFactory(QObject *parent) : QObject(parent)
 {
 
@@ -7,76 +13,52 @@ ConfigFactory::ConfigFactory(QObject *parent) : QObject(parent)
 
 QString ConfigFactory::getConfig(SensorBaseType type)
 {
-    switch(type){
-
-    case SensorBaseType::LUX:
-        return "{"
-                "\"config\":"
-                        "["
-                            "{\"0\": {\"min\":100}}, {\"1\": {\"min\":100}},{\"2\": {\"min\":100}},{\"3\": {\"min\":100}},{\"4\": {\"min\":100}},{\"5\": {\"min\":100}},{\"6\": {\"min\":100}},{\"7\": {\"min\":100}},{\"8\": {\"min\":100}},{\"9\": {\"min\":100}},{\"10\": {\"min\":100}},"
-                            "{\"11\": {\"min\":100}},{\"12\": {\"min\":100}},{\"13\": {\"min\":100}},{\"14\": {\"min\":100}},{\"15\": {\"min\":100}},{\"16\": {\"min\":100}},{\"17\": {\"min\":100}},{\"18\": {\"min\":100}},{\"19\": {\"min\":100}},{\"20\": {\"min\":100}},"
-                            "{\"21\": {\"min\":100}},{\"22\": {\"min\":100}},{\"23\": {\"min\":100}},{\"24\": {\"min\":100}}"
-                         "],"
-               "\"Ignore\": "
-                        "true"
-               "}";
-
-    case SensorBaseType::UV:
-        return "{"
-               "\"config\":"
-                       "["
-                           "{\"0\": {\"min\":100}}, {\"1\": {\"min\":100}},{\"2\": {\"min\":100}},{\"3\": {\"min\":100}},{\"4\": {\"min\":100}},{\"5\": {\"min\":100}},{\"6\": {\"min\":100}},{\"7\": {\"min\":100}},{\"8\": {\"min\":100}},{\"9\": {\"min\":100}},{\"10\": {\"min\":100}},"
-                           "{\"11\": {\"min\":100}},{\"12\": {\"min\":100}},{\"13\": {\"min\":100}},{\"14\": {\"min\":100}},{\"15\": {\"min\":100}},{\"16\": {\"min\":100}},{\"17\": {\"min\":100}},{\"18\": {\"min\":100}},{\"19\": {\"min\":100}},{\"20\": {\"min\":100}},"
-                           "{\"21\": {\"min\":100}},{\"22\": {\"min\":100}},{\"23\": {\"min\":100}},{\"24\": {\"min\":100}}"
-                        "],"
-              "\"Ignore\": "
-                       "true"
-              "}";
-
-    case SensorBaseType::TEMPERATURE:
-        return "{"
-               "\"config\":"
-                       "["
-                           "{\"0\": {\"min\":100}, \"max\":100}, {\"1\": {\"min\":100, \"max\":100}},{\"2\": {\"min\":100, \"max\":100}},{\"3\": {\"min\":100, \"max\":100}},{\"4\": {\"min\":100, \"max\":100}},{\"5\": {\"min\":100, \"max\":100}},{\"6\": {\"min\":100, \"max\":100}},"
-                           "{\"7\": {\"min\":100, \"max\":100}},{\"8\": {\"min\":100, \"max\":100}},{\"9\": {\"min\":100, \"max\":100}},{\"10\": {\"min\":100, \"max\":100}},{\"11\": {\"min\":100, \"max\":100}},{\"12\": {\"min\":100, \"max\":100}},{\"13\": {\"min\":100, \"max\":100}},"
-                           "{\"14\": {\"min\":100, \"max\":100}},{\"15\": {\"min\":100, \"max\":100}},{\"16\": {\"min\":100, \"max\":100}},{\"17\": {\"min\":100, \"max\":100}},{\"18\": {\"min\":100, \"max\":100}},{\"19\": {\"min\":100, \"max\":100}},{\"20\": {\"min\":100, \"max\":100}},"
-                           "{\"21\": {\"min\":100, \"max\":100}},{\"22\": {\"min\":100, \"max\":100}},{\"23\": {\"min\":100, \"max\":100}},{\"24\": {\"min\":100, \"max\":100}}"
-                        "],"
-              "\"AusBeiMin\": "
-                       "true,"
-              "\"Smooth\": "
-                       "true"
-              "}";
-    case SensorBaseType::SUBSTRAT_HUMIDITY:
-        return "{"
-               "\"config\":"
-                       "["
-                           "{\"0\": {\"min\":100}}, {\"1\": {\"min\":100}},{\"2\": {\"min\":100}},{\"3\": {\"min\":100}},{\"4\": {\"min\":100}},{\"5\": {\"min\":100}},{\"6\": {\"min\":100}},{\"7\": {\"min\":100}},{\"8\": {\"min\":100}},{\"9\": {\"min\":100}},{\"10\": {\"min\":100}},"
-                           "{\"11\": {\"min\":100}},{\"12\": {\"min\":100}},{\"13\": {\"min\":100}},{\"14\": {\"min\":100}},{\"15\": {\"min\":100}},{\"16\": {\"min\":100}},{\"17\": {\"min\":100}},{\"18\": {\"min\":100}},{\"19\": {\"min\":100}},{\"20\": {\"min\":100}},"
-                           "{\"21\": {\"min\":100}},{\"22\": {\"min\":100}},{\"23\": {\"min\":100}},{\"24\": {\"min\":100}}"
-                        "],"
-              "\"Ignore\": "
-                       "true"
-              "}";
-    case SensorBaseType::REL_HUMIDITY:
-        return "{"
-               "\"config\":"
-                       "["
-                           "{\"0\": {\"min\":100}, \"max\":100}, {\"1\": {\"min\":100, \"max\":100}},{\"2\": {\"min\":100, \"max\":100}},{\"3\": {\"min\":100, \"max\":100}},{\"4\": {\"min\":100, \"max\":100}},{\"5\": {\"min\":100, \"max\":100}},{\"6\": {\"min\":100, \"max\":100}},"
-                           "{\"7\": {\"min\":100, \"max\":100}},{\"8\": {\"min\":100, \"max\":100}},{\"9\": {\"min\":100, \"max\":100}},{\"10\": {\"min\":100, \"max\":100}},{\"11\": {\"min\":100, \"max\":100}},{\"12\": {\"min\":100, \"max\":100}},{\"13\": {\"min\":100, \"max\":100}},"
-                           "{\"14\": {\"min\":100, \"max\":100}},{\"15\": {\"min\":100, \"max\":100}},{\"16\": {\"min\":100, \"max\":100}},{\"17\": {\"min\":100, \"max\":100}},{\"18\": {\"min\":100, \"max\":100}},{\"19\": {\"min\":100, \"max\":100}},{\"20\": {\"min\":100, \"max\":100}},"
-                           "{\"21\": {\"min\":100, \"max\":100}},{\"22\": {\"min\":100, \"max\":100}},{\"23\": {\"min\":100, \"max\":100}},{\"24\": {\"min\":100, \"max\":100}}"
-                        "],"
-              "\"AusBeiMin\": "
-                       "true,"
-              "\"Smooth\": "
-                       "true,"
-               "\"MaxDauerInMin\": "
-                        "3,"
-              "}";
-
-    case SensorBaseType::CLOCK:
-        return "{\"start\": 8, \"stop\": 16}";
-    }
-    return "{}";
+    return this->readFromFile(type);
 }
+
+QString ConfigFactory::readFromFile(SensorBaseType type)
+{
+    QFile *file;
+    switch (type) {
+    case SensorBaseType::LUX:
+        file = new QFile(":/configs/defaultconfigs/lux.json");
+        break;
+    case SensorBaseType::UV:
+        file = new QFile(":/configs/defaultconfigs/uv.json");
+        break;
+    case SensorBaseType::TEMPERATURE:
+        file = new QFile(":/configs/defaultconfigs/temperature.json");
+        break;
+    case SensorBaseType::REL_HUMIDITY:
+        file = new QFile(":/configs/defaultconfigs/rel_humidity.json");
+        break;
+    case SensorBaseType::SUBSTRAT_HUMIDITY:
+        file = new QFile(":/configs/defaultconfigs/substrat_humidity.json");
+        break;
+    case SensorBaseType::CLOCK:
+        file = new QFile(":/configs/defaultconfigs/clock.json");
+        break;
+    case SensorBaseType::CAMERA:
+        return "{}";
+    default:
+        return "{}";
+    }
+    if(!file->open(QIODevice::ReadOnly)) {
+        delete file;
+        return "{}";
+    }
+    QString out;
+    QTextStream in(file);
+    while(!in.atEnd()) {
+        out = in.readAll();
+    }
+    out.remove(QRegExp("[\\n\\t\\r]"));
+    qDebug() << out;
+    file->close();
+    delete file;
+    QJsonDocument jsonFile = QJsonDocument::fromJson(out.toUtf8());
+    QString s(jsonFile.toJson(QJsonDocument::Compact));
+    return s;
+}
+
+
