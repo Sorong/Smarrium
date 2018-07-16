@@ -69,6 +69,15 @@ void ActuatorList::addActuator(const QSharedPointer<Actuator> actuator)
     this->actuators[actuators.size() - 1] = actuator;
 }
 
+bool ActuatorList::hasActuator(QString code){
+    for(int i = 0; i < this->actuators.size(); i++){
+        if(actuators[i]->getCode() == code){
+            return true;
+        }
+    }
+    return false;
+}
+
 const Actuator& ActuatorList::at(int index)
 {
     return *this->actuators.at(index);

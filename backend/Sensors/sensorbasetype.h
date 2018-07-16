@@ -10,7 +10,8 @@ public:
         UV,
         LUX,
         TEMPERATURE,
-        HUMIDITY,
+        REL_HUMIDITY,
+        SUBSTRAT_HUMIDITY,
         CLOCK,
         CAMERA
     };

@@ -1,5 +1,5 @@
 #include "./backend/Sensors/Sensor.h"
-
+#include <QDebug>
 Sensor::Sensor(int interval)
 {
     this->_id = QUuid::createUuid();
@@ -19,6 +19,7 @@ QUuid Sensor::getUuid()
 }
 
 void Sensor::intervallElapsed(){
+    qDebug() << "Intervall elapsed";
     sensors_event_t* event = new sensors_event_t();
     this->getEvent(event);
     emit newSensorEvent(event);

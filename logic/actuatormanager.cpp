@@ -29,6 +29,7 @@ SensorList &ActuatorManager::getSensors()
 
 void ActuatorManager::eventReceived(sensors_event_t* event)
 {
+    qDebug() << "Event recived: " << event->timestamp;
     if(!_actuator) {
         return;
     }
@@ -52,6 +53,13 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         eventData = event->uv;
         break;
 
+    case SENSOR_TYPE_IRTEMPERATURE:
+        eventData = event->irTemperature;
+        break;
+
+    case SENSOR_TYPE_MOISTURE:
+        eventData = event->moisture;
+        break;
     }
     if(config->getMinValue() < eventData){
         this->_actuator->switchOn();

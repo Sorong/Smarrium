@@ -38,6 +38,8 @@ public:
 
     void addActuator(const QSharedPointer<Actuator> actuator);
 
+    bool hasActuator(QString code);
+
     Q_INVOKABLE const Actuator& at(int index);
 
     Q_INVOKABLE bool removeAt(int index);
