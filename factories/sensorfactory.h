@@ -2,6 +2,7 @@
 #define SENSORFACTORY_H
 
 #include <QObject>
+#include <QQueue>
 #include <QSet>
 #include <QSharedPointer>
 #include <logic/channelmap.h>
@@ -40,11 +41,14 @@ public:
     Q_INVOKABLE bool isAnalog(QString str);
     Q_INVOKABLE bool isDigital(QString str);
     Q_INVOKABLE bool isI2C(QString str);
-signals:
 
 public slots:
+    void killEvent();
+    void eventCollector(sensors_event_t*);
 
 private:
+    void addToSensorList(Sensor*);
+    QQueue<sensors_event_t*> occuredEvents;
     GPIOList &available;
     SensorList& sensors;
     SensorMap sensorMap;

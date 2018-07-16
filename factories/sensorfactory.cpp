@@ -31,9 +31,7 @@ void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_
     default:
         return;
     }
-    if(ptr) {
-        this->sensors.add(ptr);
-    }
+    this->addToSensorList(ptr);
 }
 
 void SensorFactory::addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensorType){
@@ -54,9 +52,7 @@ void SensorFactory::addDigitalSensor(int interval, GPIO gpio, sensors_type_t sen
     default:
         return;
     }
-    if(ptr) {
-        this->sensors.add(ptr);
-    }
+    this->addToSensorList(ptr);
 }
 
 void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
@@ -87,9 +83,7 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
     default:
         return;
     }
-    if(ptr) {
-        this->sensors.add(ptr);
-    }
+    this->addToSensorList(ptr);
 }
 
 void SensorFactory::addAnalogSensor(QString channel, QString sensor)
@@ -146,4 +140,27 @@ bool SensorFactory::isDigital(QString str)
 bool SensorFactory::isI2C(QString str)
 {
     return this->i2cSensors.contains(this->sensorMap[str]);
+}
+
+void SensorFactory::killEvent()
+{
+    sensors_event_t *sensor = this->occuredEvents.dequeue();
+    if(sensor) {
+        qDebug() << ";_;7 Rip sensors_event_t" <<  QDateTime::currentDateTime();
+        delete sensor;
+    }
+}
+
+void SensorFactory::eventCollector(sensors_event_t *ev)
+{
+    this->occuredEvents.enqueue(ev);
+    QTimer::singleShot(2 * 60 * 1000, this, SLOT(killEvent())); //Garbagecollection after 2 minutes
+}
+
+void SensorFactory::addToSensorList(Sensor *sensor)
+{
+    if(sensor){
+        this->sensors.add(sensor);
+        connect(sensor, &Sensor::newSensorEvent, this, &SensorFactory::eventCollector);
+    }
 }
