@@ -22,7 +22,6 @@ public:
 
 private:
     float calculateUV();
-    float mapfloat(float x, float inMin, float inMax, float outMin, float outMax);
     float averageAnalogRead(uint8_t pin);
 
     uint8_t _channel;
