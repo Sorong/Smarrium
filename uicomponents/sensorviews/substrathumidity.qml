@@ -36,7 +36,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: interval; running: false; repeat: true;
+            interval: interval; running: true; repeat: true;
             onTriggered: function () {
                 lineSeriesTemp.refresh();
                 this.getTimerInterval();
