@@ -14,6 +14,8 @@ public:
     SensorConfig(QJsonObject json);
     float getMinValue(int );
     float getMaxValue(int );
+    bool minIsOff();
+    bool ignoreSwitch();
     QString toString();
 };
 

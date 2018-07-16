@@ -22,6 +22,24 @@ float SensorConfig::getMaxValue(int time)
     return v.toDouble();
 }
 
+bool SensorConfig::minIsOff(){
+    QString key = "min_is_off";
+    QJsonValue value = (*this)[key];
+    if(value.isNull()){
+        return false;
+    }
+    return value.toBool();
+}
+
+bool SensorConfig::ignoreSwitches(){
+    QString key = "ignore";
+    QJsonValue value = (*this)[key];
+    if(value.isNull()){
+        return false;
+    }
+    return value.toBool();
+}
+
 QString SensorConfig::toString()
 {
 
