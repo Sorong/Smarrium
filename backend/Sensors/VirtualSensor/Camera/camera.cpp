@@ -9,6 +9,8 @@ Camera::Camera() : defaultImage(":/images/images/default.ppm"), VirtualSensor(EV
     this->referenceImageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->imageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->camera.open();
+    this->lastSaveFile = ":/images/images/default.ppm";
+    this->name = "Kamera";
 }
 
 void Camera::takeReferncePicture(){
@@ -70,7 +72,7 @@ QImage Camera::retriveDifferencePicture()
     QProcess pythonScript;
     QString program = "python";
     QStringList params;
-    params <<  directory + "script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/diference.ppm";
+    params <<  directory + "script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/difference.ppm";
     if(!saveReference()){
         return this->defaultImage;
     }
@@ -86,6 +88,7 @@ QImage Camera::retriveDifferencePicture()
         return this->defaultImage;
     }
     QImage image(directory + "/difference.ppm");
+    this->lastSaveFile = QString(directory + "/difference.ppm");
     this->differencePicture = image.copy();
     return this->differencePicture;
 }
@@ -112,6 +115,11 @@ bool Camera::getEvent(sensors_event_t *event)
 
 QString Camera::getSort(){
     return "Camera";
+}
+
+QString Camera::getLastImage()
+{
+    return this->lastSaveFile;
 }
 
 

@@ -9,6 +9,7 @@ SensorMap::SensorMap()
     addItem(SENSOR_TYPE_UV, "UV-Messer");
     addItem(SENSOR_TYPE_IRTEMPERATURE, "Infrarot-Thermometer");
     addItem(SENSOR_TYPE_MOISTURE, "Substrat-Hygrometer");
+    addItem(SENSOR_TYPE_CAMERA, "Kamera");
 }
 
 const QString &SensorMap::operator[](const sensor_type_t &type)

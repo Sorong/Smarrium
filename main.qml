@@ -210,24 +210,25 @@ Window {
                         var component = undefined;
                         switch (type) {
                         case SensorBaseType.UV:
-                            console.log("UV");
                             component = Qt.createComponent("uicomponents/sensorviews/uv.qml")
                             break;
                         case SensorBaseType.LUX:
-                            console.log("UV");
                             component =Qt.createComponent("uicomponents/sensorviews/lux.qml")
                             break;
-                        case SensorBaseType.HUMIDITY:
-                            console.log("HUMIDITY");
-                            component = Qt.createComponent("uicomponents/sensorviews/humidity.qml")
+                        case SensorBaseType.REF_HUMIDITY:
+                            component = Qt.createComponent("uicomponents/sensorviews/refhumidity.qml")
+                            break;
+                        case SensorBaseType.SUBSTRAT_HUMIDITY:
+                            component = Qt.createComponent("uicomponents/sensorviews/substrathumidity.qml")
                             break;
                         case SensorBaseType.TEMPERATURE:
-                            console.log("TEMPERATURE");
                             component = Qt.createComponent("uicomponents/sensorviews/temperature.qml")
                             break;
                         case SensorBaseType.CLOCK:
-                            console.log("CLOCK");
                             component = Qt.createComponent("uicomponents/sensorviews/clock.qml")
+                            break;
+                        case SensorBaseType.CAMERA:
+                            component = Qt.createComponent("uicomponents/sensorviews/camera.qml")
                             break;
                         default:
                             console.log("default");

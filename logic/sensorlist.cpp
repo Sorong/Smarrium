@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <backend/Sensors/VirtualSensor/Camera/camera.h>
 #include "sensorlist.h"
 
 SensorList::SensorList(QObject *parent)
@@ -39,18 +40,30 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
     if (!index.isValid() && role == Qt::DisplayPropertyRole){
         return QVariant();
     }
+    Sensor *sensor = this->sensorList.at(index.row());
+    if(!sensor) {
+        return QVariant();;
+    }
     switch(role){
     case TypeRole:
-        return QVariant(this->sensorList.at(index.row())->getRawType());
+        return QVariant(sensor->getRawType());
 
     case NameRole:
-        return QVariant(this->sensorList.at(index.row())->toString());
+        return QVariant(sensor->toString());
 
     case IntervalRole:
-        return QVariant(this->sensorList.at(index.row())->getInterval());
+        return QVariant(sensor->getInterval());
 
     case UuidRole:
-        return QVariant(this->sensorList.at(index.row())->getId());
+        return QVariant(sensor->getId());
+    case LastRole:
+        if(sensor->getRawType() == SensorBaseType::CAMERA) {
+            return QVariant(static_cast<Camera*>(sensor)->getLastImage());
+        }
+        return QVariant(sensor->getLastEventValue());
+    case LogRole:
+        return QVariant::fromValue(sensor->getEventValueLog());
+
 
     default:
         return QVariant();
@@ -67,6 +80,9 @@ QHash<int, QByteArray> SensorList::roleNames() const
     roles[IntervalRole] = "interval";
     //roles[ConnectionRole] = "connection";
     roles[UuidRole] = "uuid";
+
+    roles[LogRole] = "log";
+    roles[LastRole] = "last";
     return roles;
 }
 

@@ -4,10 +4,12 @@
         <file>uicomponents/_sensorcreator.qml</file>
         <file>uicomponents/_actuatorcreator.qml</file>
         <file>uicomponents/sensorviews/clock.qml</file>
-        <file>uicomponents/sensorviews/humidity.qml</file>
         <file>uicomponents/sensorviews/lux.qml</file>
         <file>uicomponents/sensorviews/temperature.qml</file>
         <file>uicomponents/sensorviews/uv.qml</file>
+        <file>uicomponents/sensorviews/substrathumidity.qml</file>
+        <file>uicomponents/sensorviews/camera.qml</file>
+        <file>uicomponents/sensorviews/relhumidity.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>svg/ic_add_48px.svg</file>

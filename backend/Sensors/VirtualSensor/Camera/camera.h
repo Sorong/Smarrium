@@ -11,7 +11,7 @@
 #define CAMERA_WIDTH 1280
 #define CAMERA_HEIGHT 920
 #define EVENT_INTERVAL 1800000
-class Camera : VirtualSensor
+class Camera : public VirtualSensor
 {
     Q_OBJECT
 public:
@@ -34,6 +34,7 @@ public:
     sensors_type_t getType() const override;
     SensorBaseType getRawType() override;
     QString getSort() override;
+    QString getLastImage();
 
 signals:
 
@@ -45,7 +46,7 @@ private:
     QImage referenceImage;
     QImage image;
     QImage differencePicture;
-
+    QString lastSaveFile;
     QString directory = "/home/pi/OpenCVScript";
 
     raspicam::RaspiCam camera;

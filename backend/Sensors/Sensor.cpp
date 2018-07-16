@@ -90,7 +90,7 @@ QList<float> Sensor::getEventValueLog(){
     return this->eventValueLog;
 }
 
-float Sensor::getLastEventValaue(){
+float Sensor::getLastEventValue(){
     if(this->eventValueLog.isEmpty()){
         return 0;
     }

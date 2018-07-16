@@ -14,7 +14,9 @@ public:
         TypeRole = Qt::UserRole + 1,
         NameRole,
         IntervalRole,
-        UuidRole
+        UuidRole,
+        LogRole,
+        LastRole
     };
 
     explicit SensorList(QObject *parent = nullptr);

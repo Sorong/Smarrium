@@ -110,7 +110,11 @@ Row{
             anchors.verticalCenter: parent.verticalCenter
             text: "Controllpanel"
         }
-
+        Image {
+            width : parent.width
+            height : parent.height
+            source: "/images/images/default.ppm"
+        }
     }
 
     Rectangle {

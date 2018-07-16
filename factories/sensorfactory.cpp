@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <backend/Sensors/VirtualSensor/Camera/camera.h>
 #include "sensorfactory.h"
 
 
@@ -8,7 +9,7 @@ SensorFactory::SensorFactory(GPIOList& available, SensorList& sensors, QObject *
     this->interface = QSharedPointer<Bcm2835Interface>(new Bcm2835Interface());
     this->analogSenors = {SENSOR_TYPE_MOISTURE, SENSOR_TYPE_UV};
     this->digitalSensors = {SENSOR_TYPE_RELATIVE_HUMIDITY, SENSOR_TYPE_TEMPERATURE};
-    this->i2cSensors = {SENSOR_TYPE_IRTEMPERATURE, SENSOR_TYPE_LIGHT};
+    this->i2cSensors = {SENSOR_TYPE_IRTEMPERATURE, SENSOR_TYPE_LIGHT, SENSOR_TYPE_CAMERA};
 }
 
 void SensorFactory::addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensorType){
@@ -76,6 +77,9 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
         numberLightSensors++;
         break;
     }
+    case SENSOR_TYPE_CAMERA:
+        ptr = new Camera();
+        break;
     default:
         return;
     }
@@ -110,8 +114,8 @@ void SensorFactory::addDigitalSensor(GPIO gpio, sensors_type_t sensor)
 
 void SensorFactory::addI2CSensor(QString sensor)
 {
-       sensor_type_t type = this->sensorMap[sensor];
-       this->addI2CSensor(type);
+    sensor_type_t type = this->sensorMap[sensor];
+    this->addI2CSensor(type);
 }
 
 void SensorFactory::addI2CSensor(sensors_type_t sensor)
@@ -137,5 +141,5 @@ bool SensorFactory::isDigital(QString str)
 
 bool SensorFactory::isI2C(QString str)
 {
-   return this->i2cSensors.contains(this->sensorMap[str]);
+    return this->i2cSensors.contains(this->sensorMap[str]);
 }

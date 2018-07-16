@@ -103,8 +103,7 @@ HEADERS += \
     backend/Sensors/VirtualSensor/Camera/camera.h \
 
 
-DISTFILES += \
-    logic/.dummy
+DISTFILES +=
 
 target.path = /home/pi
 INSTALLS += target

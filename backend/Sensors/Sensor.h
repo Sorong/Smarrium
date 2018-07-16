@@ -65,7 +65,7 @@ public:
     QUuid getUuid();
     Q_INVOKABLE QString getId();
     QList<float> getEventValueLog();
-    float getLastEventValaue();
+    float getLastEventValue();
 
 
 
