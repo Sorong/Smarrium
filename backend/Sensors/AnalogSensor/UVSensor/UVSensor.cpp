@@ -4,7 +4,8 @@ UVSensor::UVSensor(int intervall, uint8_t channel, ADC* adc): Sensor(intervall)
 {
     _channel = channel;
     _adc = adc;
-    this->name = "UV-Sensor, Kanal: " + QString::number(this->_channel);
+    this->name = "UV-Sensor, Kanal: " + QString::number(this->_channel + 1);
+
 }
 
 UVSensor::~UVSensor()

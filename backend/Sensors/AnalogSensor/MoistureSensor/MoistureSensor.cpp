@@ -5,7 +5,7 @@ MoistureSensor::MoistureSensor(int intervall, uint8_t channel, ADC* ADC): Sensor
     //this->_id = id;
     this->_channel = channel;
     this->_ADC = ADC;
-    this->name = "Bodenfeuchtigkeitsmesser, Kanal: "  + QString::number(this->_channel);
+    this->name = "Bodenfeuchtigkeitsmesser, Kanal: "  + QString::number(this->_channel + 1);
 }
 
 bool MoistureSensor::getEvent(sensors_event_t* event){
