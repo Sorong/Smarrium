@@ -10,7 +10,6 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -27,10 +26,11 @@ Row{
         Image {
             width : parent.width
             height : parent.height
-            source: last.charAt(0) === ":" ? last.substring(1) : last  //applicationPath + "raspicam_image.ppm"
+            source: last.charAt(0) === ":" ? last.substring(1) : last //applicationPath + "download.jpeg"
             // "/images/images/default.ppm"
             Component.onCompleted: function() {
                 console.log(this.source)
+                console.log(applicationPath)
             }
         }
 

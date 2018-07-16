@@ -10,8 +10,7 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -24,6 +23,27 @@ Row{
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         color: "azure"
+        Timer {
+            property var getTimerInterval : function() {
+                var today = new Date(); //Berlin
+                var m = today.getMinutes();
+                if(m == 0) {
+                    var hour = 1000 * 60 * 60; //1000Millisekunde * 60 Sekunden * 60 Minuten
+                    refreshTimer.interval = hour;
+                } else {
+                    var nextHour = 1000 * 60 * (60-m);
+                    refreshTimer.interval = nextHour;
+                }
+            }
+            id : refreshTimer
+            interval: interval; running: false; repeat: true;
+            onTriggered: function () {
+                lineSeriesTemp.refresh();
+                this.getTimerInterval();
+            }
+        }
+
+
         ChartView {
             title: name
             anchors.fill: parent
@@ -33,26 +53,34 @@ Row{
                 min: 0
                 max: 24
                 tickCount: 1
+                reverse: true
+                titleText: "Aktuelle Uhrzeit -X Stunden"
             }
 
             ValueAxis {
                 id: axisY
                 min: 0
                 max: 0
+                titleText: "C°"
             }
 
             LineSeries {
                 id : lineSeriesTemp
                 axisX: axisX
                 axisY: axisY
-                Component.onCompleted: function() {
+                property var refresh: function() {
                     var data = log;
+                    removePoints(0, lineSeriesTemp.count)
                     for(var i = 0; i < data.length; i++) {
                         if(data[i] >= axisY.max) {
                             axisY.max = data[i] +5
                         }
-                        lineSeriesTemp.append(i, data[i]);
+                        lineSeriesTemp.append(i, data.length - data[i]);
                     }
+                }
+
+                Component.onCompleted: function() {
+                    lineSeriesTemp.refresh();
                 }
             }
         }
@@ -104,7 +132,7 @@ Row{
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -120,8 +148,7 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.18
         height: sensorListPane.height * 0.5
-        color: "blue"
-        border.color: "blue"
+        color: "azure"
         ChartView {
             title: "Vorschau"
             anchors.fill: parent
@@ -142,8 +169,7 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.03
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
-        color: "red"
+        color: "azure"
 
         RoundButton {
             id: applyConfig

@@ -95,7 +95,6 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
