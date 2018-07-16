@@ -101,7 +101,7 @@ Row {
                     sensorFactory.addAnalogSensor(this.option, this.sensor)
                 }
             }
-
+            actorConfiguratorPane.reload()
         }
     }
 }

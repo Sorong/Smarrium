@@ -12,6 +12,9 @@ QMLContextManager::QMLContextManager(QQmlApplicationEngine& engine, QObject *par
     this->gpioManager.getUnavailable(&this->gpioUnavailable);
     this->channelManager.getAvailable(&this->channelAvailable);
     this->channelManager.getUnavailable(&this->channelUnavailable);
+    this->selectedActuator = nullptr;
+    this->selectedActuators = nullptr;
+    this->selectedSensors = nullptr;
 }
 
 void QMLContextManager::init()
