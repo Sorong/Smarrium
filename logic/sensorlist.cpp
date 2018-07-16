@@ -63,13 +63,8 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
         return QVariant(sensor->getLastEventValue());
     case LogRole:
         return QVariant::fromValue(sensor->getEventValueLog());
-
-
-    default:
-        return QVariant();
-
     }
-
+    return QVariant();
 }
 
 QHash<int, QByteArray> SensorList::roleNames() const

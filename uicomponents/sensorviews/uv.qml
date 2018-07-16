@@ -11,7 +11,7 @@ Row{
         width: sensorListPane.width * 0.15
         height: sensorListPane.height * 0.5
         border.color: "lightgray"
-        color: "red"
+        color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -23,36 +23,36 @@ Row{
     Rectangle {
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
-        color: "blue"
-        border.color: "blue"
+        color:"azure"
         ChartView {
             title: name
             anchors.fill: parent
             antialiasing: true
-
             ValueAxis {
-                id: valueAxis
-                min: 2000
-                max: 2011
-                tickCount: 12
-                labelFormat: "%.0f"
+                id: axisX
+                min: 0
+                max: 24
+                tickCount: 1
             }
 
-            AreaSeries {
-                axisX: valueAxis
-                upperSeries: LineSeries {
-                    XYPoint { x: 2000; y: 1 }
-                    XYPoint { x: 2001; y: 1 }
-                    XYPoint { x: 2002; y: 1 }
-                    XYPoint { x: 2003; y: 1 }
-                    XYPoint { x: 2004; y: 1 }
-                    XYPoint { x: 2005; y: 0 }
-                    XYPoint { x: 2006; y: 1 }
-                    XYPoint { x: 2007; y: 1 }
-                    XYPoint { x: 2008; y: 4 }
-                    XYPoint { x: 2009; y: 3 }
-                    XYPoint { x: 2010; y: 2 }
-                    XYPoint { x: 2011; y: 1 }
+            ValueAxis {
+                id: axisY
+                min: 0
+                max: 0
+            }
+
+            LineSeries {
+                id : lineSeriesTemp
+                axisX: axisX
+                axisY: axisY
+                Component.onCompleted: function() {
+                    var data = log;
+                    for(var i = 0; i < data.length; i++) {
+                        if(data[i] >= axisY.max) {
+                            axisY.max = data[i] +5
+                        }
+                        lineSeriesTemp.append(i, data[i]);
+                    }
                 }
             }
         }

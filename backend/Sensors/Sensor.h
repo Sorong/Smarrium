@@ -64,7 +64,7 @@ public:
     void setInterval(int inerval);
     QUuid getUuid();
     Q_INVOKABLE QString getId();
-    QList<float> getEventValueLog();
+    QList<qreal> getEventValueLog();
     float getLastEventValue();
 
 
@@ -79,7 +79,7 @@ protected:
     QUuid _id;
     int _interval;
     QString name;
-    QList<float> eventValueLog;
+    QList<qreal> eventValueLog;
 
 private:
     void logEvent(sensors_event_t*);

@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");
     QMLContextManager manager(engine);
     manager.init();
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

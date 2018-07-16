@@ -53,7 +53,6 @@ QString ConfigFactory::readFromFile(SensorBaseType type)
         out = in.readAll();
     }
     out.remove(QRegExp("[\\n\\t\\r]"));
-    qDebug() << out;
     file->close();
     delete file;
     QJsonDocument jsonFile = QJsonDocument::fromJson(out.toUtf8());

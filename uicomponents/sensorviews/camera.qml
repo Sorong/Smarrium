@@ -27,7 +27,7 @@ Row{
         Image {
             width : parent.width
             height : parent.height
-            source: last.charAt(0) === ":" ? last.substring(1) : last
+            source: last.charAt(0) === ":" ? last.substring(1) : last  //applicationPath + "raspicam_image.ppm"
             // "/images/images/default.ppm"
             Component.onCompleted: function() {
                 console.log(this.source)

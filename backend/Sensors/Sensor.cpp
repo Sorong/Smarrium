@@ -7,6 +7,7 @@ Sensor::Sensor(int interval)
     this->lastCheckedHour = QTime::currentTime().hour();
     start(interval);
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
+    eventValueLog = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}; //TODO: Remove me
 }
 
 const QString &Sensor::toString()
@@ -86,7 +87,7 @@ void Sensor::logEvent(sensors_event_t *event){
     }
 }
 
-QList<float> Sensor::getEventValueLog(){
+QList<qreal> Sensor::getEventValueLog(){
     return this->eventValueLog;
 }
 

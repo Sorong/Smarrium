@@ -14,7 +14,6 @@ void ActuatorManager::registerActuator(Actuator &actuator)
 
 bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
 {
-    qDebug() << "Config added for:" << sensor.toString() << " Config: " << config;
     this->sensorList.addUnique(&sensor);
     SensorConfig *current = this->configurations[&sensor];
     if(current) {

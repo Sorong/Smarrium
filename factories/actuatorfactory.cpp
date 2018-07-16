@@ -9,7 +9,7 @@ ActuatorFactory::ActuatorFactory(ActuatorList& actuators, QObject *parent) :  QO
 }
 
 void ActuatorFactory::addActuator(QList<bool> flipSwitch){
-    qDebug() << "addActuator";
+
     QString socketCombination("");
     for(int index = 0; index < flipSwitch.size(); index++){
         socketCombination.append(flipSwitch[index] ? "0" : "F");
@@ -17,6 +17,7 @@ void ActuatorFactory::addActuator(QList<bool> flipSwitch){
     if(this->actuators.hasActuator(socketCombination)){
         return;
     };
+    qDebug() << "addActuator";
     QSharedPointer<Actuator> actuator = QSharedPointer<Actuator>(new Actuator(socketCombination, this->rcSwitch.data()));
     this->actuators.addActuator(actuator);
 }
