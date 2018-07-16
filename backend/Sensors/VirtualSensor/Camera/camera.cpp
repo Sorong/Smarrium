@@ -4,9 +4,8 @@
 #include <iostream>
 #include <QThread>
 
-Camera::Camera() : defaultImage(CAMERA_WIDTH, CAMERA_HEIGHT, QImage::Format_RGBA8888), VirtualSensor(EVENT_INTERVAL)
+Camera::Camera() : defaultImage(":/images/images/default.ppm"), VirtualSensor(EVENT_INTERVAL)
 {
-    defaultImage.fill(Qt::GlobalColor::blue);
     this->referenceImageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->imageData = new unsigned char[camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
     this->camera.open();
@@ -71,7 +70,7 @@ QImage Camera::retriveDifferencePicture()
     QProcess pythonScript;
     QString program = "python";
     QStringList params;
-    params << directory + "/script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/diference.ppm";
+    params <<  directory + "script.py" << "-f" << directory + "/referenz.ppm" << "-s" << directory + "/image.ppm" << "-o" <<directory + "/diference.ppm";
     if(!saveReference()){
         return this->defaultImage;
     }
@@ -118,4 +117,8 @@ QString Camera::getSort(){
 
 SensorBaseType Camera::getRawType(){
     return SensorBaseType::CAMERA;
+}
+
+QImage Camera::getDefaultImage(){
+    return this->defaultImage;
 }

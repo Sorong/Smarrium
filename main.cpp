@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     wiringPiSetup();
     Camera camera;
     camera.takePicture();
+    camera.takeReferncePicture();
     camera.retriveDifferencePicture();
     QQuickStyle::setStyle("Material");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
