@@ -2,6 +2,9 @@
 #define SENSORCONFIG_H
 
 #include <QJsonObject>
+#include <QTime>
+#include <QJsonArray>
+#include <QJsonValue>
 
 
 

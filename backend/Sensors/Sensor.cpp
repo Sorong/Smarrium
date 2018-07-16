@@ -22,6 +22,7 @@ QUuid Sensor::getUuid()
 void Sensor::intervallElapsed(){
     qDebug() << "Intervall elapsed";
     sensors_event_t* event = new sensors_event_t();
+    this->getEvent(event);
     logEvent(event);
     emit newSensorEvent(event);
 }
