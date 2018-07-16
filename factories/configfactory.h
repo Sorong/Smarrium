@@ -14,6 +14,8 @@ signals:
 
 public slots:
     Q_INVOKABLE QString getConfig(SensorBaseType type);
+private:
+    QString readFromFile(SensorBaseType type);
 };
 
 #endif // CONFIGFACTORY_H
