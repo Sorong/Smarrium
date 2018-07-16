@@ -36,8 +36,6 @@ int SensorList::rowCount(const QModelIndex &parent) const
 
 QVariant SensorList::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "sensorList" << index.row();
-
     if (!index.isValid() && role == Qt::DisplayPropertyRole){
         return QVariant();
     }
@@ -134,4 +132,9 @@ void SensorList::addUnique(Sensor *sensor)
 bool SensorList::isEmpty()
 {
     return this->sensorList.isEmpty();
+}
+
+void SensorList::changeConfig(QString uuid, QString config)
+{
+    emit onChangeConfig(uuid, config);
 }

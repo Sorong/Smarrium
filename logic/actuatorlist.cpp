@@ -29,7 +29,6 @@ int ActuatorList::rowCount(const QModelIndex &parent) const
 
 QVariant ActuatorList::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "actuatorlist" << index.row();
     if (!index.isValid() && role == Qt::DisplayPropertyRole)
         return QVariant();
     return QVariant(this->actuators.at(index.row())->getCode());
@@ -99,3 +98,5 @@ void ActuatorList::selectActuator(int index)
         emit onSelect(this->actuators.at(index).data());
     }
 }
+
+

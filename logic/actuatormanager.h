@@ -24,6 +24,7 @@ signals:
 
 public slots:
     void eventReceived(sensors_event_t*);
+    QString getConfig(QString uuid);
 
 private:
     SensorList sensorList;

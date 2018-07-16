@@ -63,21 +63,35 @@ Row{
         width: sensorListPane.width * 0.2
         height: sensorListPane.height * 0.5
         anchors.margins: 5
-        border.color: "lightgray"
-        color: "green"
+        border.color: "black"
         Text {
             id: extendedConfig
             text: "Erweiterte Konfigurationen:"
         }
         ScrollView {
-            //anchors.top : extendedConfig.bottom
+            anchors.top : extendedConfig.bottom
+            anchors.leftMargin: 5
+            //anchors.fill: jsonPane
 
             QSS1_4.TextArea {
-//                width: jsonPane.width - 10
-//                height: jsonPane.height - extendedConfig.height - 10
-                //anchors.fill: jsonPane
+                property var getJson : function() {
+                    var t = "";
+                    if(actuatorManager !== null) {
+                        t = actuatorManager.getConfig();
+                        if(t !== "") {
+                            t = JSON.stringify(JSON.parse(t), null, 2)
+                        }
+                    }
+                    if(t === "" ) {
+                        t = JSON.stringify(JSON.parse(configFactory.getConfig(type)), null, 2)
+                    }
+                    return t;
+                }
+                width: jsonPane.width - 10
+                height: jsonPane.height - extendedConfig.height - 10
                 id: jsonStringArea
-                text: JSON.stringify(JSON.parse(configFactory.getConfig(type)), null, 2)
+                text: getJson()
+
                 style: TextAreaStyle {
                     backgroundColor : "white"
                 }
@@ -137,12 +151,13 @@ Row{
             icon { source:"/icons/svg/ic_save_48px.svg"}
             onClicked: function() {
                 console.log(jsonStringArea.text)
-                var jsonString = JSON.parse(jsonStringArea.text)
-
-                console.log(jsonString.json);
-                // expected output: 42
-
-                console.log(jsonString.json);
+                try {
+                    var jsonObject = JSON.parse(jsonStringArea.text)
+                    jsonPane.border.color = "green"
+                    selectedSensors.changeConfig(uuid, jsonStringArea.text)
+                } catch(e) {
+                    jsonPane.border.color = "red"
+                }
             }
         }
         RoundButton {

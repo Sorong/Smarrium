@@ -48,7 +48,7 @@ private:
     QSharedPointer<SensorFactory>  sensorFactory;
     QSharedPointer<ConfigFactory> configFactory;
     Actuator *selectedActuator;
-    ActuatorList *selectedActuators;
+    ActuatorManager *selectedActuatorManager;
     SensorList *selectedSensors;
 };
 
