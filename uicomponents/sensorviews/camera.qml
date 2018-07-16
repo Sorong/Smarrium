@@ -24,16 +24,17 @@ Row{
         height: sensorListPane.height * 0.5
         color: "azure"
         Image {
+            id: camera
             width : parent.width
             height : parent.height
-            source: last.charAt(0) === ":" ? last.substring(1) : last //applicationPath + "download.jpeg"
-            // "/images/images/default.ppm"
-            Component.onCompleted: function() {
-                console.log(this.source)
-                console.log(applicationPath)
+            source: applicationPath + "/OpenCVScript/difference.ppm"
+            Timer {
+                interval: 600000; running: true; repeat: true;
+                onTriggered: function() {
+                    camera.source = applicationPath + "/OpenCVScript/difference.ppm";
+                }
             }
         }
-
     }
 
 //    Rectangle {

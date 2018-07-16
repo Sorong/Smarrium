@@ -1,5 +1,5 @@
 #include "./UVSensor.hpp"
-
+#include <QDebug>
 UVSensor::UVSensor(int intervall, uint8_t channel, ADC* adc): Sensor(intervall)
 {
     _channel = channel;
@@ -15,11 +15,12 @@ UVSensor::~UVSensor()
 
 float UVSensor::calculateUV()
 {
-    uint32_t refLevel = averageAnalogRead(_channel);
+    float refLevel = averageAnalogRead(_channel);
 
-    float uvLevel = 3.3 / refLevel * uvLevel;
-    float uvIntensity = mapfloat(uvLevel, 0.99, 2.8, 0.0, 15.0);
-
+    float voltOutput = refLevel * (3.3 / 1023.0);
+    qDebug() << voltOutput;
+    voltOutput = voltOutput / 4.3;
+    float uvIntensity = voltOutput * 9.0;
     return uvIntensity;
 
 }
@@ -53,10 +54,6 @@ float UVSensor::averageAnalogRead(uint8_t pinToRead)
   return runningValue;  
 }
 
-float UVSensor::mapfloat(float x, float inMin, float inMax, float outMin, float outMax)
-{
-    return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-}
 
 bool UVSensor::getEvent(sensors_event_t* event)
 {

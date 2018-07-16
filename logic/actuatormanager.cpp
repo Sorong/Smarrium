@@ -34,6 +34,7 @@ SensorList &ActuatorManager::getSensors()
 void ActuatorManager::eventReceived(sensors_event_t* event)
 {
     qDebug() << "Event recived: " << event->timestamp;
+
     if(!_actuator) {
         return;
     }
@@ -65,6 +66,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         eventData = event->moisture;
         break;
     }
+    qDebug() << "Gemessner Wert: " << eventData;
     if(config->getMinValue(QTime::currentTime().hour()) < eventData){
         this->_actuator->switchOn();
     }
