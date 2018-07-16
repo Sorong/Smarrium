@@ -135,3 +135,8 @@ bool SensorList::isEmpty()
 {
     return this->sensorList.isEmpty();
 }
+
+void SensorList::changeConfig(QString uuid, QString config)
+{
+    emit onChangeConfig(uuid, config);
+}

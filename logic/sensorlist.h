@@ -48,8 +48,13 @@ public slots:
 
     Q_INVOKABLE bool isEmpty();
 
+    void changeConfig(QString uuid, QString config);
+
 signals:
     void onSelect(Sensor* sensor);
+    void onChangeConfig(QString uuid, QString config);
+
+
 
 private:
      QList<Sensor*> sensorList;

@@ -52,7 +52,6 @@ public slots:
 signals:
     void onSelect(Actuator*);
 
-
 private:
     QList<QSharedPointer<Actuator>> actuators;
     GPIOMap gpioMap;

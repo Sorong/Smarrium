@@ -77,4 +77,17 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
     //delete event;
 }
 
+QString ActuatorManager::getConfig(QString uuid)
+{
+    Sensor *sensor = this->sensorIds[QUuid(uuid)];
+    if(sensor) {
+        SensorConfig * config = this->configurations[sensor];
+        if(config) {
+            return config->toString();
+        }
+    }
+
+    return "";
+}
+
 

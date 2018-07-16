@@ -11,6 +11,7 @@ public:
     SensorConfig(QJsonObject json);
     float getMinValue();
     float getMaxValue();
+    QString toString();
 };
 
 #endif // SENSORCONFIG_H

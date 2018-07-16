@@ -99,3 +99,5 @@ void ActuatorList::selectActuator(int index)
         emit onSelect(this->actuators.at(index).data());
     }
 }
+
+
