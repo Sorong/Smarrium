@@ -13,6 +13,7 @@ Row {
     property var onOptionChanged: function(item, index) {
         add.option = item
         add.index = index
+        add.enabled = true;
     }
 
     Component.onCompleted: function() {
@@ -33,6 +34,11 @@ Row {
             onCurrentIndexChanged: function() {
                 if(currentIndex >= 0)
                     sensorCreator.onSelectionChanged(model.at(currentIndex))
+            }
+            property var refresh: function() {
+                if(this.model.rowCount() > currentIndex) {
+                    sensorCreator.onSelectionChanged(model.at(currentIndex))
+                }
             }
 
         }
@@ -124,10 +130,12 @@ Row {
                 break;
             default: //Analog
                 if (channelAvailable.removeAt(this.index)) {
-                   sensorFactory.addAnalogSensor(this.interval, this.option, this.sensor)
+                    sensorFactory.addAnalogSensor(this.interval, this.option, this.sensor)
                 }
             }
-            actorConfiguratorPane.reload()
+            actorConfiguratorPane.reload();
+            add.enabled = false;
+            sensorSelector.refresh();
         }
     }
 }
