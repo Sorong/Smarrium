@@ -31,7 +31,7 @@ Row{
             property var timeChange : function() {
                 var today = new Date();
                 var h = today.getHours(); //Berlin
-                var m = today.getMinutes();s
+                var m = today.getMinutes();
                 h = checkTime(h);
                 m = checkTime(m);
                 textClock.text = h + ":" + m + "  Uhr (UTC)";
