@@ -92,6 +92,7 @@ Row{
         property var jsonChange : function(json) {
             jsonStringArea.text = JSON.stringify(this.json, null, 2)
             this.json = json
+            previewChart.refresh(json)
         }
 
         anchors.margins: 5
@@ -138,7 +139,6 @@ Row{
                         jsonPane.border.color = "#C5E1A5" //okay grün
                         jsonPane.border.width = 3
                         jsoPane.json = jsonObject
-                        selectedSensors.changeConfig(uuid, jsonStringArea.text)
                     } catch(e) {
                         jsonPane.border.color = "#EF9A9A" //nicht okay rot
                         jsonPane.border.width = 3
@@ -150,7 +150,7 @@ Row{
 
     Rectangle {
         id: controlPane
-        width: (sensorListPane.width-sensorListScrollBar.width) * 0.25
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.23
         height: sensorListPane.height * 0.5
         color: "azure"
         Column {
@@ -244,7 +244,6 @@ Row{
                     toInsert["min_is_off"] = onMax.checked
                     console.log(JSON.stringify(toInsert, null, 2))
                     jsonPane.jsonChange(toInsert)
-
                 }
             }
 
@@ -256,18 +255,66 @@ Row{
         height: sensorListPane.height * 0.5
         color: "azure"
         ChartView {
+            id: previewChart
             title: "Vorschau"
             anchors.fill: parent
-            theme: ChartView.ChartThemeBrownSand
+            property var refresh: function(json) {
+                axisYPreview.min = 100
+                axisYPreview.max = 0
+                lineSeriesTempPreviewMin.removePoints(0, lineSeriesTempPreviewMin.count)
+                lineSeriesTempPreviewMax.removePoints(0, lineSeriesTempPreviewMax.count)
+                lineSeriesTempPreviewMedian.removePoints(0, lineSeriesTempPreviewMedian.count)
+                for(var i = 0; i < 24 || json[i] !== undefined; i++) {
+                    if(json[i]["min"] < axisYPreview.min) {
+                        axisYPreview.min = (json[i]["min"]-1)
+                    }
+                    if(json[i]["max"] > axisYPreview.max) {
+                        axisYPreview.max = (json[i]["max"]+1)
+                    }
+                    lineSeriesTempPreviewMin.append(24-i, json[i]["min"])
+                    lineSeriesTempPreviewMax.append(24-i, json[i]["max"])
+                    lineSeriesTempPreviewMedian.append(24-i, (json[i]["max"] + json[i]["min"]) /2 )
 
-            BoxPlotSeries {
-                id: plotSeries
-                name: "Income"
-                BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
-                BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
-                BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
-                BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
-                BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
+                }
+
+            }
+
+            ValueAxis {
+                id: axisXPreview
+                min: 0
+                max: 24
+                tickCount: 1
+                reverse: true
+                titleText: "Aktuelle Uhrzeit -X Stunden"
+            }
+
+            ValueAxis {
+                id: axisYPreview
+                min: 100
+                max: 0
+                titleText: "C°"
+            }
+
+            LineSeries {
+                id : lineSeriesTempPreviewMin
+                axisX: axisXPreview
+                axisY: axisYPreview
+                color: "#2196F3"
+            }
+
+            LineSeries {
+                id : lineSeriesTempPreviewMax
+                axisX: axisXPreview
+                axisY: axisYPreview
+                color: "#F44336"
+
+
+            }
+            LineSeries {
+                id : lineSeriesTempPreviewMedian
+                axisX: axisXPreview
+                axisY: axisYPreview
+                color: "#607D8B"
             }
         }
     }
