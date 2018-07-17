@@ -5,7 +5,14 @@
 
 GPIOManager::GPIOManager() :
     available({
-              GPIO::GPIO_7
+              GPIO::GPIO_7,
+              //GPIO::GPIO_11,
+              GPIO::GPIO_12,
+              GPIO::GPIO_13,
+              GPIO::GPIO_15,
+              GPIO::GPIO_16,
+              GPIO::GPIO_18,
+              GPIO::GPIO_22
               })
 {
 
@@ -14,7 +21,6 @@ GPIOManager::GPIOManager() :
 GPIOManager::~GPIOManager() {
 
 }
-
 
 GPIOList* GPIOManager::getAvailable(GPIOList *ptr) {
     if(!ptr) {

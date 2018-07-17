@@ -10,6 +10,7 @@ LightSensor::LightSensor(int intervall, uint8_t address, Bcm2835Interface *i2c) 
   _tsl2561IntegrationTime = TSL2561_INTEGRATIONTIME_13MS;
   _tsl2561Gain = TSL2561_GAIN_1X;
   this->name = "Lichtsensor";
+  this->init();
 }
 
 

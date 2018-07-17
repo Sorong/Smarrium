@@ -65,7 +65,7 @@ private:
     const int DEFAULT_INTERVAL_MS = 600000;
     uint32_t irDefaultAdress = 0x5A;
     uint8_t numberLightSensors = 0;
-    uint8_t lightAdress[3] = {0x29, 0x39, 0x49};
+    uint8_t lightAdress[3] = {0x39, 0x29, 0x49};
 };
 
 #endif // SENSORFACTORY_H
