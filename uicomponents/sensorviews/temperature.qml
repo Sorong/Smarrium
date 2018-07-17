@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtCharts 2.2
-import QtQuick.Controls 1.4 as QSS1_4
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 
@@ -8,13 +7,13 @@ import QtQuick.Controls.Styles 1.4
 Row{
 
     Rectangle {
-        width: (sensorListPane.width-sensorListScrollBar.width) * 0.13
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.12
         height: sensorListPane.height * 0.5
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: '<b>Name:</b> \n' + name
+            text: name
         }
 
     }
@@ -36,7 +35,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: 5*interval; running: true; repeat: true;
+            interval: 500; running: true; repeat: true;
             onTriggered: function () {
                 console.log("refreshTimer")
                 lineSeriesTemp.refresh();
@@ -96,52 +95,66 @@ Row{
         }
 
         anchors.margins: 5
-        color: "azure"
-        Text {
-            id: extendedConfig
-            text: "Erweiterte Konfigurationen:"
-        }
-        ScrollView {
-            anchors.top : extendedConfig.bottom
-            anchors.leftMargin: 5
-            //anchors.fill: jsonPane
-
-            QSS1_4.TextArea {
-                id: jsonStringArea
-                property var getJson : function() {
-                    var t = "";
-                    if(actuatorManager !== null) {
-                        t = actuatorManager.getConfig();
-                        if(t !== "") {
-                            jsonPane.json = JSON.parse(t)
-                            t = JSON.stringify(jsonPane.json, null, 2)
-                        }
-                    }
-                    if(t === "" ) {
-                        jsonPane.json = JSON.parse(configFactory.getConfig(type))
-                        t = JSON.stringify(jsonPane.json, null, 2)
-                    }
-                    return t;
+        color: "white"
+        border.color: "azure"
+        border.width: 4
+        Column {
+            Timer {
+                id: resetColor
+                interval: 5000; running: false; repeat: false;
+                onTriggered: function() {
+                    jsonPane.border = "azure";
                 }
+            }
+
+            Text {
+                id: extendedConfig
+                text: "Erweiterte Konfigurationen:"
+            }
+            ScrollView {
+                //anchors.fill: jsonPane
                 width: jsonPane.width - 10
                 height: jsonPane.height - extendedConfig.height - 10
-                anchors.leftMargin: 5
+                clip: true
+                ScrollBar.vertical.policy: ScrollBar.AlwaysOn
 
-                text: getJson()
+                TextArea {
+                    id: jsonStringArea
+                    property var getJson : function() {
+                        var t = "";
+                        console.log("getJson");
+                        if(actuatorManager !== null) {
+                            t = actuatorManager.getConfig();
+                            if(t !== "") {
+                                jsonPane.json = JSON.parse(t)
+                                t = JSON.stringify(jsonPane.json, null, 2)
+                            }
+                        }
+                        if(t === "" ) {
+                            jsonPane.json = JSON.parse(configFactory.getConfig(type))
+                            t = JSON.stringify(jsonPane.json, null, 2)
+                        }
+                        previewChart.refresh(jsonPane.json)
+                        return t;
+                    }
 
-                style: TextAreaStyle {
-                    id: testAreaStyle
-                }
-                wrapMode: TextArea.NoWrap
-                onEditingFinished : function() {
-                    try {
-                        var jsonObject = JSON.parse(jsonStringArea.text)
-                        jsonPane.border.color = "#C5E1A5" //okay grün
-                        jsonPane.border.width = 3
-                        jsoPane.json = jsonObject
-                    } catch(e) {
-                        jsonPane.border.color = "#EF9A9A" //nicht okay rot
-                        jsonPane.border.width = 3
+                    //background: "white"
+                    text: getJson()
+                    wrapMode : TextEdit.NoWrap
+
+                    onEditingFinished : function() {
+                        try {
+                            var jsonObject = JSON.parse(jsonStringArea.text)
+                            jsonPane.border.color = "#C5E1A5" //okay grün
+                            jsonPane.border.width = 3
+                            jsoPane.json = jsonObject
+                            previewChart.refresh(jsonObject)
+                            resetColor.running = true
+
+                        } catch(e) {
+                            jsonPane.border.color = "#EF9A9A" //nicht okay rot
+                            jsonPane.border.width = 3
+                        }
                     }
                 }
             }
@@ -271,9 +284,9 @@ Row{
                     if(json[i]["max"] > axisYPreview.max) {
                         axisYPreview.max = (json[i]["max"]+1)
                     }
-                    lineSeriesTempPreviewMin.append(24-i, json[i]["min"])
-                    lineSeriesTempPreviewMax.append(24-i, json[i]["max"])
-                    lineSeriesTempPreviewMedian.append(24-i, (json[i]["max"] + json[i]["min"]) /2 )
+                    lineSeriesTempPreviewMin.append(i, json[i]["min"])
+                    lineSeriesTempPreviewMax.append(i, json[i]["max"])
+                    lineSeriesTempPreviewMedian.append(i, (json[i]["max"] + json[i]["min"]) /2 )
 
                 }
 
@@ -284,8 +297,7 @@ Row{
                 min: 0
                 max: 24
                 tickCount: 1
-                reverse: true
-                titleText: "Aktuelle Uhrzeit -X Stunden"
+                titleText: "Uhrzeit"
             }
 
             ValueAxis {
@@ -297,6 +309,7 @@ Row{
 
             LineSeries {
                 id : lineSeriesTempPreviewMin
+                name: "Min."
                 axisX: axisXPreview
                 axisY: axisYPreview
                 color: "#2196F3"
@@ -304,6 +317,7 @@ Row{
 
             LineSeries {
                 id : lineSeriesTempPreviewMax
+                name: "Max."
                 axisX: axisXPreview
                 axisY: axisYPreview
                 color: "#F44336"
@@ -312,6 +326,7 @@ Row{
             }
             LineSeries {
                 id : lineSeriesTempPreviewMedian
+                name: "Mid."
                 axisX: axisXPreview
                 axisY: axisYPreview
                 color: "#607D8B"
@@ -320,7 +335,7 @@ Row{
     }
 
     Rectangle {
-        width: (sensorListPane.width-sensorListScrollBar.width) * 0.02
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.05
         height: sensorListPane.height * 0.5
         color: "azure"
 

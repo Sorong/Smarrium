@@ -2,6 +2,7 @@
 #include "backend/Actuator/Actuator.hpp"
 #include <QDebug>
 #include <QJsonDocument>
+#include "backend/Sensors/sensorbasetype.h"
 
 ActuatorManager::ActuatorManager(QObject *parent) : QObject(parent)
 {
@@ -23,6 +24,10 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
     this->configurations[&sensor] = &config;
     this->sensorIds[sensor.getId()] = &sensor;
     connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));
+
+    if(sensor.getRawType() == SensorBaseType::CLOCK) {
+        this->runtimeConfigurations[sensor.getId()] = &config;
+    }
     return true;
 }
 
@@ -35,7 +40,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
 {
     qDebug() << "Event recived: " << event->timestamp;
 
-    if(!_actuator) {
+    if(!_actuator || !event || this->isBlocked(*event)) {
         return;
     }
     SensorConfig* config = this->configurations[sensorIds[event->sensor_id]];
@@ -105,5 +110,38 @@ QString ActuatorManager::getConfig(QString uuid)
 
     return "";
 }
+
+bool ActuatorManager::isBlocked(sensors_event_t &ev)
+{
+
+    Sensor* sensor = this->sensorIds[ev.sensor_id];
+    if(!sensor) {
+        return true;
+    }
+    if(sensor->getRawType() == SensorBaseType::CLOCK) {
+        return false;
+    }
+    int hour = ev.timestamp.hour();
+    for(auto key : this->runtimeConfigurations.keys()) {
+        SensorConfig * config = this->runtimeConfigurations[key];
+        if(config) {
+            int start = config->getStart();
+            int stop = config->getStop();
+            //siehe Kommentar oben - dieses If ist jedoch invertiert
+            if(!((start == stop) || (hour >= start && hour <= stop))) {
+                qDebug() << "geblockt";
+                return true;
+            } else if( !(stop < start && (!(hour >= stop && hour <= start)))) {
+                qDebug() << "geblockt";
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
+
+
 
 

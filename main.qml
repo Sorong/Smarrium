@@ -156,8 +156,6 @@ Window {
                             if(selectedSensors !== undefined) {
                                 sensorList.model = selectedSensors
                             }
-
-
                         }
                     }
                 }
@@ -172,9 +170,7 @@ Window {
             anchors.topMargin: 20
             anchors.left: actorConfiguratorPane.left
             anchors.right: actorConfiguratorPane.right
-            //color: "red"
             Layout.fillHeight: true
-            //Layout.fillHeight: true
             ListView {
                 id: sensorList
                 anchors.fill: parent
@@ -184,28 +180,6 @@ Window {
                 }
                 delegate: Rectangle {
                     height: sensorListPane.height * 0.5
-                    //                    Rectangle { color: "red"; width: 50; height: 50 }
-                    //                    Rectangle { color: "green"; width: 20; height: 50 }
-                    //                    Rectangle { color: "blue"; width: 50; height: 20 }
-                    //                    Row{
-
-                    //                        Rectangle {
-                    //                            width: sensorListPane.height * 0.5
-                    //                            height: sensorListPane.height * 0.5
-                    //                            border.color: "lightgray"
-                    //                            color: "red"
-                    //                            Text {
-                    //                                anchors.verticalCenter: parent.verticalCenter
-                    //                                text: '<b>Name:</b> ' + name
-                    //                            }
-
-                    //                        }
-                    //                        Rectangle {
-                    //                            width: sensorListPane.height * 0.5
-                    //                            height: sensorListPane.height * 0.5
-                    //                            color: "blue"
-                    //                            //anchors.verticalCenter: parent.verticalCenter
-                    //                            border.color: "blue"
                     Component.onCompleted: function() {
                         var component = undefined;
                         switch (type) {
@@ -215,7 +189,7 @@ Window {
                         case SensorBaseType.LUX:
                             component =Qt.createComponent("uicomponents/sensorviews/lux.qml")
                             break;
-                        case SensorBaseType.REF_HUMIDITY:
+                        case SensorBaseType.REL_HUMIDITY:
                             component = Qt.createComponent("uicomponents/sensorviews/relhumidity.qml")
                             break;
                         case SensorBaseType.SUBSTRAT_HUMIDITY:
@@ -231,11 +205,12 @@ Window {
                             component = Qt.createComponent("uicomponents/sensorviews/camera.qml")
                             break;
                         default:
-                            console.log("default");
                             break;
                         }
                         if (component && component.status === Component.Ready) {
+                            console.log("vor createObject")
                             component.createObject(this);
+                            console.log("createObject")
                         }
                     }
 

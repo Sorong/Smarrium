@@ -7,7 +7,7 @@ class BaseType
     Q_GADGET
 public:
     enum Type {
-        UV,
+        UV = 0,
         LUX,
         TEMPERATURE,
         REL_HUMIDITY,

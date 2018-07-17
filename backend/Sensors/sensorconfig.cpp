@@ -22,6 +22,19 @@ float SensorConfig::getMaxValue(int time)
     return v.toDouble();
 }
 
+int SensorConfig::getStart()
+{
+    QJsonValue v = (*this)["start"];
+    return v.toInt();
+}
+
+
+int SensorConfig::getStop()
+{
+    QJsonValue v = (*this)["stop"];
+    return v.toInt();
+}
+
 bool SensorConfig::minIsOff(){
     QString key = "min_is_off";
     QJsonValue value = (*this)[key];

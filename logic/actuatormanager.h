@@ -28,8 +28,10 @@ public slots:
 
 private:
     SensorList sensorList;
+    bool isBlocked(sensors_event_t&);
     QMap<Sensor*, SensorConfig*> configurations;
     QMap<QUuid, Sensor*> sensorIds;
+    QMap<QUuid, SensorConfig*> runtimeConfigurations;
 
     Actuator* _actuator;
 };
