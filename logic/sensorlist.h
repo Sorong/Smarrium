@@ -16,7 +16,8 @@ public:
         IntervalRole,
         UuidRole,
         LogRole,
-        LastRole
+        LastRole,
+        IndexRole
     };
 
     explicit SensorList(QObject *parent = nullptr);
@@ -48,6 +49,8 @@ public slots:
 
     void addUnique(Sensor* sensor);
 
+    void removeAt(int index);
+
     Q_INVOKABLE bool isEmpty();
 
     void changeConfig(QString uuid, QString config);
@@ -55,7 +58,7 @@ public slots:
 signals:
     void onSelect(Sensor* sensor);
     void onChangeConfig(QString uuid, QString config);
-
+    void onRemove(Sensor* sensor);
 
 
 private:

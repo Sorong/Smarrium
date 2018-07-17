@@ -134,7 +134,7 @@ Row{
                                 t = JSON.stringify(jsonPane.json, null, 2)
                             }
                         }
-                        if(t === "" ) {
+                        if(t === "" ) {selectedSensors.removeAt(listIndex);
                             jsonPane.json = JSON.parse(configFactory.getConfig(type))
                             t = JSON.stringify(jsonPane.json, null, 2)
                         }
@@ -372,7 +372,7 @@ Row{
             property string option: ""
             icon { source:"/icons/svg/ic_remove_circle_48px.svg"}
             onClicked: function() {
-
+                selectedSensors.removeAt(listIndex);
             }
         }
 

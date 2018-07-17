@@ -325,7 +325,7 @@ Row{
             property string option: ""
             icon { source:"/icons/svg/ic_remove_circle_48px.svg"}
             onClicked: function() {
-
+                selectedSensors.removeAt(listIndex);
             }
         }
 

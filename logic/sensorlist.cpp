@@ -63,6 +63,8 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
         return QVariant(sensor->getLastEventValue());
     case LogRole:
         return QVariant::fromValue(sensor->getEventValueLog());
+    case IndexRole:
+        return QVariant(index.row());
     }
     return QVariant();
 }
@@ -78,6 +80,7 @@ QHash<int, QByteArray> SensorList::roleNames() const
 
     roles[LogRole] = "log";
     roles[LastRole] = "last";
+    roles[IndexRole] = "listIndex";
     return roles;
 }
 
@@ -107,9 +110,8 @@ bool SensorList::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     for(int i = 0; i < count; i++) {
-        Sensor* sensor = this->sensorList.at(row);
-        if(sensor)
-            delete sensor;
+        Sensor *sensor = this->sensorList[row];
+        emit onRemove(sensor);
         this->sensorList.removeAt(row);
     }
     endRemoveRows();
@@ -138,6 +140,11 @@ void SensorList::addUnique(Sensor *sensor)
         }
     }
     this->add(sensor);
+}
+
+void SensorList::removeAt(int index)
+{
+    removeRows(index, 1);
 }
 
 bool SensorList::isEmpty()

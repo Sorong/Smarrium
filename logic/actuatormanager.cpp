@@ -6,6 +6,7 @@
 
 ActuatorManager::ActuatorManager(QObject *parent) : QObject(parent)
 {
+    connect(&(this->sensorList), &SensorList::onRemove, this, &ActuatorManager::unregisterSensor);
 }
 
 void ActuatorManager::registerActuator(Actuator &actuator)
@@ -28,6 +29,17 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
     if(sensor.getRawType() == SensorBaseType::CLOCK) {
         this->runtimeConfigurations[sensor.getId()] = &config;
     }
+    return true;
+}
+
+bool ActuatorManager::unregisterSensor(Sensor *sensor)
+{
+    if(!sensor) {
+        return false;
+    }
+    this->configurations.remove(sensor);
+    this->sensorIds.remove(sensor->getUuid());
+    this->runtimeConfigurations.remove(sensor->getUuid());
     return true;
 }
 

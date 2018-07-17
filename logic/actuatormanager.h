@@ -18,11 +18,13 @@ public:
     explicit ActuatorManager(QObject *parent = nullptr);
     void registerActuator(Actuator& actuator);
     bool registerSensor(Sensor& sensor, SensorConfig& config);
+
     Q_INVOKABLE SensorList& getSensors();
 
 signals:
 
 public slots:
+    bool unregisterSensor(Sensor* sensor);
     void eventReceived(sensors_event_t*);
     QString getConfig(QString uuid);
 
