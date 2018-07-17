@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
-import QtQuick.Controls 1.4 as QSS1_4
 
 Row {
     id: sensorCreator
@@ -85,13 +84,21 @@ Row {
             text: "Messintervall in Sekunden: "
         }
 
-        QSS1_4.SpinBox {
+        SpinBox {
             id: sensorInterval
-            minimumValue: 1
+            from: 0
+            to: 60
             value: 30
-            maximumValue: 60
-            width: sensorCreatorPane.width * 0.30
-
+            editable: true
+            width: sensorCreatorPane.width * 0.10
+            onValueChanged : function() {
+                add.interval = this.value
+            }
+        }
+        Text {
+            color: "red"
+            text: "Nicht unterstützt von der Kamera und der Uhr"
+            font.weight: Font.Light
         }
     }
 
@@ -103,20 +110,21 @@ Row {
         property int index: 0
         property string sensor : ""
         property string option: ""
+        property int interval : 30
         icon { source:"/icons/svg/ic_add_48px.svg"}
         onClicked: function() {
             switch(this.mode) {
             case 1: //Digital
                 if (gpioAvailable.removeAt(this.index)) {
-                    sensorFactory.addDigitalSensor(this.option, this.sensor)
+                    sensorFactory.addDigitalSensor(this.interval, this.option, this.sensor)
                 }
                 break;
             case 2: //I2C
-                sensorFactory.addI2CSensor(this.sensor)
+                sensorFactory.addI2CSensor(this.interval, this.sensor)
                 break;
             default: //Analog
                 if (channelAvailable.removeAt(this.index)) {
-                    sensorFactory.addAnalogSensor(this.option, this.sensor)
+                   sensorFactory.addAnalogSensor(this.interval, this.option, this.sensor)
                 }
             }
             actorConfiguratorPane.reload()

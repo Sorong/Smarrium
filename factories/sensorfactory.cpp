@@ -93,6 +93,13 @@ void SensorFactory::addAnalogSensor(QString channel, QString sensor)
     this->addAnalogSensor(chan, type);
 }
 
+void SensorFactory::addAnalogSensor(int interval, QString channel, QString sensor)
+{
+    sensor_type_t type = this->sensorMap[sensor];
+    CHANNEL chan = this->channelMap[channel];
+    this->addAnalogSensor(interval, chan, type);
+}
+
 void SensorFactory::addAnalogSensor(CHANNEL channel, sensors_type_t sensor)
 {
     this->addAnalogSensor(DEFAULT_INTERVAL_MS, channel, sensor);
@@ -105,6 +112,13 @@ void SensorFactory::addDigitalSensor(QString gpio, QString sensor)
     this->addDigitalSensor(pin, type);
 }
 
+void SensorFactory::addDigitalSensor(int interval, QString gpio, QString sensor)
+{
+    sensor_type_t type = this->sensorMap[sensor];
+    GPIO pin = this->gpioMap[gpio];
+    this->addDigitalSensor(interval, pin, type);
+}
+
 void SensorFactory::addDigitalSensor(GPIO gpio, sensors_type_t sensor)
 {
     this->addDigitalSensor(DEFAULT_INTERVAL_MS, gpio, sensor);
@@ -114,6 +128,12 @@ void SensorFactory::addI2CSensor(QString sensor)
 {
     sensor_type_t type = this->sensorMap[sensor];
     this->addI2CSensor(type);
+}
+
+void SensorFactory::addI2CSensor(int interval, QString sensor)
+{
+    sensor_type_t type = this->sensorMap[sensor];
+    this->addI2CSensor(interval, type);
 }
 
 void SensorFactory::addI2CSensor(sensors_type_t sensor)

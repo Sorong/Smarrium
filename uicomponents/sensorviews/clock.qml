@@ -31,11 +31,10 @@ Row{
             property var timeChange : function() {
                 var today = new Date();
                 var h = today.getHours(); //Berlin
-                var m = today.getMinutes();
-                var s = today.getSeconds();
+                var m = today.getMinutes();s
+                h = checkTime(h);
                 m = checkTime(m);
-                s = checkTime(s);
-                textClock.text = h + ":" + m + ":" + s + " (UTC)";
+                textClock.text = h + ":" + m + "  Uhr (UTC)";
             }
             property var checkTime: function(i) {
                 if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
