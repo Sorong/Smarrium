@@ -64,23 +64,15 @@ Row{
                 titleText: "Lux"
             }
 
-            LineSeries {
-                id : lineSeriesTemp
-                axisX: axisX
-                axisY: axisY
-                property var refresh: function() {
-                    var data = log;
-                    removePoints(0, lineSeriesTemp.count)
-                    for(var i = 0; i < data.length; i++) {
-                        if(data[i] >= axisY.max) {
-                            axisY.max = data[i] +5
-                        }
-                        lineSeriesTemp.append(i, data.length-data[i]);
+            property var refresh: function() {
+                var data = log;
+                removePoints(0, lineSeriesTemp.count)
+                for(var i = 0; i < data.length; i++) {
+                    if(data[i] >= axisY.max) {
+                        axisY.max = data[i] +5
                     }
-                }
-
-                Component.onCompleted: function() {
-                    lineSeriesTemp.refresh();
+                    lineSeriesTemp.append(data.length - i, data[i]);
+                    console.log("LogGraph Point added: " + (data.length - i) + " | " +  data[i])
                 }
             }
         }

@@ -4,7 +4,7 @@ Sensor::Sensor(int interval)
 {
     this->_id = QUuid::createUuid();
     this->_interval = interval;
-    this->lastCheckedHour = QTime::currentTime().hour();
+    this->lastCheckedHour = -1;
     start(interval);
     connect(this, SIGNAL(timeout()), this, SLOT(intervallElapsed()));
     //eventValueLog = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}; //TODO: Remove me
@@ -74,8 +74,10 @@ void Sensor::logEvent(sensors_event_t *event){
         return;
     }
     int currentHour = QTime::currentTime().hour();
-    if(this->lastCheckedHour < currentHour || currentHour == 0){
+    if(true || this->lastCheckedHour < currentHour || currentHour == 0){  //TODO: if Abfrage überarbeiten - return true raus und 0-23 Uhr beachten
+        qDebug() << "Logeintrag erstellt";
         if(eventValueLog.size() == 24){
+
             this->eventValueLog.pop_front();
             this->eventValueLog.push_back(value);
         }

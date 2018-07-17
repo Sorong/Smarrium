@@ -28,9 +28,9 @@ class SensorFactory : public QObject
 public:
     explicit SensorFactory(GPIOList& available, SensorList& sensors, QObject *parent = nullptr);
 
-    void addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensor);
-    void addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensor);
-    void addI2CSensor(int interval, sensors_type_t sensor);
+    Q_INVOKABLE void addAnalogSensor(int interval, CHANNEL channel, sensors_type_t sensor);
+    Q_INVOKABLE void addDigitalSensor(int interval, GPIO gpio, sensors_type_t sensor);
+    Q_INVOKABLE void addI2CSensor(int interval, sensors_type_t sensor);
     Q_INVOKABLE void addAnalogSensor(QString channel, QString sensor);
     void addAnalogSensor(CHANNEL channel, sensors_type_t sensor);
     Q_INVOKABLE void addDigitalSensor(QString gpio, QString sensor);

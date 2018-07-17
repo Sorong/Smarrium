@@ -68,6 +68,7 @@ Row{
                 id : lineSeriesTemp
                 axisX: axisX
                 axisY: axisY
+
                 property var refresh: function() {
                     var data = log;
                     removePoints(0, lineSeriesTemp.count)
@@ -75,12 +76,9 @@ Row{
                         if(data[i] >= axisY.max) {
                             axisY.max = data[i] +5
                         }
-                        lineSeriesTemp.append(i, data.length - data[i]);
+                        lineSeriesTemp.append(data.length - i, data[i]);
+                        console.log("LogGraph Point added: " + (data.length - i) + " | " +  data[i])
                     }
-                }
-
-                Component.onCompleted: function() {
-                    lineSeriesTemp.refresh();
                 }
             }
         }

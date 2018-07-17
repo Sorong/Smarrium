@@ -36,10 +36,11 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: interval; running: true; repeat: true;
+            interval: 5*interval; running: true; repeat: true;
             onTriggered: function () {
+                console.log("refreshTimer")
                 lineSeriesTemp.refresh();
-                this.getTimerInterval();
+                //this.getTimerInterval();
             }
         }
 
@@ -75,12 +76,9 @@ Row{
                         if(data[i] >= axisY.max) {
                             axisY.max = data[i] +5
                         }
-                        lineSeriesTemp.append(i, data.length - data[i]);
+                        lineSeriesTemp.append(data.length - i, data[i]);
+                        console.log("LogGraph Point added: " + (data.length - i) + " | " +  data[i])
                     }
-                }
-
-                Component.onCompleted: function() {
-                    lineSeriesTemp.refresh();
                 }
             }
         }

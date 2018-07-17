@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4 as QSS1_4
 
 Row {
     id: sensorCreator
@@ -28,7 +29,7 @@ Row {
         ComboBox {
             id: sensorSelector
             textRole: "display"
-            width: sensorCreatorPane.width * 0.40
+            width: sensorCreatorPane.width * 0.30
             model: supportedSensors
             onCurrentIndexChanged: function() {
                 if(currentIndex >= 0)
@@ -69,7 +70,7 @@ Row {
         ComboBox {
             id: sensorOptionSelector
             textRole: "display"
-            width: sensorCreatorPane.width * 0.40
+            width: sensorCreatorPane.width * 0.30
             onCurrentIndexChanged: function() {
                 if(model === undefined || currentIndex < 0) {
                     return
@@ -78,6 +79,23 @@ Row {
             }
         }
     }
+
+    Column {
+        Text {
+            text: "Messintervall in Sekunden: "
+        }
+
+        QSS1_4.SpinBox {
+            id: sensorInterval
+            minimumValue: 1
+            value: 30
+            maximumValue: 60
+            width: sensorCreatorPane.width * 0.30
+
+        }
+    }
+
+
     RoundButton {
         id: add
         anchors.bottom: parent.bottom
