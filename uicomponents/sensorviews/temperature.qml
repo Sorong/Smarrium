@@ -98,6 +98,9 @@ Row{
         color: "white"
         border.color: "azure"
         border.width: 4
+        Component.onCompleted: {
+            jsonStringArea.text = jsonStringArea.getJson();
+        }
         Column {
             Timer {
                 id: resetColor
@@ -139,7 +142,7 @@ Row{
                     }
 
                     //background: "white"
-                    text: getJson()
+                    text: ""
                     wrapMode : TextEdit.NoWrap
 
                     onEditingFinished : function() {

@@ -83,7 +83,9 @@ Row{
                 height: jsonPane.height - extendedConfig.height - 10
                 clip: true
                 ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-
+                Component.onCompleted: {
+                    jsonStringArea.text = jsonStringArea.getJson();
+                }
                 TextArea {
                     id: jsonStringArea
                     property var getJson : function() {
@@ -105,7 +107,7 @@ Row{
                     }
 
                     //background: "white"
-                    text: getJson()
+                    text: ""
                     wrapMode : TextEdit.NoWrap
 
                     onEditingFinished : function() {

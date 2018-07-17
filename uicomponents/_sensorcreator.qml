@@ -123,6 +123,7 @@ Row {
             case 1: //Digital
                 if (gpioAvailable.removeAt(this.index)) {
                     sensorFactory.addDigitalSensor(this.interval, this.option, this.sensor)
+                    add.enabled = false;
                 }
                 break;
             case 2: //I2C
@@ -131,10 +132,10 @@ Row {
             default: //Analog
                 if (channelAvailable.removeAt(this.index)) {
                     sensorFactory.addAnalogSensor(this.interval, this.option, this.sensor)
+                    add.enabled = false;
                 }
             }
             actorConfiguratorPane.reload();
-            add.enabled = false;
             sensorSelector.refresh();
         }
     }

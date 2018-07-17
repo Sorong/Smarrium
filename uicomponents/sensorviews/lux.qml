@@ -143,6 +143,7 @@ Row{
 
                     //background: "white"
                     wrapMode : TextEdit.NoWrap
+                    text : ""
 
                     onEditingFinished : function() {
                         try {
