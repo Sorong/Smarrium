@@ -216,7 +216,7 @@ Window {
                             component =Qt.createComponent("uicomponents/sensorviews/lux.qml")
                             break;
                         case SensorBaseType.REF_HUMIDITY:
-                            component = Qt.createComponent("uicomponents/sensorviews/refhumidity.qml")
+                            component = Qt.createComponent("uicomponents/sensorviews/relhumidity.qml")
                             break;
                         case SensorBaseType.SUBSTRAT_HUMIDITY:
                             component = Qt.createComponent("uicomponents/sensorviews/substrathumidity.qml")

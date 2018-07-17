@@ -23,7 +23,7 @@ Row{
         height: sensorListPane.height * 0.5
         color: "azure"
         Timer {
-            interval: 500; running: true; repeat: true;
+            interval: 10000; running: true; repeat: true;
             onTriggered: textClock.timeChange()
         }
         Text {
