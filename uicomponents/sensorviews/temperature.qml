@@ -8,19 +8,19 @@ import QtQuick.Controls.Styles 1.4
 Row{
 
     Rectangle {
-        width: sensorListPane.width * 0.15
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.13
         height: sensorListPane.height * 0.5
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: '<b>Name:</b> ' + name
+            text: '<b>Name:</b> \n' + name
         }
 
     }
 
     Rectangle {
-        width: sensorListPane.width * 0.2
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.2
         height: sensorListPane.height * 0.5
         color: "azure"
         Timer {
@@ -40,7 +40,7 @@ Row{
             onTriggered: function () {
                 console.log("refreshTimer")
                 lineSeriesTemp.refresh();
-                //this.getTimerInterval();
+                this.getTimerInterval();
             }
         }
 
@@ -86,10 +86,16 @@ Row{
 
     Rectangle {
         id: jsonPane
-        width: sensorListPane.width * 0.2
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.2
         height: sensorListPane.height * 0.5
+        property var json : ({})
+        property var jsonChange : function(json) {
+            jsonStringArea.text = JSON.stringify(this.json, null, 2)
+            this.json = json
+        }
+
         anchors.margins: 5
-        border.color: "black"
+        color: "azure"
         Text {
             id: extendedConfig
             text: "Erweiterte Konfigurationen:"
@@ -100,51 +106,153 @@ Row{
             //anchors.fill: jsonPane
 
             QSS1_4.TextArea {
+                id: jsonStringArea
                 property var getJson : function() {
                     var t = "";
                     if(actuatorManager !== null) {
                         t = actuatorManager.getConfig();
                         if(t !== "") {
-                            t = JSON.stringify(JSON.parse(t), null, 2)
+                            jsonPane.json = JSON.parse(t)
+                            t = JSON.stringify(jsonPane.json, null, 2)
                         }
                     }
                     if(t === "" ) {
-                        t = JSON.stringify(JSON.parse(configFactory.getConfig(type)), null, 2)
+                        jsonPane.json = JSON.parse(configFactory.getConfig(type))
+                        t = JSON.stringify(jsonPane.json, null, 2)
                     }
                     return t;
                 }
                 width: jsonPane.width - 10
                 height: jsonPane.height - extendedConfig.height - 10
-                id: jsonStringArea
+                anchors.leftMargin: 5
+
                 text: getJson()
 
                 style: TextAreaStyle {
-                    backgroundColor : "white"
+                    id: testAreaStyle
                 }
                 wrapMode: TextArea.NoWrap
+                onEditingFinished : function() {
+                    try {
+                        var jsonObject = JSON.parse(jsonStringArea.text)
+                        jsonPane.border.color = "#C5E1A5" //okay grün
+                        jsonPane.border.width = 3
+                        jsoPane.json = jsonObject
+                        selectedSensors.changeConfig(uuid, jsonStringArea.text)
+                    } catch(e) {
+                        jsonPane.border.color = "#EF9A9A" //nicht okay rot
+                        jsonPane.border.width = 3
+                    }
+                }
             }
         }
     }
 
     Rectangle {
-        width: sensorListPane.width * 0.2
+        id: controlPane
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.25
         height: sensorListPane.height * 0.5
-        border.color: "lightgray"
         color: "azure"
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            text: "Controllpanel"
-        }
-        Image {
-            width : parent.width
-            height : parent.height
-            source: "/images/images/default.ppm"
+        Column {
+            Row {
+                Column {
+                    Text {
+                        text: "Startuhrzeit: "
+                    }
+                    SpinBox {
+                        id: from
+                        from: 0
+                        to: 23
+                        editable: true
+                    }
+                }
+
+                Column {
+                    Text {
+                        text: "Enduhrzeit: "
+                    }
+                    SpinBox {
+                        id: to
+                        from: 0
+                        to: 23
+                        editable: true
+                    }
+                }
+
+
+            }
+
+            Row {
+                Column {
+                    Text {
+                        anchors.leftMargin: 5
+                        text: "Min. Temperatur: "
+                    }
+
+                    SpinBox {
+                        id: min
+                        from: 0
+                        to: 80
+                        editable: true
+                        onValueChanged: {
+                            max.from = this.value
+                            if(max.value < this.value) {
+                                max.value = this.value
+                            }
+                        }
+                    }
+
+                }
+                Column {
+                    Text {
+                        text: "Max. Temperatur: "
+                    }
+                    SpinBox {
+                        id: max
+                        from: 0
+                        to: 80
+                        editable: true
+                    }
+                }
+            }
+
+
+            Row {
+
+                RadioButton {
+                    id: onMin
+                    checked: true
+                    text: qsTr("Minimum")
+                }
+                RadioButton {
+                    id: onMax
+                    text: qsTr("Maximum")
+                }
+
+            }
+            Button {
+                icon { source:"/icons/svg/ic_save_48px.svg"}
+                onClicked: function() {
+                    var toInsert = jsonPane.json
+                    for(var i = from.value; i != to.value; i++) {
+                        if(i == 24) {
+                            i %= 24;
+                        }
+                        toInsert[i] = {"min" : min.value, "max" : max.value}
+
+                    }
+                    toInsert["min_is_off"] = onMax.checked
+                    console.log(JSON.stringify(toInsert, null, 2))
+                    jsonPane.jsonChange(toInsert)
+
+                }
+            }
+
         }
     }
 
     Rectangle {
-        width: sensorListPane.width * 0.18
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.20
         height: sensorListPane.height * 0.5
         color: "azure"
         ChartView {
@@ -162,10 +270,10 @@ Row{
                 BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
             }
         }
-
     }
+
     Rectangle {
-        width: sensorListPane.width * 0.03
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.02
         height: sensorListPane.height * 0.5
         color: "azure"
 

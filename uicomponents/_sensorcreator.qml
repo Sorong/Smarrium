@@ -86,13 +86,13 @@ Row {
 
         SpinBox {
             id: sensorInterval
-            from: 0
-            to: 60
+            from: 10
+            to: 120
             value: 30
             editable: true
             width: sensorCreatorPane.width * 0.10
             onValueChanged : function() {
-                add.interval = this.value
+                add.interval = this.value * 1000
             }
         }
         Text {
@@ -110,7 +110,7 @@ Row {
         property int index: 0
         property string sensor : ""
         property string option: ""
-        property int interval : 30
+        property int interval : sensorInterval.value * 1000
         icon { source:"/icons/svg/ic_add_48px.svg"}
         onClicked: function() {
             switch(this.mode) {

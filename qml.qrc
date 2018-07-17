@@ -16,6 +16,7 @@
         <file>svg/ic_remove_circle_48px.svg</file>
         <file>svg/ic_delete_forever_48px.svg</file>
         <file>svg/ic_save_48px.svg</file>
+        <file>svg/ic_done_48px.svg</file>
     </qresource>
     <qresource prefix="/configs">
         <file>defaultconfigs/clock.json</file>

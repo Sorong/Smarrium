@@ -85,7 +85,6 @@ float HumiditySensor::readFrequenz(){
 
     for(int cycle = 0; cycle < AVERAGE_READING; cycle++){
         while(bcm2835_gpio_lev(_pin) == LOW){
-
         }
         clock_gettime(CLOCK_REALTIME, &t1);
         while(bcm2835_gpio_lev(_pin) == HIGH){
