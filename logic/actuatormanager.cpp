@@ -74,7 +74,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         eventData = event->moisture;
         break;
     }
-    qDebug() << "Wert: " << eventData;
+
     if(config->ignoreSwitches()){
         return;
     }

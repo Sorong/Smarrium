@@ -21,7 +21,6 @@ QUuid Sensor::getUuid()
 }
 
 void Sensor::intervallElapsed(){
-    qDebug() << "Intervall elapsed";
     sensors_event_t* event = new sensors_event_t();
     this->getEvent(event);
     logEvent(event);
@@ -73,6 +72,7 @@ void Sensor::logEvent(sensors_event_t *event){
     default:
         return;
     }
+    qDebug() << "Intervall elapsed: " << value << "Sensor: " << this->getSort();
     int currentHour = QTime::currentTime().hour();
     if(this->lastCheckedHour < currentHour || currentHour == 0){
         qDebug() << "Logeintrag erstellt";
