@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtCharts 2.2
-import QtQuick.Controls 1.4 as QSS1_4
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 
@@ -36,7 +35,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: interval; running: true; repeat: true;
+            interval: 5000; running: true; repeat: true;
             onTriggered: function () {
                 lineSeriesLux.refresh();
                 this.getTimerInterval();
@@ -64,15 +63,20 @@ Row{
                 titleText: "Lux"
             }
 
-            property var refresh: function() {
-                var data = log;
-                removePoints(0, lineSeriesLux.count)
-                for(var i = 0; i < data.length; i++) {
-                    if(data[i] >= axisY.max) {
-                        axisY.max = data[i] +5
+            LineSeries {
+                id : lineSeriesLux
+                axisX: axisX
+                axisY: axisY
+                property var refresh: function() {
+                    var data = log;
+                    removePoints(0, lineSeriesLux.count)
+                    for(var i = 0; i < data.length; i++) {
+                        if(data[i] >= axisY.max) {
+                            axisY.max = data[i] +5
+                        }
+                        lineSeriesLux.append(data.length - i, data[i]);
+                        console.log("LogGraph Point added: " + (data.length - i) + " | " +  data[i])
                     }
-                    lineSeriesLux.append(data.length - i, data[i]);
-                    console.log("LogGraph Point added: " + (data.length - i) + " | " +  data[i])
                 }
             }
         }
@@ -93,6 +97,10 @@ Row{
         color: "white"
         border.color: "azure"
         border.width: 4
+        Component.onCompleted: {
+            jsonStringArea.text = jsonStringArea.getJson();
+        }
+
         Column {
             Timer {
                 id: resetColor
@@ -134,7 +142,6 @@ Row{
                     }
 
                     //background: "white"
-                    text: getJson()
                     wrapMode : TextEdit.NoWrap
 
                     onEditingFinished : function() {
@@ -302,6 +309,7 @@ Row{
                     var jsonObject = JSON.parse(jsonStringArea.text)
                     jsonPane.border.color = "green"
                     selectedSensors.changeConfig(uuid, jsonStringArea.text)
+                    resetColor.running = true
                 } catch(e) {
                     jsonPane.border.color = "red"
                 }

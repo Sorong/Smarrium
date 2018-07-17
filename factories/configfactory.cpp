@@ -57,6 +57,9 @@ QString ConfigFactory::readFromFile(SensorBaseType type)
     delete file;
     QJsonDocument jsonFile = QJsonDocument::fromJson(out.toUtf8());
     QString s(jsonFile.toJson(QJsonDocument::Compact));
+    if(s == "") {
+        return "{}";
+    }
     return s;
 }
 

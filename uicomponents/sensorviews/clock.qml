@@ -244,6 +244,7 @@ Row{
                     var jsonObject = JSON.parse(jsonStringArea.text)
                     jsonPane.border.color = "green"
                     selectedSensors.changeConfig(uuid, jsonStringArea.text)
+                    resetColor.running = true
                 } catch(e) {
                     jsonPane.border.color = "red"
                 }

@@ -74,7 +74,7 @@ void Sensor::logEvent(sensors_event_t *event){
         return;
     }
     int currentHour = QTime::currentTime().hour();
-    if(true || this->lastCheckedHour < currentHour || currentHour == 0){  //TODO: if Abfrage überarbeiten - return true raus und 0-23 Uhr beachten
+    if(this->lastCheckedHour < currentHour || currentHour == 0){
         qDebug() << "Logeintrag erstellt";
         if(eventValueLog.size() == 24){
 

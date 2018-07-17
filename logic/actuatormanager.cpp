@@ -127,18 +127,15 @@ bool ActuatorManager::isBlocked(sensors_event_t &ev)
         if(config) {
             int start = config->getStart();
             int stop = config->getStop();
-            //siehe Kommentar oben - dieses If ist jedoch invertiert
-            if(!((start == stop) || (hour >= start && hour <= stop))) {
-                qDebug() << "geblockt";
-                return true;
-            } else if( !(stop < start && (!(hour >= stop && hour <= start)))) {
-                qDebug() << "geblockt";
-                return true;
+            if((start == stop) || (hour >= start && hour <= stop)) {
+                return false;
+            } else if((stop < start) && !(hour >= stop  && hour <= start)) {
+                return false;
             }
         }
 
     }
-    return false;
+    return true;
 }
 
 

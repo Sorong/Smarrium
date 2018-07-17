@@ -35,7 +35,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: 500; running: true; repeat: true;
+            interval: 5000; running: true; repeat: true;
             onTriggered: function () {
                 console.log("refreshTimer")
                 lineSeriesTemp.refresh();
@@ -353,6 +353,7 @@ Row{
                     var jsonObject = JSON.parse(jsonStringArea.text)
                     jsonPane.border.color = "green"
                     selectedSensors.changeConfig(uuid, jsonStringArea.text)
+                    resetColor.running = true
                 } catch(e) {
                     jsonPane.border.color = "red"
                 }
