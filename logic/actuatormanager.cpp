@@ -23,8 +23,15 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
     }
 
     this->configurations[&sensor] = &config;
-    this->sensorIds[sensor.getId()] = &sensor;
-    connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));
+    this->setLimit(config.getLimit());
+    this->setCooldown(config.getCooldown());
+
+    if(!this->sensorIds.contains(sensor.getId())) {
+        connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));
+        this->sensorIds[sensor.getId()] = &sensor;
+    }
+
+
 
     if(sensor.getRawType() == SensorBaseType::CLOCK) {
         this->runtimeConfigurations[sensor.getId()] = &config;
@@ -48,14 +55,62 @@ SensorList &ActuatorManager::getSensors()
     return this->sensorList;
 }
 
+void ActuatorManager::setLimit(int limit)
+{
+    if(limit == 0)
+        return;
+
+    if(this->limit == -1) {
+        qDebug() << "Limit set to:" << limit;
+        this->limit = limit;
+    } else if (this->limit < limit) {
+        qDebug() << "Limit set to:" << limit;
+        this->limit = limit;
+    }
+}
+
+void ActuatorManager::setCooldown(int cooldown)
+{
+    if(cooldown == 0)
+        return;
+
+    if(this->cooldown == -1) {
+        qDebug() << "Cooldown set to:" << cooldown;
+        this->cooldown = cooldown;
+    } else if (this->cooldown < cooldown) {
+        qDebug() << "Cooldown set to:" << cooldown;
+        this->cooldown = cooldown;
+    }
+}
+
 void ActuatorManager::eventReceived(sensors_event_t* event)
 {
     qDebug() << "Event recived: " << event->timestamp;
-
-    if(!_actuator || !event || this->isBlocked(*event)) {
+    if(!_actuator || !event) {
         return;
     }
+
     SensorConfig* config = this->configurations[sensorIds[event->sensor_id]];
+    if(!config) {
+        return;
+    }
+
+    if(limit != -1) {
+        int lastStart = this->activatedAt.elapsed();
+        if(lastStart >= limit) {
+            qDebug() << "Limit reached";
+            this->_actuator->switchOff();
+            return;
+        } else if (!this->_actuator->isOn() && lastStart <= (limit+cooldown)) {
+            qDebug() << "remaining cooldown" << ((limit + cooldown) - lastStart);
+            return;
+        }
+    }
+
+    if(this->isBlocked(*event)) {
+        return;
+    }
+
 
 
 
@@ -85,29 +140,20 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
     case SENSOR_TYPE_MOISTURE:
         eventData = event->moisture;
         break;
+    default:
+        break;
     }
 
     if(config->ignoreSwitches()){
         return;
     }
-    if (config->minIsOff()){
-        if(config->getMinValue(QTime::currentTime().hour()) < eventData){
-            this->_actuator->switchOff();
-        }
 
-        else if(config->getMaxValue(QTime::currentTime().hour()) > eventData){
-            this->_actuator->switchOn();
-        }
+    if(event->type == SENSOR_TYPE_CLOCK) {
+        this->processClockEvent(*config);
+    } else {
+        this->processEventData(eventData, *config);
     }
-    else{
-        if(config->getMinValue(QTime::currentTime().hour()) < eventData){
-            this->_actuator->switchOn();
-        }
 
-        else if(config->getMaxValue(QTime::currentTime().hour()) > eventData){
-            this->_actuator->switchOff();
-        }
-    }
 
 }
 
@@ -122,6 +168,52 @@ QString ActuatorManager::getConfig(QString uuid)
     }
 
     return "";
+}
+
+void ActuatorManager::processEventData(float eventData, SensorConfig &config)
+{
+
+    if (config.minIsOff()){
+        if(config.getMinValue(QTime::currentTime().hour()) < eventData){
+            this->_actuator->switchOff();
+        }
+
+        else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
+            this->_actuator->switchOn();
+            this->activatedAt.start();
+        }
+    }
+    else{
+        if(config.getMinValue(QTime::currentTime().hour()) < eventData){
+            this->_actuator->switchOn();
+            this->activatedAt.start();
+        }
+
+        else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
+            this->_actuator->switchOff();
+        }
+    }
+}
+
+void ActuatorManager::processClockEvent(SensorConfig &config)
+{
+    int hour = QTime::currentTime().hour();
+    int start = config.getStart();
+    int stop = config.getStop();
+    if(config.ignoreOn() && !this->_actuator->isOn()) {
+        qDebug() << "ignore on";
+        return;
+    }
+
+    if((start == stop) || (hour >= start && hour <= stop)) {
+        this->_actuator->switchOn();
+        this->activatedAt.start();
+    } else if((stop < start) && !(hour >= stop  && hour <= start)) {
+        this->_actuator->switchOn();
+        this->activatedAt.start();
+    } else {
+        this->_actuator->switchOff();
+    }
 }
 
 bool ActuatorManager::isBlocked(sensors_event_t &ev)

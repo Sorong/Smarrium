@@ -31,6 +31,11 @@ QString& Actuator::getCode(){
     return this->_code;
 }
 
+bool Actuator::isOn()
+{
+    return this->_isActive;
+}
+
 
 ActuatorManager &Actuator::getManager()
 {

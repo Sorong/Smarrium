@@ -53,6 +53,29 @@ bool SensorConfig::ignoreSwitches(){
     return value.toBool();
 }
 
+bool SensorConfig::ignoreOn()
+{
+    QString key = "ignore_on";
+    QJsonValue value = (*this)[key];
+    if(value.isNull()){
+        return false;
+    }
+    return value.toBool();
+}
+
+int SensorConfig::getLimit()
+{
+    QJsonValue v = (*this)["limit"];
+    return v.toInt(0);
+}
+
+int SensorConfig::getCooldown()
+{
+    QJsonValue v = (*this)["cooldown"];
+    return v.toInt(0);
+}
+
+
 QString SensorConfig::toString()
 {
 

@@ -18,6 +18,9 @@ public:
     int getStop();
     bool minIsOff();
     bool ignoreSwitches();
+    bool ignoreOn();
+    int getLimit();
+    int getCooldown();
     QString toString();
 };
 

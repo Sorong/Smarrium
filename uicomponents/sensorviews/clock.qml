@@ -69,7 +69,7 @@ Row{
                 id: resetColor
                 interval: 5000; running: false; repeat: false;
                 onTriggered: function() {
-                    jsonPane.border = "azure";
+                    jsonPane.border.color = "azure";
                 }
             }
 
