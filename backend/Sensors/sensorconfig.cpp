@@ -63,6 +63,16 @@ bool SensorConfig::ignoreOn()
     return value.toBool();
 }
 
+bool SensorConfig::ignoreOff()
+{
+    QString key = "ignore_off";
+    QJsonValue value = (*this)[key];
+    if(value.isNull()){
+        return false;
+    }
+    return value.toBool();
+}
+
 int SensorConfig::getLimit()
 {
     QJsonValue v = (*this)["limit"];

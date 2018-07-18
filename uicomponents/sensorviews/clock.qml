@@ -115,7 +115,7 @@ Row{
                             var jsonObject = JSON.parse(jsonStringArea.text)
                             jsonPane.border.color = "#C5E1A5" //okay grün
                             jsonPane.border.width = 3
-                            jsoPane.json = jsonObject
+                            jsonPane.json = jsonObject
                             previewChart.refresh(jsonObject)
                             resetColor.running = true
 
@@ -160,8 +160,34 @@ Row{
                     }
                 }
 
+            }
+
+            Row {
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "Schaltet ein: "
+                }
+                CheckBox {
+                    id: onBox
+                    anchors.verticalCenter: parent.verticalCenter
+                    checked : false
+                }
 
             }
+            Row {
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "Schaltet aus: "
+                }
+                CheckBox {
+                    id: offBox
+                    anchors.verticalCenter: parent.verticalCenter
+                    checked : false
+                }
+
+            }
+
+
 
             Button {
                 icon { source:"/icons/svg/ic_save_48px.svg"}
@@ -169,6 +195,8 @@ Row{
                     var toInsert = jsonPane.json
                     toInsert["start"] = from.value
                     toInsert["stop"] = to.value
+                    toInsert["ignore_on"] = !onBox.checked
+                    toInsert["ignore_off"] = !offBox.checked
                     console.log(JSON.stringify(toInsert, null, 2))
                     jsonPane.jsonChange(toInsert)
                 }

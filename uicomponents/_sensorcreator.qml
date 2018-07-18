@@ -92,7 +92,7 @@ Row {
 
         SpinBox {
             id: sensorInterval
-            from: 10
+            from: 5
             to: 120
             value: 30
             editable: true
@@ -103,7 +103,7 @@ Row {
         }
         Text {
             color: "red"
-            text: "Nicht unterstützt von der Kamera und der Uhr"
+            text: "Nicht unterstützt von der Kamera"
             font.weight: Font.Light
         }
     }

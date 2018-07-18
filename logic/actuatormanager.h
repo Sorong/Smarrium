@@ -33,6 +33,8 @@ public slots:
 private:
     void processEventData(float data, SensorConfig& config);
     void processClockEvent(SensorConfig &config);
+    void switchOn();
+    void switchOff();
 
     SensorList sensorList;
     QTime activatedAt;

@@ -150,7 +150,7 @@ Row{
                             var jsonObject = JSON.parse(jsonStringArea.text)
                             jsonPane.border.color = "#C5E1A5" //okay grün
                             jsonPane.border.width = 3
-                            jsoPane.json = jsonObject
+                            jsonPane.json = jsonObject
                             previewChart.refresh(jsonObject)
                             resetColor.running = true
 
@@ -255,7 +255,7 @@ Row{
                             i %= 25;
                         }
                         toInsert[i] = {"min" : min.value, "max" : max.value}
-
+jsoPane.json = jsonObject
                     }
                     toInsert["min_is_off"] = onMax.checked
                     console.log(JSON.stringify(toInsert, null, 2))

@@ -79,6 +79,7 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
         break;
     case SENSOR_TYPE_CLOCK:
         ptr = new ClockSensor();
+        ptr->setInterval(interval);
         break;
     default:
         return;

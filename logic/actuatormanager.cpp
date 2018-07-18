@@ -21,8 +21,7 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
     if(current) {
         delete current;
     }
-
-    this->configurations[&sensor] = &config;
+    this->configurations.insert(&sensor, &config);
     this->setLimit(config.getLimit());
     this->setCooldown(config.getCooldown());
 
@@ -97,12 +96,12 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
 
     if(limit != -1) {
         int lastStart = this->activatedAt.elapsed();
-        if(lastStart >= limit) {
-            qDebug() << "Limit reached";
-            this->_actuator->switchOff();
+        if(this->_actuator->isOn() && lastStart >= limit) {
+            qDebug() << "Limit reached " << lastStart;
+            this->switchOff();
             return;
         } else if (!this->_actuator->isOn() && lastStart <= (limit+cooldown)) {
-            qDebug() << "remaining cooldown" << ((limit + cooldown) - lastStart);
+            qDebug() << "remaining cooldown " << ((limit + cooldown) - lastStart);
             return;
         }
     }
@@ -175,22 +174,20 @@ void ActuatorManager::processEventData(float eventData, SensorConfig &config)
 
     if (config.minIsOff()){
         if(config.getMinValue(QTime::currentTime().hour()) < eventData){
-            this->_actuator->switchOff();
+            this->switchOff();
         }
 
         else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
-            this->_actuator->switchOn();
-            this->activatedAt.start();
+            this->switchOn();
         }
     }
     else{
         if(config.getMinValue(QTime::currentTime().hour()) < eventData){
-            this->_actuator->switchOn();
-            this->activatedAt.start();
+            this->switchOn();
         }
 
         else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
-            this->_actuator->switchOff();
+            this->switchOff();
         }
     }
 }
@@ -204,14 +201,33 @@ void ActuatorManager::processClockEvent(SensorConfig &config)
         qDebug() << "ignore on";
         return;
     }
+    if(config.ignoreOff() && this->_actuator->isOn()) {
+        qDebug() << "ignore off";
+        return;
+    }
 
     if((start == stop) || (hour >= start && hour <= stop)) {
-        this->_actuator->switchOn();
-        this->activatedAt.start();
+        this->switchOn();
     } else if((stop < start) && !(hour >= stop  && hour <= start)) {
+        this->switchOn();
+    } else {
+        this->_actuator->switchOff();
+    }
+}
+
+void ActuatorManager::switchOn()
+{
+    if(!this->_actuator->isOn()) {
+        qDebug() << "SwitchOn";
         this->_actuator->switchOn();
         this->activatedAt.start();
-    } else {
+    }
+}
+
+void ActuatorManager::switchOff()
+{
+    if(this->_actuator->isOn()) {
+        qDebug() << "SwitchOff";
         this->_actuator->switchOff();
     }
 }
