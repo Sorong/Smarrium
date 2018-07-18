@@ -178,7 +178,7 @@ Row{
                     SpinBox {
                         id: from
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -190,7 +190,7 @@ Row{
                     SpinBox {
                         id: to
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -257,7 +257,7 @@ Row{
                 axisYPreview.min = 1000000000
                 axisYPreview.max = 0
                 lineSeriesUVPreview.removePoints(0, lineSeriesUVPreview.count)
-                for(var i = 0; i < 24 || json[i] !== undefined; i++) {
+                for(var i = 0; i <= 24 || json[i] !== undefined; i++) {
                     if(json[i]["min"] < axisYPreview.min) {
                         axisYPreview.min = (json[i]["min"]-1)
                     }

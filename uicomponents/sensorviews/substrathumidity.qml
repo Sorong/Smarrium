@@ -176,7 +176,7 @@ Row{
                     SpinBox {
                         id: from
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -188,7 +188,7 @@ Row{
                     SpinBox {
                         id: to
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -228,8 +228,8 @@ Row{
                 onClicked: function() {
                     var toInsert = jsonPane.json
                     for(var i = from.value; i != to.value; i++) {
-                        if(i == 24) {
-                            i %= 24;
+                        if(i == 25) {
+                            i %= 25;
                         }
                         toInsert[i] = {"min" : min.value}
 

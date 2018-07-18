@@ -143,7 +143,7 @@ Row{
                     SpinBox {
                         id: from
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -155,7 +155,7 @@ Row{
                     SpinBox {
                         id: to
                         from: 0
-                        to: 23
+                        to: 24
                         editable: true
                     }
                 }
@@ -191,8 +191,8 @@ Row{
                 var end = json["stop"]
                 var today = new Date();
                 var h = today.getHours();
-                for(var i = 0; i < 24; i++) {
-                    var offset = (h + i) % 24
+                for(var i = 0; i <= 24; i++) {
+                    var offset = (h + i) % 25
                     if((start === end) || (i >= start && i <= end)) {
                         lineSeriesClock.append(i, 1)
                     } else if( (end < start) &&  !(i >= (end) && i <= start)){
