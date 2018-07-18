@@ -229,9 +229,9 @@ Row{
                 icon { source:"/icons/svg/ic_save_48px.svg"}
                 onClicked: function() {
                     var toInsert = jsonPane.json
-                    for(var i = from.value; i != to.value; i++) {
-                        if(i == 24) {
-                            i %= 24;
+                    for(var i = from.value; i != to.value + 1; i++) {
+                        if(i == 25) {
+                            i %= 25;
                         }
                         toInsert[i] = {"min" : min.value}
 

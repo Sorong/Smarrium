@@ -251,7 +251,7 @@ Row{
                 icon { source:"/icons/svg/ic_save_48px.svg"}
                 onClicked: function() {
                     var toInsert = jsonPane.json
-                    for(var i = from.value; i != to.value; i++) {
+                    for(var i = from.value; i != to.value + 1; i++) {
                         if(i == 25) {
                             i %= 25;
                         }
@@ -281,7 +281,7 @@ Row{
                 lineSeriesHumidityPreviewMin.removePoints(0, lineSeriesHumidityPreviewMin.count)
                 lineSeriesHumidityPreviewMax.removePoints(0, lineSeriesHumidityPreviewMax.count)
                 lineSeriesHumidityPreviewMedian.removePoints(0, lineSeriesHumidityPreviewMedian.count)
-                for(var i = 0; i < 24 || json[i] !== undefined; i++) {
+                for(var i = 0; i <= 24 || json[i] !== undefined; i++) {
                     if(json[i]["min"] < axisYPreview.min) {
                         axisYPreview.min = (json[i]["min"]-1)
                     }
