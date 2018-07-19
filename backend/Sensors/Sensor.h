@@ -82,6 +82,7 @@ protected:
     QList<qreal> eventValueLog;
 
 private:
+    void fillLog(float val);
     void logEvent(sensors_event_t*);
     int lastCheckedHour;
 

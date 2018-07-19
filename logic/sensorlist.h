@@ -17,7 +17,8 @@ public:
         UuidRole,
         LogRole,
         LastRole,
-        IndexRole
+        IndexRole,
+        SensorIntervalRole
     };
 
     explicit SensorList(QObject *parent = nullptr);

@@ -93,18 +93,13 @@ Row {
         SpinBox {
             id: sensorInterval
             from: 5
-            to: 120
+            to: 1200
             value: 30
             editable: true
             width: sensorCreatorPane.width * 0.10
             onValueChanged : function() {
                 add.interval = this.value * 1000
             }
-        }
-        Text {
-            color: "red"
-            text: "Nicht unterstützt von der Kamera"
-            font.weight: Font.Light
         }
     }
 
