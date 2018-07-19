@@ -27,6 +27,14 @@ void Sensor::intervallElapsed(){
     emit newSensorEvent(event);
 }
 
+void Sensor::fillLog(float val)
+{
+   for  (int i = 0; i < 24; i++) {
+        this->eventValueLog.push_back(val);
+       qDebug() << "Logeintrag erstellt";
+    }
+}
+
 int Sensor::getInterval(){
     return this->_interval;
 }
@@ -74,6 +82,11 @@ void Sensor::logEvent(sensors_event_t *event){
     }
     qDebug() << "Intervall elapsed: " << value << "Sensor: " << this->getSort();
     int currentHour = QTime::currentTime().hour();
+    if(this->lastCheckedHour == -1) {
+        this->fillLog(value);
+        this->lastCheckedHour = currentHour;
+        return;
+    }
     if(this->lastCheckedHour < currentHour || currentHour == 0){
         qDebug() << "Logeintrag erstellt";
         if(eventValueLog.size() == 24){

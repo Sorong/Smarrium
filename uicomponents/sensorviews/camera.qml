@@ -29,7 +29,7 @@ Row{
             height : parent.height
             source: applicationPath + "/OpenCVScript/difference.ppm"
             Timer {
-                interval: 600000; running: true; repeat: true;
+                interval: sensorinterval; running: true; repeat: true; //sensorinterval
                 onTriggered: function() {
                     camera.source = applicationPath + "/OpenCVScript/difference.ppm";
                 }

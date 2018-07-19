@@ -36,7 +36,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: 5000; running: true; repeat: true;
+            interval: sensorinterval; running: true; repeat: true;
             onTriggered: function () {
                 lineSeriesHumidity.refresh();
                 this.getTimerInterval();

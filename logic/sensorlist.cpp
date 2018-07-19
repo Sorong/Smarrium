@@ -50,7 +50,7 @@ QVariant SensorList::data(const QModelIndex &index, int role) const
 
     case NameRole:
         return QVariant(sensor->toString());
-
+    case SensorIntervalRole:
     case IntervalRole:
         return QVariant(sensor->getInterval());
 
@@ -81,6 +81,7 @@ QHash<int, QByteArray> SensorList::roleNames() const
     roles[LogRole] = "log";
     roles[LastRole] = "last";
     roles[IndexRole] = "listIndex";
+    roles[SensorIntervalRole] = "sensorinterval";
     return roles;
 }
 

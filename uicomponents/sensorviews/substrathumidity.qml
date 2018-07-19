@@ -36,7 +36,7 @@ Row{
                 }
             }
             id : refreshTimer
-            interval: 5000; running: true; repeat: true;
+            interval: sensorinterval; running: true; repeat: true;
             onTriggered: function () {
                 lineSeriesSub.refresh();
                 this.getTimerInterval();
@@ -104,7 +104,7 @@ Row{
                 id: resetColor
                 interval: 5000; running: false; repeat: false;
                 onTriggered: function() {
-                    jsonPane.border = "azure";
+                    jsonPane.border.color = "azure";
                 }
             }
 

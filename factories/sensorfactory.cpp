@@ -76,6 +76,7 @@ void SensorFactory::addI2CSensor(int interval, sensors_type_t sensorType){
     }
     case SENSOR_TYPE_CAMERA:
         ptr = new Camera();
+        ptr->setInterval(interval);
         break;
     case SENSOR_TYPE_CLOCK:
         ptr = new ClockSensor();
@@ -167,7 +168,7 @@ void SensorFactory::killEvent()
 {
     sensors_event_t *sensor = this->occuredEvents.dequeue();
     if(sensor) {
-        qDebug() << ";_;7 Rip sensors_event_t" <<  QDateTime::currentDateTime();
+        //qDebug() << ";_;7 Rip sensors_event_t" <<  QDateTime::currentDateTime();
         delete sensor;
     }
 }
