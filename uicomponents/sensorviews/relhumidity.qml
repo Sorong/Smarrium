@@ -10,7 +10,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.12
-        height: sensorListPane.height * 0.5
+        height:
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -22,7 +22,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.2
-        height: sensorListPane.height * 0.5
+        height:
         color: "azure"
         Timer {
             property var getTimerInterval : function() {
@@ -88,7 +88,7 @@ Row{
     Rectangle {
         id: jsonPane
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.2
-        height: sensorListPane.height * 0.5
+        height:
         property var json : ({})
         property var jsonChange : function(json) {
             jsonStringArea.text = JSON.stringify(this.json, null, 2)
@@ -169,7 +169,7 @@ Row{
     Rectangle {
         id: controlPane
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.23
-        height: sensorListPane.height * 0.5
+        height:
         color: "azure"
         Column {
             Row {
@@ -270,7 +270,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.20
-        height: sensorListPane.height * 0.5
+        height:
         color: "azure"
         ChartView {
             id: previewChart
@@ -341,7 +341,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.05
-        height: sensorListPane.height * 0.5
+        height:
         color: "azure"
 
         RoundButton {

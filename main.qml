@@ -9,8 +9,8 @@ Window {
 
     id: window
     property alias sensorListPane: sensorListPane
-    width: 1680
-    height: 1050
+    width: 1920
+    height: 1080
     visible: true
     title: qsTr("Smarrium")
     ColumnLayout {
@@ -24,7 +24,7 @@ Window {
             anchors.left: layout.left
             anchors.right: layout.right
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
+            Layout.preferredHeight: 80
             Text {
                 anchors.centerIn: parent
                 text: "Smarriumkonfigurator"
