@@ -9,9 +9,8 @@ import SensorBaseType 1.0
 Row{
 
     Rectangle {
-        width: (sensorListPane.width-sensorListScrollBar.width) * 0.15
+        width: (sensorListPane.width-sensorListScrollBar.width) * 0.12
         height: sensorListPane.height * 0.5
-        color: "red"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
