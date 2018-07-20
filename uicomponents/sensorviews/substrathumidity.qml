@@ -95,6 +95,9 @@ Row{
             this.json = json
             previewChart.refresh(json)
         }
+        Component.onCompleted: {
+            jsonStringArea.text = jsonStringArea.getJson();
+        }
 
         anchors.margins: 5
         color: "white"
@@ -141,7 +144,7 @@ Row{
                     }
 
                     //background: "white"
-                    text: getJson()
+                    text: ""
                     wrapMode : TextEdit.NoWrap
 
                     onEditingFinished : function() {
