@@ -255,7 +255,6 @@ Row{
                             i %= 25;
                         }
                         toInsert[i] = {"min" : min.value, "max" : max.value}
-jsoPane.json = jsonObject
                     }
                     toInsert["min_is_off"] = onMax.checked
                     console.log(JSON.stringify(toInsert, null, 2))
@@ -371,7 +370,7 @@ jsoPane.json = jsonObject
             property string option: ""
             icon { source:"/icons/svg/ic_remove_circle_48px.svg"}
             onClicked: function() {
-
+                selectedSensors.removeAt(listIndex);
             }
         }
 

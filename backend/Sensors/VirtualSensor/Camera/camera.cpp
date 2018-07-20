@@ -11,6 +11,7 @@ Camera::Camera() : defaultImage(":/images/images/default.ppm"), VirtualSensor(EV
     this->camera.open();
     QThread::sleep(2);
     this->takeReferncePicture();
+    this->saveReference();
     this->lastSaveFile = ":/images/images/default.ppm";
     this->name = "Kamera";
 }

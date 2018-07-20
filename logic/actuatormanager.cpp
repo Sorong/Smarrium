@@ -99,9 +99,11 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
         if(this->_actuator->isOn() && lastStart >= limit) {
             qDebug() << "Limit reached " << lastStart;
             this->switchOff();
+            this->_actuator->switchOff();
             return;
         } else if (lastStart != 0 && !this->_actuator->isOn() && lastStart <= (limit+cooldown)) {
             qDebug() << "remaining cooldown " << ((limit + cooldown) - lastStart);
+            this->_actuator->switchOff();
             return;
         }
     }
@@ -173,20 +175,20 @@ void ActuatorManager::processEventData(float eventData, SensorConfig &config)
 {
 
     if (config.minIsOff()){
-        if(config.getMinValue(QTime::currentTime().hour()) < eventData){
+        if(config.getMinValue(QTime::currentTime().hour()) > eventData){
             this->switchOff();
         }
 
-        else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
+        else if(config.getMaxValue(QTime::currentTime().hour()) < eventData){
             this->switchOn();
         }
     }
     else{
-        if(config.getMinValue(QTime::currentTime().hour()) < eventData){
+        if(config.getMinValue(QTime::currentTime().hour()) > eventData){
             this->switchOn();
         }
 
-        else if(config.getMaxValue(QTime::currentTime().hour()) > eventData){
+        else if(config.getMaxValue(QTime::currentTime().hour()) < eventData){
             this->switchOff();
         }
     }
