@@ -10,7 +10,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.12
-        height:
+        height: sensorListPane.height * 0.6
         color: "azure"
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -22,7 +22,7 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.2
-        height:
+        height: sensorListPane.height * 0.6
         color: "azure"
         Image {
             id: camera
@@ -40,14 +40,14 @@ Row{
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.63
-        height:
+        height: sensorListPane.height * 0.6
         color: "azure"
     }
 
 
     Rectangle {
         width: (sensorListPane.width-sensorListScrollBar.width) * 0.05
-        height:
+        height: sensorListPane.height * 0.6
         color: "azure"
 
 
