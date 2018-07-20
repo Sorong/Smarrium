@@ -100,7 +100,7 @@ void ActuatorManager::eventReceived(sensors_event_t* event)
             qDebug() << "Limit reached " << lastStart;
             this->switchOff();
             return;
-        } else if (!this->_actuator->isOn() && lastStart <= (limit+cooldown)) {
+        } else if (lastStart != 0 && !this->_actuator->isOn() && lastStart <= (limit+cooldown)) {
             qDebug() << "remaining cooldown " << ((limit + cooldown) - lastStart);
             return;
         }
@@ -219,6 +219,9 @@ void ActuatorManager::switchOn()
 {
     if(!this->_actuator->isOn()) {
         qDebug() << "SwitchOn";
+        //for(int i = 0; i < 10; i++){
+            this->_actuator->switchOn();
+       // }
         this->_actuator->switchOn();
         this->activatedAt.start();
     }
