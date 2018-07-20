@@ -30,7 +30,6 @@ void QMLContextManager::init()
     context->setContextProperty("configFactory", configFactory.data());
     context->setContextProperty("supportedSensors", &supportedSensors);
     context->setContextProperty("channelAvailable", &channelAvailable);
-    context->setContextProperty("actuatorManager", this->selectedActuatorManager);
     connect(&this->existingActuators, &ActuatorList::onSelect, this, &QMLContextManager::selectActuator);
     connect(this->actuatorFactory.data(), &ActuatorFactory::onCreateActuatorConfig, this, &QMLContextManager::createConfig);
     //connect(sender, SIGNAL(destroyed()), this, SLOT(objectDestroyed()));
@@ -50,6 +49,7 @@ void QMLContextManager::selectActuator(Actuator *actuator)
     QQmlContext * context = this->engine.rootContext();
     this->selectedSensors = &(actuator->getManager().getSensors());
     context->setContextProperty("selectedSensors", this->selectedSensors);
+    context->setContextProperty("actuatorManager", this->selectedActuatorManager);
     connect(&this->existingSensors, &SensorList::onSelect, this->selectedSensors, &SensorList::addUnique);
     connect(this->selectedSensors, &SensorList::onChangeConfig, this, &QMLContextManager::createConfig);
 }

@@ -37,7 +37,7 @@ Row{
             id : refreshTimer
             interval: sensorinterval; running: true; repeat: true;
             onTriggered: function () {
-                console.log("refreshTimer")
+                //console.log("refreshTimer")
                 lineSeriesTemp.refresh();
                 this.getTimerInterval();
             }
@@ -125,7 +125,7 @@ Row{
                     id: jsonStringArea
                     property var getJson : function() {
                         var t = "";
-                        console.log("getJson");
+                        //console.log("getJson");
                         if(actuatorManager !== null) {
                             t = actuatorManager.getConfig(uuid);
                             if(t !== "") {
@@ -257,7 +257,7 @@ Row{
                         toInsert[i] = {"min" : min.value, "max" : max.value}
                     }
                     toInsert["min_is_off"] = onMax.checked
-                    console.log(JSON.stringify(toInsert, null, 2))
+                    //console.log(JSON.stringify(toInsert, null, 2))
                     jsonPane.jsonChange(toInsert)
                 }
             }

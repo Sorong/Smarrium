@@ -126,7 +126,7 @@ Row{
                     id: jsonStringArea
                     property var getJson : function() {
                         var t = "";
-                        console.log("getJson");
+                        //console.log("getJson");
                         if(actuatorManager !== null) {
                             t = actuatorManager.getConfig(uuid);
                             if(t !== "") {
@@ -238,7 +238,7 @@ Row{
 
                     }
                     toInsert["ignore"] = ignore.checked
-                    console.log(JSON.stringify(toInsert, null, 2))
+                    //console.log(JSON.stringify(toInsert, null, 2))
                     jsonPane.jsonChange(toInsert)
                 }
             }

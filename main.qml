@@ -24,7 +24,7 @@ Window {
             anchors.left: layout.left
             anchors.right: layout.right
             Layout.fillWidth: true
-            Layout.preferredHeight: 80
+            Layout.preferredHeight: 50
             Text {
                 anchors.centerIn: parent
                 text: "Smarriumkonfigurator"
@@ -179,7 +179,7 @@ Window {
                     policy: ScrollBar.AlwaysOn
                 }
                 delegate: Rectangle {
-                    height: sensorListPane.height * 0.5
+                    height: sensorListPane.height * 0.6
                     Component.onCompleted: function() {
                         var component = undefined;
                         switch (type) {

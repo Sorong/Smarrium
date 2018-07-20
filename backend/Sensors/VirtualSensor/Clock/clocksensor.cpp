@@ -1,8 +1,8 @@
 #include "clocksensor.h"
-
+static int counter = 0;
 ClockSensor::ClockSensor() : VirtualSensor(CLOCK_RESOLUTION)
 {
-    this->name = "Uhr";
+    this->name = "Uhr " + QString::number(counter++);
 }
 
 bool ClockSensor::getEvent(sensors_event_t *event){

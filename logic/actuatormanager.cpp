@@ -84,7 +84,7 @@ void ActuatorManager::setCooldown(int cooldown)
 
 void ActuatorManager::eventReceived(sensors_event_t* event)
 {
-    qDebug() << "Event recived: " << event->timestamp;
+    //qDebug() << "Event recived: " << event->timestamp;
     if(!_actuator || !event) {
         return;
     }
@@ -201,11 +201,11 @@ void ActuatorManager::processClockEvent(SensorConfig &config)
     int start = config.getStart();
     int stop = config.getStop();
     if(config.ignoreOn() && !this->_actuator->isOn()) {
-        qDebug() << "ignore on";
+        //qDebug() << "ignore on";
         return;
     }
     if(config.ignoreOff() && this->_actuator->isOn()) {
-        qDebug() << "ignore off";
+        //qDebug() << "ignore off";
         return;
     }
 
@@ -221,7 +221,7 @@ void ActuatorManager::processClockEvent(SensorConfig &config)
 void ActuatorManager::switchOn()
 {
     if(!this->_actuator->isOn()) {
-        qDebug() << "SwitchOn";
+        qDebug() << "Switched on at " << QTime::currentTime();
         //for(int i = 0; i < 10; i++){
             this->_actuator->switchOn();
        // }
@@ -233,7 +233,7 @@ void ActuatorManager::switchOn()
 void ActuatorManager::switchOff()
 {
     if(this->_actuator->isOn()) {
-        qDebug() << "SwitchOff";
+        qDebug() << "Switched off at: " << QTime::currentTime();
         this->_actuator->switchOff();
     }
 }
