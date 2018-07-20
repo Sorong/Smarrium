@@ -33,7 +33,7 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
 
 
     if(sensor.getRawType() == SensorBaseType::CLOCK) {
-        this->runtimeConfigurations[sensor.getId()] = &config;
+        this->runtimeConfigurations.insert(sensor.getId(), &config);
     }
     return true;
 }
