@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtCharts 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
-
+import SensorBaseType 1.0
 
 Row{
 
@@ -127,7 +127,7 @@ Row{
                         var t = "";
                         console.log("getJson");
                         if(actuatorManager !== null) {
-                            t = actuatorManager.getConfig();
+                            t = actuatorManager.getConfig(uuid);
                             if(t !== "") {
                                 jsonPane.json = JSON.parse(t)
                                 t = JSON.stringify(jsonPane.json, null, 2)
