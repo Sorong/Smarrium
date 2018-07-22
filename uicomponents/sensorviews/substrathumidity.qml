@@ -135,12 +135,12 @@ Row{
                             }
                         }
                         if(t === "" ) {
-                            jsonPane.json = JSON.parse(configFactory.getConfig(type))
+                            deinjsonPane.json = JSON.parse(configFactory.getConfig(type))
                             t = JSON.stringify(jsonPane.json, null, 2)
                         }
                         previewChart.refresh(jsonPane.json)
                         return t;
-                    }
+                   }
 
                     //background: "white"
                     text: ""

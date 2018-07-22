@@ -27,7 +27,7 @@ bool ActuatorManager::registerSensor(Sensor& sensor, SensorConfig& config)
 
     if(!this->sensorIds.contains(sensor.getId())) {
         connect(&sensor, SIGNAL(newSensorEvent(sensors_event_t*)), this, SLOT(eventReceived(sensors_event_t*)));
-        this->sensorIds[sensor.getId()] = &sensor;
+        this->sensorIds.insert(sensor.getId(), &sensor);
     }
 
 
